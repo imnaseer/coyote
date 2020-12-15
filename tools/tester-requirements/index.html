@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://lovettchris.github.io/bobcat/tools/tester-requirements/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Tester requirements - Coyote</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/main.css" rel="stylesheet">
+    <link href="../../css/player-controls.css" rel="stylesheet">
+    <link href="../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Tester requirements", url: "#_top", children: [
+              {title: "Stick to your programming model", url: "#stick-to-your-programming-model" },
+              {title: "Declare all nondeterminism", url: "#declare-all-nondeterminism" },
+              {title: "Exceptions", url: "#exceptions" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
+      <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+      <script src="../../assets/js/analytics.js"></script>
+      <script src="../../assets/js/plugins.js"></script>
+      <script src="../../assets/js/animate_trace.js"></script>
+      <script src="../../assets/js/animation.js"></script>
+      <script src="../../assets/js/progress_bar.js"></script>
+      <script src="../../assets/js/trace_model.js"></script>
+      <script src="../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../coverage/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../coverage/" class="btn btn-xs btn-link">
+        Code and activity coverage
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../unit-testing/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../unit-testing/" class="btn btn-xs btn-link">
+        Unit testing
+      </a>
+    </div>
+    
+  </div>
+
+      
+
+      <h2 id="tester-requirements">Tester requirements</h2>
+<p>The Coyote tester is based on the idea of <a href="../../core/systematic-testing/">systematic testing</a>. This
+means that it must understand the concurrency and nondeterminism in your test code. For this reason,
+the following restrictions must be kept in mind when writing Coyote tests. Note that these
+restrictions only apply to your test code (in order to run <code>coyote test</code>). There are no such
+restrictions when running in production. If you find that your test must call some code that
+potentially violates these restrictions, then you must mock the call for the purpose of the test.</p>
+<h3 id="stick-to-your-programming-model">Stick to your programming model</h3>
+<p>The test must only have concurrency in the chosen Coyote programming model. The following code that
+spawns both a controlled Coyote <code>Task</code> as well as an native .NET <code>Task</code> is going to confuse
+the tester because it would not know how to control the scheduling of the latter.</p>
+<pre><code class="language-c#">using CoyoteTasks = Microsoft.Coyote.Tasks;
+using SystemTasks = System.Threading.Tasks;
+
+[Microsoft.Coyote.SystematicTesting.Test]
+public static async CoyoteTasks.Task MyTest()
+{
+    // bad: do not do this.
+    var t1 = CoyoteTasks.Task.Run(() =&gt; { foo(); });
+    var t2 = SystemTasks.Task.Run(() =&gt; { bar(); });
+    ...
+}
+</code></pre>
+<p>The tester does its best to identify concurrency outside its control (e.g., the task <code>t2</code> above) and
+complain so that you can debug your code, but it is not always able to do so.</p>
+<p>The same holds for synchronization operations, e.g., acquiring or releasing locks via the <code>lock</code>
+construct. In this case, the tester can deadlock if there is synchronization in the test that it
+does not know about. In most cases, Coyote code would be free of these low-level synchronization
+operations. If you must use a lock and you are using the Coyote Tasks programming model try the
+Coyote <code>AsyncLock</code>. If you are calling 3rd party code that mixes locks and concurrency you may need
+to mock that external code.</p>
+<h3 id="declare-all-nondeterminism">Declare all nondeterminism</h3>
+<p>The tester needs to understand all <a href="../../core/non-determinism/">nondeterminism</a> in a test. So the
+test should not invoke code that cannot be replayed by the tester. Consider the following code that
+performs a branch based on the current time of the day.</p>
+<pre><code class="language-c#">if (DateTime.Now - prevTime &gt; TimeSpan.FromSeconds(5)) { ... } else { ... }
+</code></pre>
+<p>This branch is not in the control of the tester, hence an attempt to replay a test iteration can
+fail. In such a case, for the purpose of the test, the branch should instead be based on a call to
+<code>Microsoft.Coyote.Random.Generator</code>, which can be recorded and replayed by the tester. This change has
+the added bonus that it makes it easier for the tester to explore both sides of the branch. Of
+course, do continue to use the time-based decision in production code.</p>
+<pre><code class="language-c#">bool branch = false;
+if (isTest)
+{
+  // You should cache this generator at a higher level for better
+  // performance.
+  var generator = Microsoft.Coyote.Random.Generator.Create();
+  branch = generator.NextBoolean();
+} else {
+  branch = DateTime.Now - prevTime &gt; TimeSpan.FromSeconds(5);
+}
+
+if (branch) { ... } else { ... }
+</code></pre>
+<h3 id="exceptions">Exceptions</h3>
+<p>The code executed by the test should not catch exceptions of the type
+<code>Microsoft.Coyote.RuntimeException</code> (or any derived type). These exceptions are used by the
+tester for multiple purposes. For instance, it is thrown when an assertion fails in a monitor, or
+when a test iteration hits <code>max-steps</code>. In these cases, the test needs to fully unwind its stack.</p>
+<p>The following code will confuse the tester because the catch block will catch Coyote exceptions that
+the tester might throw when inside <code>RunTheTest</code> and then attempt to continue to the test, which the
+tester does not expect.</p>
+<pre><code class="language-c#">[Microsoft.Coyote.SystematicTesting.Test]
+public static async Microsoft.Coyote.Tasks.Task MyTest()
+{
+  try
+  {
+    RunTheTest();
+  }
+  catch (Exception e)
+  {
+    Cleanup();
+  }
+  SomeMoreTesting();
+}
+</code></pre>
+<p>Essentially, what this means is that you should not have an unconditional <code>catch(Exception e)</code> in
+your test code. The above code can be fixed by adding an exception filter as follows:</p>
+<pre><code class="language-c#">[Microsoft.Coyote.SystematicTesting.Test]
+public static async Microsoft.Coyote.Tasks.Task MyTest()
+{
+  try
+  {
+    RunTheTest();
+  }
+  catch (Exception e) when (!(e is Microsoft.Coyote.RuntimeException))
+  {
+    Cleanup();
+  }
+  SomeMoreTesting();
+}
+</code></pre>
+<p>This allows the special Coyote runtime exceptions to pass through this try/catch block so the Coyote
+test engine can handle it and continue to run normally.</p>
+
+    <br>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../coverage/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../coverage/" class="btn btn-xs btn-link">
+        Code and activity coverage
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../unit-testing/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../unit-testing/" class="btn btn-xs btn-link">
+        Unit testing
+      </a>
+    </div>
+    
+  </div>
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+
+  <section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+
+            <li><a href="/coyote/">Home</a></li>
+
+            <li><a href="/coyote/about">About</a></li>
+
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+
+            <li><a href="/coyote/overview/what-is-coyote">Overview</a></li>
+
+            <li><a href="/coyote/get-started/install">Install</a></li>
+
+            <li><a href="/coyote/get-started/using-coyote">Getting started</a></li>
+
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+
+            <li><a href="https://github.com/microsoft/coyote" target="_blank">GitHub</a></li>
+
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li>© 2020 Microsoft</li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>

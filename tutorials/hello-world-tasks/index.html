@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://lovettchris.github.io/bobcat/tutorials/hello-world-tasks/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Hello world tasks - Coyote</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../css/main.css" rel="stylesheet">
+    <link href="../../css/player-controls.css" rel="stylesheet">
+    <link href="../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Hello world example with tasks", url: "#_top", children: [
+          ]},
+          {title: "What you will need", url: "#what-you-will-need", children: [
+          ]},
+          {title: "Build the samples", url: "#build-the-samples", children: [
+          ]},
+          {title: "Run the HelloWorldTasks application", url: "#run-the-helloworldtasks-application", children: [
+          ]},
+          {title: "How to reproduce the bug", url: "#how-to-reproduce-the-bug", children: [
+          ]},
+          {title: "The code", url: "#the-code", children: [
+          ]},
+          {title: "Summary", url: "#summary", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script>
+      <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
+      <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+      <script src="../../assets/js/analytics.js"></script>
+      <script src="../../assets/js/plugins.js"></script>
+      <script src="../../assets/js/animate_trace.js"></script>
+      <script src="../../assets/js/animation.js"></script>
+      <script src="../../assets/js/progress_bar.js"></script>
+      <script src="../../assets/js/trace_model.js"></script>
+      <script src="../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../hello-world-actors/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../hello-world-actors/" class="btn btn-xs btn-link">
+        Hello world actors
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../programming-models/actors/why-actors/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../programming-models/actors/why-actors/" class="btn btn-xs btn-link">
+        Why Coyote actors?
+      </a>
+    </div>
+    
+  </div>
+
+      
+
+      <h2 id="hello-world-example-with-tasks">Hello world example with tasks</h2>
+<p>The <a href="http://github.com/microsoft/coyote-samples/">HelloWorldTasks</a> is a simple program to get you
+started using the <a href="../../programming-models/async/overview/">asynchronous tasks programming
+model</a> with Coyote.</p>
+<h2 id="what-you-will-need">What you will need</h2>
+<p>To run the Hello World Tasks  example, you will need to:</p>
+<ul>
+<li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
+<li>Install the <a href="../../get-started/install/#installing-the-net-core-31-coyote-tool">.NET Core 3.1 version of the <code>coyote</code> tool</a>.</li>
+<li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../tools/testing/">Testing</a>.</li>
+</ul>
+<h2 id="build-the-samples">Build the samples</h2>
+<p>Build the <code>coyote-samples</code> repo by running the following command:</p>
+<pre><code class="language-plain">powershell -f build.ps1
+</code></pre>
+<h2 id="run-the-helloworldtasks-application">Run the HelloWorldTasks application</h2>
+<p>Now you can run the HelloWorldTasks application:</p>
+<pre><code class="language-plain">&quot;./bin/net5.0/HelloWorldTasks.exe&quot;
+</code></pre>
+<p>Note that in the code there is a bug (put intentionally) that should be caught by a Coyote
+assertion. The program should display exactly the string <code>Hello World!</code> however sometimes it
+displays <code>Good Morning</code>. With good luck you will need to run the program only a few times in order
+to get the buggy result, but on average this bug happens rarely and may need many manual runs,
+sometimes 20 - 30, in order to be reproduced.</p>
+<p>The typical &ldquo;normal&rdquo; run will look like this:</p>
+<pre><code class="language-plain">Hello World!
+</code></pre>
+<p>When the error is caught, the run may look like this:</p>
+<pre><code class="language-plain">Good Morning
+
+Unhandled Exception: Microsoft.Coyote.AssertionFailureException: { ... Exception text here }
+</code></pre>
+<h2 id="how-to-reproduce-the-bug">How to reproduce the bug</h2>
+<p>There are two ways to reproduce the bug:</p>
+<p>The first way is to run <code>HelloWorldTasks.exe</code> from the command prompt repeatedly, until you finally
+get this exception:</p>
+<pre><code class="language-plain">Good Morning
+
+Unhandled Exception: Microsoft.Coyote.AssertionFailureException: Value is 'Good Morning' instead of 'Hello World!'.
+   at Microsoft.Coyote.Runtime.CoyoteRuntime.Assert(Boolean predicate, String s, Object[] args)
+   at Microsoft.Coyote.Samples.HelloWorld.Greeter.&lt;RunAsync&gt;d__4.MoveNext() in C:\git\CoyoteSamples\HelloWorldTasks\Greeter.cs:line 38
+</code></pre>
+<p>Although this is one of the simplest Async Tasks programs, you may need to perform many executions
+before getting this exception. Even in this simplest example, reproducing the bug may take you a
+significant amount of time.</p>
+<p><strong>Here is where Coyote really shines</strong>.</p>
+<p>The second way to reproduce the bug is to run the code under <code>coyote test</code>.  From the command line you enter:</p>
+<pre><code class="language-plain">coyote test ./bin/net5.0/HelloWorldTasks.dll --iterations 100
+</code></pre>
+<p>You will see output like this:</p>
+<pre><code class="language-plain">. Testing .\bin\net5.0\HelloWorldTasks.dll
+Starting TestingProcessScheduler in process 36352
+... Created '1' testing task.
+... Task 0 is using 'random' strategy (seed:914718657).
+..... Iteration #1
+..... Iteration #2
+..... Iteration #3
+..... Iteration #4
+..... Iteration #5
+..... Iteration #6
+..... Iteration #7
+..... Iteration #8
+..... Iteration #9
+... Task 0 found a bug.
+... Emitting task 0 traces:
+..... Writing bin\net5.0\Output\HelloWorldTasks.exe\CoyoteOutput\HelloWorldTasks_0_0.txt
+..... Writing bin\net5.0\Output\HelloWorldTasks.exe\CoyoteOutput\HelloWorldTasks_0_0.schedule
+... Elapsed 0.07038 sec.
+... Testing statistics:
+..... Found 1 bug.
+... Scheduling statistics:
+..... Explored 9 schedules: 9 fair and 0 unfair.
+..... Found 11.11% buggy schedules.
+..... Number of scheduling points in fair terminating schedules: 12 (min), 15 (avg), 19 (max).
+... Elapsed 0.3880718 sec.
+. Done
+</code></pre>
+<p>So in just 0.38 seconds <code>coyote test</code> has found the bug in this simple program&mdash;something that
+would take much longer if testing manually. So, even in this simple case Coyote finds the bug tens
+or even hundreds of times quicker. When using Coyote for testing much more complex, real-world
+systems the time savings can be even more impressive! This will give you the ability to find and fix
+even the most difficult to reproduce concurrency bugs <strong>before pushing to production</strong>.</p>
+<p>To learn more about testing with Coyote read <a href="../../tools/testing/">Testing Coyote programs end-to-end and reproducing
+bugs</a>.</p>
+<h2 id="the-code">The code</h2>
+<p>This section shows how to write a program using the Coyote <a href="../../programming-models/async/overview/">asynchronous task programming
+model</a>. The Coyote controlled <code>Task</code> type is a
+drop-in replacement for the <code>System.Threading.Tasks.Task</code> type, and thus any prior experience
+writing asynchronous code using <code>async</code> and <code>await</code> is useful and relevant. If you are not already
+familiar with <code>async</code> and <code>await</code>, you can learn more in the C#
+<a href="https://docs.microsoft.com/en-us/dotnet/standard/async-in-depth">docs</a>.</p>
+<p>The program consists of two code files:
+1. <code>Program.cs</code> contains the <code>Main()</code> entry point of the application.
+2. <code>Greeter.cs</code> defines the <code>Greeter</code> class. Its <code>RunAsync()</code> method is where &ldquo;all the work&rdquo; is done.</p>
+<p>Here is the code for <code>Greeter.cs</code>:</p>
+<pre><code class="language-c#">using System;
+using Microsoft.Coyote.Specifications;
+using Microsoft.Coyote.Tasks;
+
+namespace Microsoft.Coyote.Samples.HelloWorldTasks
+{
+    internal class Greeter
+    {
+        private const string HelloWorld = &quot;Hello World!&quot;;
+        private const string GoodMorning = &quot;Good Morning&quot;;
+
+        private string Value;
+
+        private async Task WriteWithDelayAsync(string value)
+        {
+            await Task.Delay(100);
+            this.Value = value;
+        }
+
+        public async Task RunAsync()
+        {
+            Task task1 = this.WriteWithDelayAsync(GoodMorning);
+            Task task2 = this.WriteWithDelayAsync(HelloWorld);
+            Task task3 = this.WriteWithDelayAsync(HelloWorld);
+            Task task4 = this.WriteWithDelayAsync(HelloWorld);
+            Task task5 = this.WriteWithDelayAsync(HelloWorld);
+
+            await Task.WhenAll(task1, task2, task3, task4, task5);
+
+            Console.WriteLine(this.Value);
+
+            Specification.Assert(this.Value == HelloWorld, $&quot;Value is '{this.Value}' instead of '{HelloWorld}'.&quot;);
+        }
+    }
+}
+</code></pre>
+<p><code>WriteWithDelayAsync()</code> is a C# <code>async</code> method that asynchronously waits for a 100ms delay (created
+via the <code>Task.Delay(100)</code> call), and then modifies the value of the private <code>string Value</code>.</p>
+<p>The <code>RunAsync()</code> asynchronous method is invoking the <code>WriteWithDelayAsync()</code> method five times,
+first passing the value <code>"Good Morning"</code> and the value <code>"Hello World!"</code> for the others. Each method
+call returns a <code>Task</code> object, which can be awaited upon using <code>await</code>. After invoking these
+asynchronous method calls The <code>RunAsync</code> method calls <code>Task.WhenAll(...)</code> to <code>await</code> on the
+completion of all the async tasks.</p>
+<p>Because the <code>WriteWithDelayAsync()</code> method awaits a <code>Task.Delay</code> to complete, it will yield control
+to the caller of the method, which is the <code>RunAsync()</code> method. However, the <code>RunAsync()</code> method is
+not doing any awaiting immediately after invoking the <code>WriteWithDelayAsync()</code> method calls. This
+means that the five calls will be executed in <em>parallel</em>, and thus depending entirely on the thread
+scheduling the <code>Value</code> member will be set to either <code>"Good Morning"</code> or <code>"Hello World!"</code> after
+<code>Task.WhenAll(...)</code> completes.</p>
+<p>Using <code>Specification.Assert</code>, Coyote allows you to write assertions that check these kinds of safety
+properties. In this case, the assertion will check if the value is <code>"Hello World!"</code> or not, and if
+not, it will throw an exception, or during testing will report an error together with a reproducible
+trace.</p>
+<p>Definitely, this <code>Assert</code> will fire sometimes because the asynchronous tasks do not have a
+guaranteed order. Despite having this assertion here on purpose, imagine if in a real project the
+programmer who wrote the Assert didn&rsquo;t realize how asynchronous the code was, or perhaps the
+programmer who wrote the code didn&rsquo;t read and understand the Assert properly and has violated the
+specification in their overly asynchronous implementation. Either way this is a demonstration
+showing that assertions like this can be very useful in finding some pretty tricky bugs.</p>
+<p>The code for <code>Program.cs</code> is much simpler:</p>
+<pre><code class="language-c#">using Microsoft.Coyote.Runtime;
+using Microsoft.Coyote.Samples.HelloWorld;
+using Microsoft.Coyote.Tasks;
+
+namespace Microsoft.Coyote.Samples.HelloWorldTasks
+{
+    public static class Program
+    {
+        public static async System.Threading.Tasks.Task Main()
+        {
+            await Execute();
+        }
+
+        [Microsoft.Coyote.SystematicTesting.Test]
+        public static async Task Execute()
+        {
+            var greeter = new Greeter();
+            await greeter.RunAsync();
+        }
+    }
+}
+</code></pre>
+<p>The <code>static async Task Main()</code> method is the entry point to the program, as usual for a .NET
+executable. If you didn&rsquo;t want the program to be testable with <code>coyote test</code>, you could omit the
+second method above, and simply write<code>Main()</code> as:</p>
+<pre><code class="language-c#">public static async Task Main()
+{
+    var greeter = new Greeter();
+    await greeter.RunAsync();
+}
+</code></pre>
+<p>However, here the intent is that the code must be testable with <code>coyote test</code>. This is done by
+including the <code>Execute()</code> method and the only thing the <code>Main()</code> method does is to call this <code>async
+Execute()</code> method and await its execution.</p>
+<p>It is a rule in Coyote that for any executable to be testable with <code>coyote test</code>, it must contain a
+static <code>Execute()</code> method which must have a specific, signature. In this code one of these allowed
+signatures for the method is specified.</p>
+<p>Do note the <code>[Microsoft.Coyote.SystematicTesting.Test]</code> attribute of the <code>Execute()</code> method, and its
+return type: <code>Microsoft.Coyote.Tasks.Task</code>. When these are specified, then <code>coyote test</code> can find
+the <code>Execute()</code> method in the executable assembly and can control its execution.</p>
+<p>The Coyote <code>Task</code> type uses a C# 7 feature known as <code>async task types</code> (see
+<a href="https://github.com/dotnet/roslyn/blob/master/docs/features/task-types.md">here</a>) that allows framework
+developers to create custom task types that can be used with <code>async</code> and <code>await</code>. This is where the
+magic happens. In production, <code>Task</code> enables C# to build a custom asynchronous state machine that
+uses regular <code>Task</code> objects. However, during testing, Coyote uses dependency injection to supply
+another custom implementation of an asynchronous state machine that allows controlling the
+scheduling of <code>Task</code> objects, and thus systematically explore their interleavings.</p>
+<p>Also note that with <code>coyote test</code> the <code>Main()</code> method is not executed! This is why it is recommended
+that the <code>Main()</code> method should not contain any other code except awaiting the <code>Execute()</code> method.
+If it does contain other actions, those actions would not be executed by <code>coyote test</code>.  If you need
+to pass information from <code>Main</code> to <code>Execute</code> you can use a static variable with a default value. This
+way the <code>Execute</code> will run with the default value during <code>coyote test</code>.</p>
+<h2 id="summary">Summary</h2>
+<p>In this tutorial you learned:</p>
+<ol>
+<li><a href="#build-the-sample">How to install and build Coyote</a></li>
+<li><a href="#build-the-sample">How to build the samples used in the tutorials</a></li>
+<li><a href="#run-the-helloworldtasks-application">How to run the HelloWorldTasks sample from the
+   command-line</a></li>
+<li><a href="../../programming-models/async/overview/">Using the controlled <code>Task</code> type to enable Coyote to control the scheduling of the
+   program</a></li>
+<li>How to write code that is Coyote-testable</li>
+<li><a href="#how-to-reproduce-the-bug">How testing with Coyote results in finding even the trickiest concurrency bugs quickly even
+   before pushing to production.</a></li>
+</ol>
+
+    <br>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../hello-world-actors/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../hello-world-actors/" class="btn btn-xs btn-link">
+        Hello world actors
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../programming-models/actors/why-actors/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../programming-models/actors/why-actors/" class="btn btn-xs btn-link">
+        Why Coyote actors?
+      </a>
+    </div>
+    
+  </div>
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+
+  <section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+
+            <li><a href="/coyote/">Home</a></li>
+
+            <li><a href="/coyote/about">About</a></li>
+
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+
+            <li><a href="/coyote/overview/what-is-coyote">Overview</a></li>
+
+            <li><a href="/coyote/get-started/install">Install</a></li>
+
+            <li><a href="/coyote/get-started/using-coyote">Getting started</a></li>
+
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+
+            <li><a href="https://github.com/microsoft/coyote" target="_blank">GitHub</a></li>
+
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li>© 2020 Microsoft</li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>
