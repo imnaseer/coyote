@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://lovettchris.github.io/bobcat/ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary/Create/">
+    <link rel="canonical" href="https://lovettchris.github.io/bobcat/ref/Microsoft.Coyote.IO/TextWriterLogger/WriteLine/">
     <link rel="shortcut icon" href="../../../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Create - Coyote</title>
+    <title>WriteLine - Coyote</title>
     <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="../../../../css/base.css" rel="stylesheet">
@@ -35,11 +35,17 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "SharedDictionary.Create&lt;TKey,TValue&gt; method (1 of 2)", url: "#_top", children: [
+          {title: "TextWriterLogger.WriteLine method (1 of 4)", url: "#_top", children: [
               {title: "See Also", url: "#see-also" },
           ]},
-          {title: "SharedDictionary.Create&lt;TKey,TValue&gt; method (2 of 2)", url: "#shareddictionarycreatetkeytvalue-method-2-of-2", children: [
+          {title: "TextWriterLogger.WriteLine method (2 of 4)", url: "#textwriterloggerwriteline-method-2-of-4", children: [
               {title: "See Also", url: "#see-also_1" },
+          ]},
+          {title: "TextWriterLogger.WriteLine method (3 of 4)", url: "#textwriterloggerwriteline-method-3-of-4", children: [
+              {title: "See Also", url: "#see-also_2" },
+          ]},
+          {title: "TextWriterLogger.WriteLine method (4 of 4)", url: "#textwriterloggerwriteline-method-4-of-4", children: [
+              {title: "See Also", url: "#see-also_3" },
           ]},
         ];
 
@@ -77,20 +83,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../SharedDictionary-2/" class="btn btn-xs btn-default pull-right">
+      <a href="../TextWriterLogger/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../SharedDictionary-2/" class="btn btn-xs btn-link">
-        Overview
+      <a href="../TextWriterLogger/" class="btn btn-xs btn-link">
+        TextWriterLogger
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../" class="btn btn-xs btn-default pull-left">
+      <a href="../Write/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../" class="btn btn-xs btn-link">
-        Overview
+        Previous</a><a href="../Write/" class="btn btn-xs btn-link">
+        Write
       </a>
     </div>
     
@@ -98,9 +104,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h1 id="shareddictionarycreatetkeytvalue-method-1-of-2">SharedDictionary.Create&lt;TKey,TValue&gt; method (1 of 2)</h1>
-<p>Creates a new shared dictionary.</p>
-<pre><code class="language-csharp">public static SharedDictionary&lt;TKey, TValue&gt; Create&lt;TKey, TValue&gt;(IActorRuntime runtime)
+      <h1 id="textwriterloggerwriteline-method-1-of-4">TextWriterLogger.WriteLine method (1 of 4)</h1>
+<p>Writes an informational string to the log.</p>
+<pre><code class="language-csharp">public override void WriteLine(string message)
 </code></pre>
 <table>
 <thead>
@@ -111,32 +117,21 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </thead>
 <tbody>
 <tr>
-<td>TKey</td>
-<td>The type of the key.</td>
-</tr>
-<tr>
-<td>TValue</td>
-<td>The type of the value.</td>
-</tr>
-<tr>
-<td>runtime</td>
-<td>The actor runtime.</td>
+<td>value</td>
+<td>The string to write.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="see-also">See Also</h2>
 <ul>
-<li>class <a href="../../SharedDictionary-2/">SharedDictionary&lt;TKey,TValue&gt;</a></li>
-<li>interface <a href="../../../Microsoft.Coyote.Actors/IActorRuntime/">IActorRuntime</a></li>
-<li>class <a href="../">SharedDictionary</a></li>
-<li>namespace <a href="../">Microsoft.Coyote.Actors.SharedObjects</a></li>
+<li>class <a href="../">TextWriterLogger</a></li>
+<li>namespace <a href="../">Microsoft.Coyote.IO</a></li>
 <li>assembly <a href="../../../Microsoft.Coyote/">Microsoft.Coyote</a></li>
 </ul>
 <hr />
-<h1 id="shareddictionarycreatetkeytvalue-method-2-of-2">SharedDictionary.Create&lt;TKey,TValue&gt; method (2 of 2)</h1>
-<p>Creates a new shared dictionary.</p>
-<pre><code class="language-csharp">public static SharedDictionary&lt;TKey, TValue&gt; Create&lt;TKey, TValue&gt;(IEqualityComparer&lt;TKey&gt; comparer, 
-    IActorRuntime runtime)
+<h1 id="textwriterloggerwriteline-method-2-of-4">TextWriterLogger.WriteLine method (2 of 4)</h1>
+<p>Writes a string followed by a line terminator to the text string or stream.</p>
+<pre><code class="language-csharp">public void WriteLine(LogSeverity severity, string value)
 </code></pre>
 <table>
 <thead>
@@ -147,29 +142,83 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </thead>
 <tbody>
 <tr>
-<td>TKey</td>
-<td>The type of the key.</td>
+<td>severity</td>
+<td>The severity of the issue being logged.</td>
 </tr>
 <tr>
-<td>TValue</td>
-<td>The type of the value.</td>
-</tr>
-<tr>
-<td>comparer</td>
-<td>The key comparer.</td>
-</tr>
-<tr>
-<td>runtime</td>
-<td>The actor runtime.</td>
+<td>value</td>
+<td>The string to write.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="see-also_1">See Also</h2>
 <ul>
-<li>class <a href="../../SharedDictionary-2/">SharedDictionary&lt;TKey,TValue&gt;</a></li>
-<li>interface <a href="../../../Microsoft.Coyote.Actors/IActorRuntime/">IActorRuntime</a></li>
-<li>class <a href="../">SharedDictionary</a></li>
-<li>namespace <a href="../">Microsoft.Coyote.Actors.SharedObjects</a></li>
+<li>enum <a href="../../LogSeverity/">LogSeverity</a></li>
+<li>class <a href="../">TextWriterLogger</a></li>
+<li>namespace <a href="../">Microsoft.Coyote.IO</a></li>
+<li>assembly <a href="../../../Microsoft.Coyote/">Microsoft.Coyote</a></li>
+</ul>
+<hr />
+<h1 id="textwriterloggerwriteline-method-3-of-4">TextWriterLogger.WriteLine method (3 of 4)</h1>
+<p>Writes an informational string to the log.</p>
+<pre><code class="language-csharp">public override void WriteLine(string format, params object[] args)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>format</td>
+<td>The string format to write.</td>
+</tr>
+<tr>
+<td>args</td>
+<td>The arguments needed to format the string.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="see-also_2">See Also</h2>
+<ul>
+<li>class <a href="../">TextWriterLogger</a></li>
+<li>namespace <a href="../">Microsoft.Coyote.IO</a></li>
+<li>assembly <a href="../../../Microsoft.Coyote/">Microsoft.Coyote</a></li>
+</ul>
+<hr />
+<h1 id="textwriterloggerwriteline-method-4-of-4">TextWriterLogger.WriteLine method (4 of 4)</h1>
+<p>Writes a string followed by a line terminator to the text string or stream.</p>
+<pre><code class="language-csharp">public void WriteLine(LogSeverity severity, string format, params object[] args)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>severity</td>
+<td>The severity of the issue being logged.</td>
+</tr>
+<tr>
+<td>format</td>
+<td>The string format to write.</td>
+</tr>
+<tr>
+<td>args</td>
+<td>The arguments needed to format the string.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="see-also_3">See Also</h2>
+<ul>
+<li>enum <a href="../../LogSeverity/">LogSeverity</a></li>
+<li>class <a href="../">TextWriterLogger</a></li>
+<li>namespace <a href="../">Microsoft.Coyote.IO</a></li>
 <li>assembly <a href="../../../Microsoft.Coyote/">Microsoft.Coyote</a></li>
 </ul>
 <!-- DO NOT EDIT: generated by xmldocmd for Microsoft.Coyote.dll -->
@@ -185,20 +234,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../SharedDictionary-2/" class="btn btn-xs btn-default pull-right">
+      <a href="../TextWriterLogger/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../SharedDictionary-2/" class="btn btn-xs btn-link">
-        Overview
+      <a href="../TextWriterLogger/" class="btn btn-xs btn-link">
+        TextWriterLogger
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../" class="btn btn-xs btn-default pull-left">
+      <a href="../Write/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../" class="btn btn-xs btn-link">
-        Overview
+        Previous</a><a href="../Write/" class="btn btn-xs btn-link">
+        Write
       </a>
     </div>
     

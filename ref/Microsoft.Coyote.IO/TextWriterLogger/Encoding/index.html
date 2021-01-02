@@ -8,51 +8,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://lovettchris.github.io/bobcat/ref/Microsoft.Coyote.Actors/IActorRuntime/">
-    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <link rel="canonical" href="https://lovettchris.github.io/bobcat/ref/Microsoft.Coyote.IO/TextWriterLogger/Encoding/">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Overview - Coyote</title>
-    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../../../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../../css/highlight.css">
-    <link href="../../../css/main.css" rel="stylesheet">
-    <link href="../../../css/player-controls.css" rel="stylesheet">
-    <link href="../../../css/syntax.css" rel="stylesheet">
+    <title>Encoding - Coyote</title>
+    <link href="../../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+    <link href="../../../../css/main.css" rel="stylesheet">
+    <link href="../../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
-    <script src="../../../js/jquery-3.2.1.min.js"></script>
-    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../../../js/highlight.pack.js"></script>
+    <script src="../../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
     
     <base target="_top">
     <script>
-      var base_url = '../../..';
+      var base_url = '../../../..';
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "IActorRuntime interface", url: "#_top", children: [
-              {title: "Members", url: "#members" },
-              {title: "Remarks", url: "#remarks" },
+          {title: "TextWriterLogger.Encoding property", url: "#_top", children: [
               {title: "See Also", url: "#see-also" },
           ]},
         ];
 
     </script>
-    <script src="../../../js/base.js"></script>
+    <script src="../../../../js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../../assets/js/analytics.js"></script>
-      <script src="../../../assets/js/plugins.js"></script>
-      <script src="../../../assets/js/animate_trace.js"></script>
-      <script src="../../../assets/js/animation.js"></script>
-      <script src="../../../assets/js/progress_bar.js"></script>
-      <script src="../../../assets/js/trace_model.js"></script>
-      <script src="../../../assets/js/main.js"></script> 
+      <script src="../../../../assets/js/analytics.js"></script>
+      <script src="../../../../assets/js/plugins.js"></script>
+      <script src="../../../../assets/js/animate_trace.js"></script>
+      <script src="../../../../assets/js/animation.js"></script>
+      <script src="../../../../assets/js/progress_bar.js"></script>
+      <script src="../../../../assets/js/trace_model.js"></script>
+      <script src="../../../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -76,20 +74,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="CreateActorId/" class="btn btn-xs btn-default pull-right">
+      <a href="../../../Microsoft.Coyote.RandomNamespace/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="CreateActorId/" class="btn btn-xs btn-link">
-        CreateActorId
+      <a href="../../../Microsoft.Coyote.RandomNamespace/" class="btn btn-xs btn-link">
+        Namespace Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../UnhandledEventException/CurrentStateName/" class="btn btn-xs btn-default pull-left">
+      <a href="../TextWriter/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../UnhandledEventException/CurrentStateName/" class="btn btn-xs btn-link">
-        CurrentStateName
+        Previous</a><a href="../TextWriter/" class="btn btn-xs btn-link">
+        TextWriter
       </a>
     </div>
     
@@ -97,60 +95,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h1 id="iactorruntime-interface">IActorRuntime interface</h1>
-<p>Interface that exposes runtime methods for creating and executing actors.</p>
-<pre><code class="language-csharp">public interface IActorRuntime : ICoyoteRuntime
+      <h1 id="textwriterloggerencoding-property">TextWriterLogger.Encoding property</h1>
+<pre><code class="language-csharp">public override Encoding Encoding { get; }
 </code></pre>
-<h2 id="members">Members</h2>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>event <a href="OnEventDropped/">OnEventDropped</a></td>
-<td>Callback that is fired when an event is dropped.</td>
-</tr>
-<tr>
-<td><a href="CreateActor/">CreateActor</a>(…)</td>
-<td>Creates a new actor of the specified Type and with the specified optional <a href="../../Microsoft.Coyote/Event/"><code>Event</code></a>. This event is given to the Event) method on the new actor. (3 methods)</td>
-</tr>
-<tr>
-<td><a href="CreateActorId/">CreateActorId</a>(…)</td>
-<td>Creates a fresh actor id that has not yet been bound to any actor.</td>
-</tr>
-<tr>
-<td><a href="CreateActorIdFromName/">CreateActorIdFromName</a>(…)</td>
-<td>Creates a actor id that is uniquely tied to the specified unique name. The returned actor id can either be a fresh id (not yet bound to any actor), or it can be bound to a previously created actor. In the second case, this actor id can be directly used to communicate with the corresponding actor.</td>
-</tr>
-<tr>
-<td><a href="GetCurrentEventGroup/">GetCurrentEventGroup</a>(…)</td>
-<td>Returns the current <a href="../EventGroup/"><code>EventGroup</code></a> of the actor with the specified id. Returns null if the id is not set, or if the <a href="../ActorId/"><code>ActorId</code></a> is not associated with this runtime. During testing, the runtime asserts that the specified actor is currently executing.</td>
-</tr>
-<tr>
-<td><a href="RegisterLog/">RegisterLog</a>(…)</td>
-<td>Use this method to register an <a href="../IActorRuntimeLog/"><code>IActorRuntimeLog</code></a>.</td>
-</tr>
-<tr>
-<td><a href="RemoveLog/">RemoveLog</a>(…)</td>
-<td>Use this method to unregister a previously registered <a href="../IActorRuntimeLog/"><code>IActorRuntimeLog</code></a>.</td>
-</tr>
-<tr>
-<td><a href="SendEvent/">SendEvent</a>(…)</td>
-<td>Sends an asynchronous <a href="../../Microsoft.Coyote/Event/"><code>Event</code></a> to an actor.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="remarks">Remarks</h2>
-<p>See <a href="/coyote/programming-models/actors/overview">Programming model: asynchronous actors</a> for more information.</p>
 <h2 id="see-also">See Also</h2>
 <ul>
-<li>interface <a href="../../Microsoft.Coyote.Runtime/ICoyoteRuntime/">ICoyoteRuntime</a></li>
-<li>namespace <a href="../../Microsoft.Coyote.ActorsNamespace/">Microsoft.Coyote.Actors</a></li>
-<li>assembly <a href="../../Microsoft.Coyote/">Microsoft.Coyote</a></li>
+<li>class <a href="../">TextWriterLogger</a></li>
+<li>namespace <a href="../">Microsoft.Coyote.IO</a></li>
+<li>assembly <a href="../../../Microsoft.Coyote/">Microsoft.Coyote</a></li>
 </ul>
 <!-- DO NOT EDIT: generated by xmldocmd for Microsoft.Coyote.dll -->
 
@@ -165,20 +117,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="CreateActorId/" class="btn btn-xs btn-default pull-right">
+      <a href="../../../Microsoft.Coyote.RandomNamespace/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="CreateActorId/" class="btn btn-xs btn-link">
-        CreateActorId
+      <a href="../../../Microsoft.Coyote.RandomNamespace/" class="btn btn-xs btn-link">
+        Namespace Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../UnhandledEventException/CurrentStateName/" class="btn btn-xs btn-default pull-left">
+      <a href="../TextWriter/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../UnhandledEventException/CurrentStateName/" class="btn btn-xs btn-link">
-        CurrentStateName
+        Previous</a><a href="../TextWriter/" class="btn btn-xs btn-link">
+        TextWriter
       </a>
     </div>
     

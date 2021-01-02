@@ -143,7 +143,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <hr />
 <h1 id="actorcreateactor-method-2-of-3">Actor.CreateActor method (2 of 3)</h1>
 <p>Creates a new actor of the specified type and name, and with the specified optional <a href="../../../Microsoft.Coyote/Event/"><code>Event</code></a>. This <a href="../../../Microsoft.Coyote/Event/"><code>Event</code></a> can only be used to access its payload, and cannot be handled.</p>
-<pre><code class="language-csharp">protected ActorId CreateActor(Type type, string name, Event initialEvent = null,
+<pre><code class="language-csharp">protected ActorId CreateActor(Type type, string name, Event initialEvent = null, 
     EventGroup eventGroup = null)
 </code></pre>
 <table>
@@ -186,7 +186,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <hr />
 <h1 id="actorcreateactor-method-3-of-3">Actor.CreateActor method (3 of 3)</h1>
 <p>Creates a new actor of the specified Type and name, using the specified unbound actor id, and passes the specified optional <a href="../../../Microsoft.Coyote/Event/"><code>Event</code></a>. This event can only be used to access its payload, and cannot be handled.</p>
-<pre><code class="language-csharp">protected void CreateActor(ActorId id, Type type, string name, Event initialEvent = null,
+<pre><code class="language-csharp">protected void CreateActor(ActorId id, Type type, string name, Event initialEvent = null, 
     EventGroup eventGroup = null)
 </code></pre>
 <table>

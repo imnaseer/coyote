@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://lovettchris.github.io/bobcat/ref/Microsoft.Coyote.Actors/IActorRuntimeLog/">
+    <link rel="canonical" href="https://lovettchris.github.io/bobcat/ref/Microsoft.Coyote.IO/TextWriterLogger/">
     <link rel="shortcut icon" href="../../../img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>Overview - Coyote</title>
@@ -35,9 +35,8 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "IActorRuntimeLog interface", url: "#_top", children: [
-              {title: "Members", url: "#members" },
-              {title: "Remarks", url: "#remarks" },
+          {title: "TextWriterLogger class", url: "#_top", children: [
+              {title: "Public Members", url: "#public-members" },
               {title: "See Also", url: "#see-also" },
           ]},
         ];
@@ -76,20 +75,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="OnCreateActor/" class="btn btn-xs btn-default pull-right">
+      <a href="Write/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="OnCreateActor/" class="btn btn-xs btn-link">
-        OnCreateActor
+      <a href="Write/" class="btn btn-xs btn-link">
+        Write
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../ActorRuntimeLogTextFormatter/Logger/" class="btn btn-xs btn-default pull-left">
+      <a href="../LogSeverity/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../ActorRuntimeLogTextFormatter/Logger/" class="btn btn-xs btn-link">
-        Logger
+        Previous</a><a href="../LogSeverity/" class="btn btn-xs btn-link">
+        LogSeverity
       </a>
     </div>
     
@@ -97,11 +96,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h1 id="iactorruntimelog-interface">IActorRuntimeLog interface</h1>
-<p>Interface that allows an external module to track what is happening in the <a href="../IActorRuntime/"><code>IActorRuntime</code></a>.</p>
-<pre><code class="language-csharp">public interface IActorRuntimeLog
+      <h1 id="textwriterlogger-class">TextWriterLogger class</h1>
+<p>Bridges custom user provided TextWriter logger so it can be passed into Coyote via the <a href="../ILogger/"><code>ILogger</code></a> interface.</p>
+<pre><code class="language-csharp">public class TextWriterLogger : TextWriter, ILogger
 </code></pre>
-<h2 id="members">Members</h2>
+<h2 id="public-members">Public Members</h2>
 <table>
 <thead>
 <tr>
@@ -111,136 +110,39 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </thead>
 <tbody>
 <tr>
-<td><a href="OnAssertionFailure/">OnAssertionFailure</a>(…)</td>
-<td>Invoked when the specified assertion failure has occurred.</td>
+<td><a href="TextWriterLogger/">TextWriterLogger</a>(…)</td>
+<td>Initializes a new instance of the <a href="./"><code>TextWriterLogger</code></a> class.</td>
 </tr>
 <tr>
-<td><a href="OnCompleted/">OnCompleted</a>()</td>
-<td>Invoked when a log is complete (and is about to be closed).</td>
+<td>override <a href="Encoding/">Encoding</a> { get; }</td>
+<td></td>
 </tr>
 <tr>
-<td><a href="OnCreateActor/">OnCreateActor</a>(…)</td>
-<td>Invoked when the specified actor has been created.</td>
+<td><a href="TextWriter/">TextWriter</a> { get; }</td>
+<td>This property provides a TextWriter that implements ILogger which is handy if you have existing code that requires a TextWriter.</td>
 </tr>
 <tr>
-<td><a href="OnCreateMonitor/">OnCreateMonitor</a>(…)</td>
-<td>Invoked when the specified monitor has been created.</td>
+<td>override <a href="Write/">Write</a>(…)</td>
+<td>Writes an informational string to the log. (2 methods)</td>
 </tr>
 <tr>
-<td><a href="OnCreateStateMachine/">OnCreateStateMachine</a>(…)</td>
-<td>Invoked when the specified state machine has been created.</td>
+<td><a href="Write/">Write</a>(…)</td>
+<td>Writes a string to the log. (2 methods)</td>
 </tr>
 <tr>
-<td><a href="OnCreateTimer/">OnCreateTimer</a>(…)</td>
-<td>Invoked when the specified actor timer has been created.</td>
+<td>override <a href="WriteLine/">WriteLine</a>(…)</td>
+<td>Writes an informational string to the log. (2 methods)</td>
 </tr>
 <tr>
-<td><a href="OnDefaultEventHandler/">OnDefaultEventHandler</a>(…)</td>
-<td>Invoked when the specified actor is idle (there is nothing to dequeue) and the default event handler is about to be executed.</td>
-</tr>
-<tr>
-<td><a href="OnDequeueEvent/">OnDequeueEvent</a>(…)</td>
-<td>Invoked when the specified event is dequeued by an actor.</td>
-</tr>
-<tr>
-<td><a href="OnEnqueueEvent/">OnEnqueueEvent</a>(…)</td>
-<td>Invoked when the specified event is about to be enqueued to an actor.</td>
-</tr>
-<tr>
-<td><a href="OnExceptionHandled/">OnExceptionHandled</a>(…)</td>
-<td>Invoked when the specified OnException method is used to handle a thrown exception.</td>
-</tr>
-<tr>
-<td><a href="OnExceptionThrown/">OnExceptionThrown</a>(…)</td>
-<td>Invoked when the specified actor throws an exception.</td>
-</tr>
-<tr>
-<td><a href="OnExecuteAction/">OnExecuteAction</a>(…)</td>
-<td>Invoked when the specified actor executes an action.</td>
-</tr>
-<tr>
-<td><a href="OnGotoState/">OnGotoState</a>(…)</td>
-<td>Invoked when the specified state machine performs a goto transition to the specified state.</td>
-</tr>
-<tr>
-<td><a href="OnHalt/">OnHalt</a>(…)</td>
-<td>Invoked when the specified actor has been halted.</td>
-</tr>
-<tr>
-<td><a href="OnHandleRaisedEvent/">OnHandleRaisedEvent</a>(…)</td>
-<td>Invoked when the specified actor handled a raised event.</td>
-</tr>
-<tr>
-<td><a href="OnMonitorError/">OnMonitorError</a>(…)</td>
-<td>Invoked when the specified monitor finds an error.</td>
-</tr>
-<tr>
-<td><a href="OnMonitorExecuteAction/">OnMonitorExecuteAction</a>(…)</td>
-<td>Invoked when the specified monitor executes an action.</td>
-</tr>
-<tr>
-<td><a href="OnMonitorProcessEvent/">OnMonitorProcessEvent</a>(…)</td>
-<td>Invoked when the specified monitor is about to process an event.</td>
-</tr>
-<tr>
-<td><a href="OnMonitorRaiseEvent/">OnMonitorRaiseEvent</a>(…)</td>
-<td>Invoked when the specified monitor raised an event.</td>
-</tr>
-<tr>
-<td><a href="OnMonitorStateTransition/">OnMonitorStateTransition</a>(…)</td>
-<td>Invoked when the specified monitor enters or exits a state.</td>
-</tr>
-<tr>
-<td><a href="OnPopState/">OnPopState</a>(…)</td>
-<td>Invoked when the specified state machine has popped its current state.</td>
-</tr>
-<tr>
-<td><a href="OnPopStateUnhandledEvent/">OnPopStateUnhandledEvent</a>(…)</td>
-<td>Invoked when the specified event cannot be handled in the current state, its exit handler is executed and then the state is popped and any previous &ldquo;current state&rdquo; is reentered. This handler is called when that pop has been done.</td>
-</tr>
-<tr>
-<td><a href="OnPushState/">OnPushState</a>(…)</td>
-<td>Invoked when the specified state machine is being pushed to a state.</td>
-</tr>
-<tr>
-<td><a href="OnRaiseEvent/">OnRaiseEvent</a>(…)</td>
-<td>Invoked when the specified state machine raises an event.</td>
-</tr>
-<tr>
-<td><a href="OnRandom/">OnRandom</a>(…)</td>
-<td>Invoked when the specified controlled nondeterministic result has been obtained.</td>
-</tr>
-<tr>
-<td><a href="OnReceiveEvent/">OnReceiveEvent</a>(…)</td>
-<td>Invoked when the specified event is received by an actor.</td>
-</tr>
-<tr>
-<td><a href="OnSendEvent/">OnSendEvent</a>(…)</td>
-<td>Invoked when the specified event is sent to a target actor.</td>
-</tr>
-<tr>
-<td><a href="OnStateTransition/">OnStateTransition</a>(…)</td>
-<td>Invoked when the specified state machine enters or exits a state.</td>
-</tr>
-<tr>
-<td><a href="OnStopTimer/">OnStopTimer</a>(…)</td>
-<td>Invoked when the specified actor timer has been stopped.</td>
-</tr>
-<tr>
-<td><a href="OnStrategyDescription/">OnStrategyDescription</a>(…)</td>
-<td>Invoked to describe the specified scheduling strategy.</td>
-</tr>
-<tr>
-<td><a href="OnWaitEvent/">OnWaitEvent</a>(…)</td>
-<td>Invoked when the specified actor waits to receive an event of a specified type. (2 methods)</td>
+<td><a href="WriteLine/">WriteLine</a>(…)</td>
+<td>Writes a string followed by a line terminator to the text string or stream. (2 methods)</td>
 </tr>
 </tbody>
 </table>
-<h2 id="remarks">Remarks</h2>
-<p>See <a href="/coyote/core/logging">Logging</a> for more information.</p>
 <h2 id="see-also">See Also</h2>
 <ul>
-<li>namespace <a href="../../Microsoft.Coyote.ActorsNamespace/">Microsoft.Coyote.Actors</a></li>
+<li>interface <a href="../ILogger/">ILogger</a></li>
+<li>namespace <a href="../../Microsoft.Coyote.IONamespace/">Microsoft.Coyote.IO</a></li>
 <li>assembly <a href="../../Microsoft.Coyote/">Microsoft.Coyote</a></li>
 </ul>
 <!-- DO NOT EDIT: generated by xmldocmd for Microsoft.Coyote.dll -->
@@ -256,20 +158,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="OnCreateActor/" class="btn btn-xs btn-default pull-right">
+      <a href="Write/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="OnCreateActor/" class="btn btn-xs btn-link">
-        OnCreateActor
+      <a href="Write/" class="btn btn-xs btn-link">
+        Write
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../ActorRuntimeLogTextFormatter/Logger/" class="btn btn-xs btn-default pull-left">
+      <a href="../LogSeverity/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../ActorRuntimeLogTextFormatter/Logger/" class="btn btn-xs btn-link">
-        Logger
+        Previous</a><a href="../LogSeverity/" class="btn btn-xs btn-link">
+        LogSeverity
       </a>
     </div>
     

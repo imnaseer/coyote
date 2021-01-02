@@ -144,7 +144,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <hr />
 <h1 id="iactorruntimecreateactor-method-2-of-3">IActorRuntime.CreateActor method (2 of 3)</h1>
 <p>Creates a new actor of the specified type, using the specified <a href="../../ActorId/"><code>ActorId</code></a>. This method optionally passes an <a href="../../../Microsoft.Coyote/Event/"><code>Event</code></a>. This event is given to the InitializeAsync method on the new actor.</p>
-<pre><code class="language-csharp">public ActorId CreateActor(ActorId id, Type type, Event initialEvent = null,
+<pre><code class="language-csharp">public ActorId CreateActor(ActorId id, Type type, Event initialEvent = null, 
     EventGroup eventGroup = null)
 </code></pre>
 <table>
@@ -187,7 +187,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <hr />
 <h1 id="iactorruntimecreateactor-method-3-of-3">IActorRuntime.CreateActor method (3 of 3)</h1>
 <p>Creates a new actor of the specified Type and name, and with the specified optional <a href="../../../Microsoft.Coyote/Event/"><code>Event</code></a>. This event is given to the Event) method on the new actor.</p>
-<pre><code class="language-csharp">public ActorId CreateActor(Type type, string name, Event initialEvent = null,
+<pre><code class="language-csharp">public ActorId CreateActor(Type type, string name, Event initialEvent = null, 
     EventGroup eventGroup = null)
 </code></pre>
 <table>
