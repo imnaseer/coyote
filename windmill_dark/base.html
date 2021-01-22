@@ -142,11 +142,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <footer class="wm-page-content">
 {%- block footer %}
   {%- block repo %}
-    {%- if page and page.edit_url %}
-      <p>
-        <a href="{{ page.edit_url }}">{% include 'repo-icon.html' %}Edit on {{ config.repo_name }}</a>
-      </p>
-    {%- elif config.repo_url %}
+    {%- if config.repo_url %}
       <p>
         <a href="{{ config.repo_url }}">{% include 'repo-icon.html' %}{{ config.repo_name }}</a>
       </p>
