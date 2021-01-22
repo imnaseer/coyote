@@ -9,13 +9,13 @@
     <meta name="description" content="None">
     
     <link rel="canonical" href="https://microsoft.github.io/coyote/">
-    <link rel="shortcut icon" href="./img/favicon.ico">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>Coyote</title>
-    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="./css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/highlight.css">
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/player-controls.css" rel="stylesheet">
     <link href="css/syntax.css" rel="stylesheet">
@@ -25,15 +25,15 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
-    <script src="./js/jquery-3.2.1.min.js"></script>
-    <script src="./js/bootstrap-3.3.7.min.js"></script>
-    <script src="./js/highlight.pack.js"></script>
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
     
-      <script src="./js/elasticlunr.min.js"></script>
+      <script src="/coyote/js/elasticlunr.min.js"></script>
     
     <base target="_top">
     <script>
-      var base_url = '.';
+      var base_url = '/coyote/';
       var is_top_frame = (window === window.parent);
         
         var pageToc = [
@@ -43,7 +43,7 @@
         ];
 
     </script>
-    <script src="./js/base.js"></script>
+    <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
       <script src="assets/js/analytics.js"></script>
@@ -65,7 +65,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="container-fluid wm-top-container">
     
     <div class="wm-top-tool pull-right wm-vcenter">
-      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="/coyote/search.html">
         
         <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
           ><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -104,6 +104,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 <nav class="wm-toc-pane">
   
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text" href="https://github.com/microsoft/coyote/">
+        <i class="fa fa-github"></i>
+
+        GitHub
+      </a>
+      </li>
+    </ul>
   <ul class="wm-toctree">
         <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Home</a>
 </li>
@@ -2201,6 +2210,10 @@ also push the limits on high concurrency, maximizing throughput and minimizing o
 </div>
 
 <footer class="wm-page-content">
+      <p>
+        <a href="https://github.com/microsoft/coyote/edit/master/docs/index.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
 
   <section class="footer-join pt-40 pb-80">
   <div class="container-fluid">
@@ -2310,5 +2323,5 @@ also push the limits on high concurrency, maximizing throughput and minimizing o
 </html>
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-01-22 09:09:01.934160+00:00
+Build Date UTC : 2021-01-22 09:59:37.399262+00:00
 -->
