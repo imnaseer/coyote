@@ -120,10 +120,10 @@ article</a>.</p>
 </code></pre>
 <h2 id="run-the-failover-coffee-machine-application">Run the failover coffee machine application</h2>
 <p>Now you can run the <code>BoundedBuffer</code> application in a mode that should trigger the deadlock most of the time:</p>
-<pre><code class="language-plain">./bin/net5.0BoundedBuffer.exe -m
+<pre><code class="language-plain">./bin/net5.0/BoundedBuffer.exe -m
 </code></pre>
 <p>And you can run it with a fix for the deadlock as follows:</p>
-<pre><code class="language-plain">./bin/net5.0BoundedBuffer.exe -f
+<pre><code class="language-plain">./bin/net5.0/BoundedBuffer.exe -f
 </code></pre>
 <h3 id="can-you-find-the-deadlock-bug-in-boundedbuffer-class">Can you find the deadlock bug in BoundedBuffer class?</h3>
 <p>The BoundedBuffer is a producer consumer queue where the <code>Take</code> method blocks if the buffer is empty and the <code>Put</code>
