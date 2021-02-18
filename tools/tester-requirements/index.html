@@ -98,9 +98,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       
 
       <h2 id="tester-requirements">Tester requirements</h2>
-<p>The Coyote tester is based on the idea of <a href="../../core/systematic-testing/">systematic testing</a>. This
-means that it must understand the concurrency and nondeterminism in your test code. For this reason,
-the following restrictions must be kept in mind when writing Coyote tests. Note that these
+<p>The Coyote tester is based on the idea of <a href="../../core/concurrency-unit-testing/">systematic testing</a>.
+This means that it must understand the concurrency and nondeterminism in your test code. For this
+reason, the following restrictions must be kept in mind when writing Coyote tests. Note that these
 restrictions only apply to your test code (in order to run <code>coyote test</code>). There are no such
 restrictions when running in production. If you find that your test must call some code that
 potentially violates these restrictions, then you must mock the call for the purpose of the test.</p>

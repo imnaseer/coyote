@@ -137,7 +137,7 @@ pace of language innovation and so this is where <code>Coyote</code> comes to th
 to test your programs you will find concurrency bugs that are very hard to find any other way.</p>
 <p>Coyote rewrites your <code>async tasks</code> in a way that allows the <a href="../../../tools/testing/">coyote test</a> tool
 to control all the concurrency and locking in your program and this allows it to find bugs using
-intelligent <a href="../../../core/systematic-testing/">systematic testing</a>.</p>
+intelligent <a href="../../../core/concurrency-unit-testing/">systematic testing</a>.</p>
 <p>For example, if you take the <code>BoundedBuffer.dll</code> from the above sample you can do the following:</p>
 <pre><code>coyote rewrite BoundedBuffer.dll
 coyote test BoundedBuffer.dll -m TestBoundedBufferMinimalDeadlock --iterations 100

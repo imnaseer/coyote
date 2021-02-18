@@ -169,7 +169,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <ul class="wm-toctree">
       <li class="wm-toc-li wm-toc-lev2 "><a href="core/non-determinism/" class="wm-article-link wm-toc-text">Program non-determinism</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="core/systematic-testing/" class="wm-article-link wm-toc-text">Systematic testing</a>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="core/concurrency-unit-testing/" class="wm-article-link wm-toc-text">Concurrency unit testing</a>
 </li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="core/specifications/" class="wm-article-link wm-toc-text">Program specifications</a>
 </li>
@@ -2175,40 +2175,35 @@ non-blocking code.</p>
 that works really well in the real world. See our <a href="case-studies/azure-batch-service/">case
 studies</a> for some great customer testimonials.</p>
 <h2 id="supported-programming-models">Supported programming models</h2>
-<p>Coyote supports two main programming models:</p>
+<p>Coyote supports the following two programming models:</p>
 <ul>
 <li>
-<p><a href="programming-models/tasks/overview/">Asynchronous tasks</a>, which follows the popular <a href="https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap">task-based
-  asynchronous
+<p><a href="programming-models/tasks/overview/">Asynchronous tasks</a>, which implements the popular
+  <a href="https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap">task-based asynchronous
   pattern</a>.
-  This programming model offers a <code>Task</code> type  that serves as a drop-in-replacement type for the
-  native .NET <code>System.Threading.Tasks.Task</code>. As with the native <code>Task</code>, a Coyote <code>Task</code> represents
-  an asynchronous operation that the programmer can coordinate using the <code>async</code> and <code>await</code>
-  keywords of <a href="https://docs.microsoft.com/en-gb/dotnet/csharp/">C#</a>. In production, a Coyote <code>Task</code>
-  executes with the same semantics of a native <code>Task</code>. In fact, it is simply a thin wrapper around a
-  native <code>Task</code> object. During testing, however, is where the magic happens. Coyote controls the
+  This programming model is centered around the <code>System.Threading.Tasks.Task</code> .NET type, which
+  represents an asynchronous operation that the programmer can coordinate using the <code>async</code> and
+  <code>await</code> keywords of <a href="https://docs.microsoft.com/en-gb/dotnet/csharp/">C#</a>. To use Coyote, you do
+  not need to change a single line in your production code! During testing, you can run Coyote
+  <a href="programming-models/tasks/rewriting/">binary rewriting</a> as a post-build task to automatically
+  instrument your tests and application, taking control of <code>Task</code> objects and related concurrency
+  types from the .NET Task Parallel Library. This is where the magic happens. Coyote controls the
   execution of each Coyote <code>Task</code> so that it can explore various different interleavings to find
-  bugs. Alternatively, you can use the <a href="programming-models/tasks/rewriting/">binary rewriting</a>
-  feature of Coyote to automatically instrument your application, taking control of
-  <code>System.Threading.Tasks.Task</code> objects and related concurrency types from the Task Parallel
-  Library, without having to use Coyote&rsquo;s drop-in-replacement library.</p>
+  and deterministically reproduce concurrency bugs.</p>
 </li>
 <li>
 <p><a href="programming-models/actors/overview/">Asynchronous actors</a> is an <a href="https://en.wikipedia.org/wiki/Actor_model">actor-based programming
-  model</a> that allows you to express your design and
-  concurrency at a higher-level of abstraction. This programming model starts with the <code>Actor</code> type
-  that represents a long-lived, interactive asynchronous object. An actor can create new actors,
-  send events to other actors, and handle received events. This more advanced programming model is
-  ideal for cases when asynchronous tasks get too unwieldy. This programming model also provides a
-  <code>StateMachine</code> type for easy development of event-driven state-machines. A <code>StateMachine</code> is
-  simply an <code>Actor</code> with explicit <code>States</code> and event-driven state transitions.</p>
+  model</a> that allows you to express your system design
+  and concurrency at a higher-level of abstraction. This programming model starts with the <code>Actor</code>
+  type that represents a long-lived, interactive asynchronous object. An actor can create new
+  actors, send events to other actors, and handle received events. This more advanced programming
+  model is ideal for cases when asynchronous tasks get too unwieldy. This programming model also
+  provides a <code>StateMachine</code> type for easy development of event-driven state-machines. A
+  <code>StateMachine</code> is simply an <code>Actor</code> with explicit <code>States</code> and event-driven state transitions.</p>
 </li>
 </ul>
-<p>Note that you can only systematically test the above two programming models together using Coyote&rsquo;s
-<a href="programming-models/tasks/rewriting/">binary rewriting</a> to take control of
-<code>System.Threading.Tasks.Task</code> objects.</p>
 <h2 id="fearless-coding-for-concurrent-software">Fearless coding for concurrent software</h2>
-<p>As a result Coyote gives your team much more confidence in building mission-critical services that
+<p>Using Coyote gives your team much more confidence in building mission-critical services that
 also push the limits on high concurrency, maximizing throughput and minimizing operational costs.</p>
 <p>With Coyote you can create highly reliable software in a way that is also highly productive.</p>
 <p>These are some direct quotes from Azure Engineers that use Coyote:</p>
@@ -2377,5 +2372,5 @@ GitHub</a>
 </html>
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-18 21:22:01.150566+00:00
+Build Date UTC : 2021-02-18 23:14:02.508489+00:00
 -->

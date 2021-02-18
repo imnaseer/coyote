@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/core/systematic-testing/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/core/concurrency-unit-testing/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Systematic testing - Coyote</title>
+    <title>Concurrency unit testing - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,7 +35,15 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Systematic testing", url: "#_top", children: [
+          {title: "Concurrency unit testing", url: "#_top", children: [
+          ]},
+          {title: "Systematic testing", url: "#systematic-testing", children: [
+          ]},
+          {title: "Binary rewriting for testing unmodified code", url: "#binary-rewriting-for-testing-unmodified-code", children: [
+          ]},
+          {title: "Expressing nondeterminism and mocking", url: "#expressing-nondeterminism-and-mocking", children: [
+          ]},
+          {title: "Testing other programming models", url: "#testing-other-programming-models", children: [
           ]},
         ];
 
@@ -94,26 +102,49 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="systematic-testing">Systematic testing</h2>
-<p>Coyote testing works by taking over the <a href="../non-determinism/">non-determinism</a> in a program.
-Once it has control over the non-determinism, the Coyote tester will repeatedly run a test case,
-each time exercising a different set of non-deterministic choices, offering much better coverage
-than using other techniques. This powerful testing ability, however, does require help: you must
-mark all sources of non-determinism in a way that Coyote understands. Let&rsquo;s see how this is done.</p>
-<p>The first requirement is to use one of Coyote&rsquo;s supported programming models to express the
-concurrency. This can be fairly easy to do, but very important because Coyote tester is going to
-take over the scheduling of the program. In fact, the tester will complain if it detects concurrency
-that is outside its control. Take the simple example that was used to explain concurrency
-<a href="../non-determinism/">non-determinism</a>. Notice the code below has replaced the .NET
-<code>System.Threading.Tasks.Task</code> type with Coyote&rsquo;s <code>Task</code> type, which is part of Coyote&rsquo;s
-<a href="../../programming-models/tasks/overview/">asynchronous Task programming model</a>, and is controlled
-during systematic testing.</p>
-<pre><code class="language-c#">// Use the Coyote controlled task type.
-using Microsoft.Coyote.Tasks;
+      <h2 id="concurrency-unit-testing">Concurrency unit testing</h2>
+<p>Coyote gives you the ability to write <em>concurrency unit tests</em>. These simple but very powerful tests
+look similar to traditional (sequential) tests, but allow (and encourage) the use of concurrency and
+<a href="../non-determinism/">non-determinism</a>, which you would normally avoid due to flakiness. By writing
+such a test, Coyote allows you to exercise what happens, for example, when <a href="../../tutorials/tasks/first-concurrency-unit-test/">two requests execute
+concurrently</a> in your service, as if it was
+deployed in production.</p>
+<p>Now the cool thing is that once a bug is found, Coyote allows you to fully reproduce the exact same
+trace that led to the bug 100% of the time, and as many times as you want. Coyote achieves this by
+automatically replaying all nondeterministic choices in your test that led to this bug. This is a
+game changer!</p>
+<p>Let&rsquo;s see how this kind of testing works in practice.</p>
+<h2 id="systematic-testing">Systematic testing</h2>
+<p>During testing, Coyote takes over the non-determinism in your program. Once Coyote has control over
+the non-determinism, it will repeatedly run the concurrency unit test from start to completion, each
+time exercising a different set of non-deterministic choices, offering much better coverage than
+using traditional techniques such as stress testing (which rely on luck). This type of testing that
+Coyote performs is known as <em>systematic testing</em>.</p>
+<p>This powerful testing ability, however, has one requirement: you must declare <em>all</em> sources of
+non-determinism in your logic in a way that Coyote understands. Luckily, in most common cases you do
+not need to do much thanks to the awesome <a href="../../tools/rewriting/">binary rewriting tool</a> of Coyote.</p>
+<h2 id="binary-rewriting-for-testing-unmodified-code">Binary rewriting for testing unmodified code</h2>
+<p>Through binary rewriting, Coyote loads one or more of your assemblies and rewrites them for
+systematic testing (for production just use the original unmodified assemblies). This can be easily
+done in a post-build task. The rewritten code maintains exact semantics with the production version
+(so you don&rsquo;t need to worry about false bugs), but has stubs and hooks injected that allow Coyote to
+take control of concurrent execution and various sources of nondeterminism in a program.</p>
+<p>Out of the box, Coyote supports most common <code>System.Threading.Tasks</code> types and methods available in
+the .NET Task Parallel Library, such as the <code>Task</code>, <code>Task&lt;TResult&gt;</code> and
+<code>TaskCompletionSource&lt;TResult&gt;</code> types, as well as the <code>async</code>, <code>await</code> and <code>lock</code> C# keywords. We
+are adding support for more APIs over time, but if something you need is missing please reach out on
+<a href="https://github.com/microsoft/coyote/issues">GitHub</a>! Coyote will let you know with an informative
+error if it detects a type it does not support.</p>
+<p>Take the simple example that was used to explain concurrency <a href="../non-determinism/">non-determinism</a>.
+Notice that the code below is using the C# <code>Task</code> type. Coyote understands this <code>Task</code> type and is
+able to control its schedule during systematic testing, as discussed above and
+<a href="../../programming-models/tasks/overview/">here</a>.</p>
+<pre><code class="language-c#">using System.Threading.Tasks;
 
 // Shared variable x.
 int x = 0;
 
+// Concurrency unit test.
 int foo()
 {
    // Concurrent operations on x.
@@ -124,24 +155,23 @@ int foo()
    Task.WaitAll(t1, t2);
 }
 </code></pre>
-<p>When this method <code>foo</code> now executes as part of a test case, the Coyote tester will understand that
-it is spawning two tasks that can run concurrently. The tester will explore different ways of
-executing the tasks to systematically cover all possibilities. Coyote provides <a href="../..">multiple programming
-models</a>. Just remember that whichever programming model you choose,
-you must express all the concurrency in that model itself.</p>
-<p>Coyote also offers APIs for expressing other forms of non-determinism. The <code>CoyoteRuntime.Random</code>
-API, for instance, returns a non-deterministic Boolean value. The exact value is chosen by the
-tester. This simple API can be used to build more complex
-<a href="https://en.wikipedia.org/wiki/Mock_object">mocks</a> of external dependencies in the system. As an
-example, suppose that our code calls into an external service. Either this call returns successfully
-and the external service does the work that we requested, or it may timeout, or return an error code
-if the external service is unable to perform the work at the time. For testing your code, you will
-write a mock for it as follows:</p>
+<p>When this method <code>foo</code> executes as part of a test case, the Coyote tester will understand that it is
+spawning two tasks that can run concurrently. The tester will explore different ways of executing
+the tasks to systematically cover all possibilities.</p>
+<h2 id="expressing-nondeterminism-and-mocking">Expressing nondeterminism and mocking</h2>
+<p>Coyote also offers APIs for expressing other forms of non-determinism that are not supported out of
+the box using binary rewriting. The <code>CoyoteRuntime.Random</code> API, for instance, returns a
+non-deterministic <code>bool</code> value. The exact value is chosen by the tester.</p>
+<p>This simple API can be used to build more complex <a href="https://en.wikipedia.org/wiki/Mock_object">mocks</a>
+of external dependencies in the system. As an example, suppose that our code calls into an external
+service. Either this call returns successfully and the external service does the work that we
+requested, or it may timeout, or return an error code if the external service is unable to perform
+the work at the time. For testing your code, you will write a mock for it as follows:</p>
 <pre><code class="language-c#">Status CallExternalServiceMock(WorkItem work)
 {
    if (CoyoteRuntime.Random())
    {
-     // Perform work.
+     // Perform some work.
      ...
      // Return success.
      return Status.Success;
@@ -165,15 +195,22 @@ write a mock for it as follows:</p>
 </code></pre>
 <p>When using such a mock, the Coyote tester will control the values that <code>Random</code> returns in a way
 that provides good coverage. All these techniques can be put together to write very expressive test
-cases. A Coyote test has the power of encoding many different scenarios concisely and leave their
-exploration to the automated tester.</p>
-<p>Using Coyote has two main components. First, using one of Coyote&rsquo;s programming models to write the
-code. Second, designing mocks for external dependencies, capturing the sources of non-determinism
-that you want tested in your system. Additionally, Coyote also offers ways of writing
+cases. A Coyote concurrency unit test has the power of encoding many different scenarios concisely
+and leave their exploration to the automated tester.</p>
+<p>Using Coyote involves two main activities. First, you write a concurrency unit test. Second, you
+design mocks for external dependencies, capturing the sources of non-determinism that you want
+tested in your system. Additionally, Coyote also offers ways of writing safety and liveness
 <a href="../specifications/">specifications</a> concisely.</p>
-<p>See <a href="../../programming-models/actors/state-machine-demo/">animating state machine demo</a> which
-shows the systematic testing process in action on a test application that implements the <a href="https://raft.github.io/">Raft
-Consensus Algorithm</a>.</p>
+<h2 id="testing-other-programming-models">Testing other programming models</h2>
+<p>Besides the popular <a href="https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap">task-based programming
+model</a>
+of C#, which Coyote is able to support without you having to modify your code, the
+<code>Microsoft.Coyote</code> library also provides APIs for expressing in-memory <a href="../../programming-models/actors/overview/">asynchronous actors and
+state machines</a>. Programs written using these types can
+also be systematically tested with Coyote similar to unmodified task-based programs.</p>
+<p>See this <a href="../../programming-models/actors/state-machine-demo/">demo</a> which shows the systematic
+testing process in action on a test application that implements the <a href="https://raft.github.io/">Raft consensus
+protocol</a> using Coyote state machines.</p>
 
     <br>
       
