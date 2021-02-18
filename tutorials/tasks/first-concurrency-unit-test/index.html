@@ -79,12 +79,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../bounded-buffer/" class="btn btn-xs btn-default pull-right">
+      <a href="../test-concurrent-operations/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../bounded-buffer/" class="btn btn-xs btn-link">
-        Deadlock in bounded-buffer
+      <a href="../test-concurrent-operations/" class="btn btn-xs btn-link">
+        Test concurrent CRUD operations
       </a>
     </div>
     
@@ -135,7 +135,7 @@ us in writing correct concurrent code.</p>
   public async Task&lt;bool&gt; DeleteAccount(string accountName) { ... }
 }
 </code></pre>
-<p>Here are the methods available available in the <code>IDbCollection</code> interface:</p>
+<p>Here are the methods available in the <code>IDbCollection</code> interface:</p>
 <pre><code class="language-c#">public interface IDbCollection
 {
   Task CreateRow(string key, string value);
@@ -153,7 +153,7 @@ row exists, otherwise it returns <code>false</code>. The <code>GetRow</code> met
 and throws <code>RowNotFoundException</code> exception if it doesn&rsquo;t exist. Finally, the <code>DeleteRow</code> method
 deletes the row if it exists and throws <code>RowNotFoundException</code> exception if it doesn&rsquo;t exist.</p>
 <p>Before reading on, we encourage you to open your editor and attempt to write out the code.</p>
-<p>Here&rsquo;s one attempt to implement the <code>AccountManager</code> methods:</p>
+<p>Here&rsquo;s one attempt to implement the <code>AccountManager</code> class:</p>
 <pre><code class="language-c#">public class AccountManager
 {
   private readonly IDbCollection AccountCollection;
@@ -200,10 +200,10 @@ deletes the row if it exists and throws <code>RowNotFoundException</code> except
 }
 </code></pre>
 <p>Does the above implementation look reasonable to you? Can you find any bugs? And how can you
-convince yourself of the absence of any bugs in the above program? Let&rsquo;s write a unit test to test
-this code. In production, <code>IDbCollection</code> is implemented using a distributed NoSQL database. To keep
-things simple during testing, we can just replace it with a mock. The following code shows such a
-mock implementation:</p>
+convince yourself of the absence of any bugs in the above program?</p>
+<p>Let&rsquo;s write a unit test to test the <code>AccountManager</code> code. In production, <code>IDbCollection</code> is
+implemented using a distributed NoSQL database. To keep things simple during testing, we can just
+replace it with a mock. The following code shows such a mock implementation:</p>
 <pre><code class="language-c#">public class InMemoryDbCollection : IDbCollection
 {
   private readonly ConcurrentDictionary&lt;string, string&gt; Collection;
@@ -287,9 +287,10 @@ public static async Task TestAccountCreation()
 <p>The above unit test clearly tests that the same account cannot be created twice. Try run it (check
 below for instructions on how to build and run this tutorial from our samples repository) and you
 will see that it always passes. But is the behavior still true if two requests happen
-<em>concurrently</em>? How can we test this? What if we spawn two tasks to create the account,
-concurrently? And then assert that only one creation succeeds, while the other always fails? Hmm -
-that can possibly work. Let&rsquo;s write this test.</p>
+<em>concurrently</em>? How can we test this?</p>
+<p>Hmm - what if we spawn two tasks to create the same account, concurrently? And then assert that only
+one creation succeeds, while the other always fails? That can possibly work, right? Let&rsquo;s write this
+test.</p>
 <pre><code class="language-c#">[Test]
 public static async Task TestConcurrentAccountCreation()
 {
@@ -420,10 +421,14 @@ in a much more complex codebase. Such bugs have very low probability of being ca
 time, if you don&rsquo;t use a tool like Coyote to systematically explore the interleavings. In the
 absence of such tools, these bugs can go undetected and occur sporadically in production, making
 them difficult to diagnose and debug. And who wants to stay awake at night debugging a live site!</p>
+<p>In the <a href="../test-concurrent-operations/">next tutorial</a>, we will write few more concurrency unit tests
+for the <code>AccountManager</code> to increase our familiarity with Coyote.</p>
 <h2 id="get-the-sample-source-code">Get the sample source code</h2>
-<p>To get the source code for the above tutorial, clone the
-<a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</p>
-<p>Build the sample by running the following command:</p>
+<p>To get the complete source code for the <code>AccountManager</code> tutorial, clone the
+<a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.
+Note that the repo also contains the code from the <a href="../test-concurrent-operations/">next tutorial</a> which
+builds upon this <code>AccountManager</code> sample.</p>
+<p>You can build the sample by running the following command:</p>
 <pre><code class="language-plain">powershell -f build.ps1
 </code></pre>
 <p>You can now run the tests (without Coyote) like this:</p>
@@ -436,11 +441,12 @@ Options:
   -s    Run sequential test without Coyote
   -c    Run concurrent test without Coyote
 </code></pre>
-<p>To test the sample with Coyote you can use the following commands (as explained in the tutorial
-above):</p>
+<p>To rewrite and test the sample with Coyote you can use the following commands (as discussed above):</p>
 <pre><code class="language-plain">coyote rewrite .\AccountManager.dll
 coyote test .\AccountManager.dll -m TestConcurrentAccountCreation -i 100
-coyote replay .\AccountManager.dll -schedule AccountManager_0_0.schedule -m TestConcurrentAccountCreation
+</code></pre>
+<p>If you find a bug you can replay with the following command:</p>
+<pre><code class="language-plain">coyote replay .\AccountManager.dll -schedule AccountManager_0_0.schedule -m TestConcurrentAccountCreation
 </code></pre>
 <p>Enjoy!</p>
 
@@ -455,12 +461,12 @@ coyote replay .\AccountManager.dll -schedule AccountManager_0_0.schedule -m Test
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../bounded-buffer/" class="btn btn-xs btn-default pull-right">
+      <a href="../test-concurrent-operations/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../bounded-buffer/" class="btn btn-xs btn-link">
-        Deadlock in bounded-buffer
+      <a href="../test-concurrent-operations/" class="btn btn-xs btn-link">
+        Test concurrent CRUD operations
       </a>
     </div>
     
