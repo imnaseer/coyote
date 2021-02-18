@@ -165,7 +165,7 @@ details of how <code>await</code> works are further explained in the C#
 <p>During testing, using <code>await</code> allows the Coyote runtime to automatically inject scheduling points
 and thoroughly explore asynchronous interleavings to find concurrency bugs.</p>
 <p>You can choose to use the <code>Microsoft.Coyote.Tasks.Task</code> directly in your programs or you can use
-the automatic <a href="../rewriting/">rewriting</a> feature which will rewrite your compiled binaries that use
+the automatic <a href="rewriting.md">rewriting</a> feature which will rewrite your compiled binaries that use
 <code>System.Threading.Tasks.Task</code> and inject the required Coyote controls so you can run <code>coyote test</code>
 on the rewritten binaries.</p>
 <h2 id="what-happens-under-the-covers">What happens under the covers</h2>

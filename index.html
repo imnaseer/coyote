@@ -171,6 +171,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="concepts/concurrency-unit-testing/" class="wm-article-link wm-toc-text">Concurrency unit testing</a>
 </li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="concepts/binary-rewriting/" class="wm-article-link wm-toc-text">Binary rewriting for systematic testing</a>
+</li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="concepts/specifications/" class="wm-article-link wm-toc-text">Program specifications</a>
 </li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="concepts/liveness-checking/" class="wm-article-link wm-toc-text">Effective liveness checking</a>
@@ -191,8 +193,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <li class="wm-toc-li wm-toc-lev3 "><a href="advanced-topics/tasks/overview/" class="wm-article-link wm-toc-text">Overview</a>
 </li>
       <li class="wm-toc-li wm-toc-lev3 "><a href="advanced-topics/tasks/interleavings/" class="wm-article-link wm-toc-text">Improving coverage of fine-grained interleavings</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="advanced-topics/tasks/rewriting/" class="wm-article-link wm-toc-text">Rewriting binaries</a>
 </li>
   </ul>
 </li>
@@ -2170,7 +2170,7 @@ studies</a> for some great customer testimonials.</p>
   represents an asynchronous operation that the programmer can coordinate using the <code>async</code> and
   <code>await</code> keywords of <a href="https://docs.microsoft.com/en-gb/dotnet/csharp/">C#</a>. To use Coyote, you do
   not need to change a single line in your production code! During testing, you can run Coyote
-  <a href="advanced-topics/tasks/rewriting/">binary rewriting</a> as a post-build task to automatically
+  <a href="concepts/binary-rewriting/">binary rewriting</a> as a post-build task to automatically
   instrument your tests and application, taking control of <code>Task</code> objects and related concurrency
   types from the .NET Task Parallel Library. This is where the magic happens. Coyote controls the
   execution of each Coyote <code>Task</code> so that it can explore various different interleavings to find
@@ -2358,5 +2358,5 @@ GitHub</a>
 </html>
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-18 23:37:56.951349+00:00
+Build Date UTC : 2021-02-18 23:43:12.994743+00:00
 -->

@@ -56,6 +56,10 @@
      <lastmod>2021-02-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/binary-rewriting/</loc>
+     <lastmod>2021-02-18</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
      <loc>https://microsoft.github.io/coyote/concepts/specifications/</loc>
      <lastmod>2021-02-18</lastmod>
      <changefreq>daily</changefreq>
@@ -73,10 +77,6 @@
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://microsoft.github.io/coyote/advanced-topics/tasks/interleavings/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/tasks/rewriting/</loc>
      <lastmod>2021-02-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
