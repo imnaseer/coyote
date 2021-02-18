@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/tasks/interleavings/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/interleavings/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Improving coverage of fine-grained interleavings - Coyote</title>
+    <title>Improving coverage of interleavings - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../../css/main.css" rel="stylesheet">
-    <link href="../../../css/player-controls.css" rel="stylesheet">
-    <link href="../../../css/syntax.css" rel="stylesheet">
+    <link href="../../css/main.css" rel="stylesheet">
+    <link href="../../css/player-controls.css" rel="stylesheet">
+    <link href="../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,7 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Helping Coyote cover fine-grained interleavings", url: "#_top", children: [
+          {title: "Improving coverage of fine-grained interleavings", url: "#_top", children: [
           ]},
           {title: "Instrumenting scheduling points to exercise racy behaviors", url: "#instrumenting-scheduling-points-to-exercise-racy-behaviors", children: [
           ]},
@@ -47,13 +47,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../../assets/js/analytics.js"></script>
-      <script src="../../../assets/js/plugins.js"></script>
-      <script src="../../../assets/js/animate_trace.js"></script>
-      <script src="../../../assets/js/animation.js"></script>
-      <script src="../../../assets/js/progress_bar.js"></script>
-      <script src="../../../assets/js/trace_model.js"></script>
-      <script src="../../../assets/js/main.js"></script> 
+      <script src="../../assets/js/analytics.js"></script>
+      <script src="../../assets/js/plugins.js"></script>
+      <script src="../../assets/js/animate_trace.js"></script>
+      <script src="../../assets/js/animation.js"></script>
+      <script src="../../assets/js/progress_bar.js"></script>
+      <script src="../../assets/js/trace_model.js"></script>
+      <script src="../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -77,20 +77,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../actors/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../actors/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../actors/overview/" class="btn btn-xs btn-link">
+      <a href="../actors/overview/" class="btn btn-xs btn-link">
         Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../overview/" class="btn btn-xs btn-default pull-left">
+      <a href="../../concepts/liveness-checking/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../overview/" class="btn btn-xs btn-link">
-        Overview
+        Previous</a><a href="../../concepts/liveness-checking/" class="btn btn-xs btn-link">
+        Effective liveness checking
       </a>
     </div>
     
@@ -98,20 +98,21 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="helping-coyote-cover-fine-grained-interleavings">Helping Coyote cover fine-grained interleavings</h2>
-<p>This page covers an advanaced topic of programmtically controlling the interleavings that Coyote
+      <h2 id="improving-coverage-of-fine-grained-interleavings">Improving coverage of fine-grained interleavings</h2>
+<p>This page covers an advanced topic of programmatically controlling the interleavings that Coyote
 covers during testing. Typically, this should not be needed: the &ldquo;Controlled&rdquo; APIs provided by
 Coyote cover a lot of scenarios already. However, if you find yourself working with code that may
 potentially have data races, or you are modeling other forms of synchronization not covered by
 Coyote already, then you might have to help out the tester a bit more.</p>
-<p>During <a href="../../../concepts/concurrency-unit-testing/">systematic testing</a>, Coyote serializes the concurrent
-execution of a program. Serialization means that only one task is running at any given time. This
-helps remove the randomness that happens when the operating system schedules parallel tasks and
-performs thread switching at unpredictable moments depending on your machine load. It also makes
-executions reproducible because Coyote controls the scheduling. This is super useful for debugging.
-Coyote, however, does not cover all possible interleavings by default. The interleavings are
-complete (i.e., all possible behaviors can be covered by testing, given enough time) for race-free
-programs. For programs with racy accesses, you have to help Coyote find more interleavings.</p>
+<p>During <a href="../../concepts/concurrency-unit-testing/">systematic testing</a>, Coyote serializes the
+concurrent execution of a program. Serialization means that only one task is running at any given
+time. This helps remove the randomness that happens when the operating system schedules parallel
+tasks and performs thread switching at unpredictable moments depending on your machine load. It also
+makes executions reproducible because Coyote controls the scheduling. This is super useful for
+debugging. Coyote, however, does not cover all possible interleavings by default. The interleavings
+are complete (i.e., all possible behaviors can be covered by testing, given enough time) for
+race-free programs. For programs with racy accesses, you have to help Coyote find more
+interleavings.</p>
 <p>Consider the following code:</p>
 <pre><code class="language-c#">int x = 0;
 
@@ -149,7 +150,7 @@ value.</p>
 <h2 id="instrumenting-scheduling-points-to-exercise-racy-behaviors">Instrumenting scheduling points to exercise racy behaviors</h2>
 <p>It is generally not safe for multiple tasks to perform non-atomic operations on the same variable at
 the same time as this can create data race conditions. Ideally, you should avoid races using
-synchronization. You can use a <a href="../semaphore/">Semaphore</a>, for instance, to protect the increment of
+synchronization. You can use a <a href="semaphore.md">Semaphore</a>, for instance, to protect the increment of
 <code>x</code>. This rules out the <code>A: 1, B: 1</code> behavior and also makes coyote testing complete (given enough
 time).</p>
 <p>There may be situations where you cannot avoid the races, for instance when writing mocks for
@@ -262,20 +263,20 @@ semantics, so by itself cannot introduce concurrency where there is none.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../actors/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../actors/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../actors/overview/" class="btn btn-xs btn-link">
+      <a href="../actors/overview/" class="btn btn-xs btn-link">
         Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../overview/" class="btn btn-xs btn-default pull-left">
+      <a href="../../concepts/liveness-checking/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../overview/" class="btn btn-xs btn-link">
-        Overview
+        Previous</a><a href="../../concepts/liveness-checking/" class="btn btn-xs btn-link">
+        Effective liveness checking
       </a>
     </div>
     
