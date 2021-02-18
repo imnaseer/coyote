@@ -98,7 +98,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       
 
       <h2 id="tester-requirements">Tester requirements</h2>
-<p>The Coyote tester is based on the idea of <a href="../../core/concurrency-unit-testing/">systematic testing</a>.
+<p>The Coyote tester is based on the idea of <a href="../../concepts/concurrency-unit-testing/">systematic testing</a>.
 This means that it must understand the concurrency and nondeterminism in your test code. For this
 reason, the following restrictions must be kept in mind when writing Coyote tests. Note that these
 restrictions only apply to your test code (in order to run <code>coyote test</code>). There are no such
@@ -129,7 +129,7 @@ operations. If you must use a lock and you are using the Coyote Tasks programmin
 Coyote <code>AsyncLock</code>. If you are calling 3rd party code that mixes locks and concurrency you may need
 to mock that external code.</p>
 <h3 id="declare-all-nondeterminism">Declare all nondeterminism</h3>
-<p>The tester needs to understand all <a href="../../core/non-determinism/">nondeterminism</a> in a test. So the
+<p>The tester needs to understand all <a href="../../concepts/non-determinism/">nondeterminism</a> in a test. So the
 test should not invoke code that cannot be replayed by the tester. Consider the following code that
 performs a branch based on the current time of the day.</p>
 <pre><code class="language-c#">if (DateTime.Now - prevTime &gt; TimeSpan.FromSeconds(5)) { ... } else { ... }

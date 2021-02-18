@@ -104,7 +104,7 @@ covers during testing. Typically, this should not be needed: the &ldquo;Controll
 Coyote cover a lot of scenarios already. However, if you find yourself working with code that may
 potentially have data races, or you are modeling other forms of synchronization not covered by
 Coyote already, then you might have to help out the tester a bit more.</p>
-<p>During <a href="../../../core/concurrency-unit-testing/">systematic testing</a>, Coyote serializes the concurrent
+<p>During <a href="../../../concepts/concurrency-unit-testing/">systematic testing</a>, Coyote serializes the concurrent
 execution of a program. Serialization means that only one task is running at any given time. This
 helps remove the randomness that happens when the operating system schedules parallel tasks and
 performs thread switching at unpredictable moments depending on your machine load. It also makes

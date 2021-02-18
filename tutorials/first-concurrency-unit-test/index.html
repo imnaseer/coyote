@@ -360,7 +360,7 @@ operating system scheduler). Coyote gives you <em>exactly</em> this.</p>
 <p>To use Coyote on your task-based program is very easy in most cases. All you need to do is to invoke
 the <code>coyote rewrite</code> tool which <a href="../../tools/rewriting.md">rewrites</a> your assembly (for testing only)
 so that Coyote can inject logic that allows it to take control of the schedule of C# tasks. Then,
-you can invoke the <code>coyote test</code> tool which <a href="../../core/concurrency-unit-testing.md">systematically explores</a>
+you can invoke the <code>coyote test</code> tool which <a href="../../concepts/concurrency-unit-testing.md">systematically explores</a>
 task interleavings to uncover bug. If a bug is uncovered, Coyote allows you to deterministically
 reproduce it every single time.</p>
 <p>Let&rsquo;s now run our test under the control of Coyote, <em>without changing a single line of code</em>. First use

@@ -200,7 +200,7 @@ providing cognitive services (such as object identification) and motion-path pla
   indeed non-null.</p>
 <p>There is a <code>LivenessMonitor</code> that monitors the execution of the system to make sure it never gets
 stuck, i.e., the <code>Robot</code> always gets a valid response to any of its requests from the <code>Navigator</code>
-and serves the selected client. See <a href="../../../core/liveness-checking/">Liveness Checking</a>.</p>
+and serves the selected client. See <a href="../../../concepts/liveness-checking/">Liveness Checking</a>.</p>
 <p>A number of excellent bugs were found by <a href="../../../tools/testing/">coyote test</a> during the development of
 this sample, and this illustrates the fact that Coyote can be applied to find bugs quickly, even in
 the design stage, before coding and pushing to production.</p>
@@ -488,7 +488,7 @@ determine if a key was replaced. For example, the <code>Navigator</code> does ac
 safety <code>Assert</code> checking to make sure a pending drink order request isn&rsquo;t getting lost in the
 failover process.</p>
 <h3 id="the-liveness-monitor">The Liveness monitor</h3>
-<p>The <code>LivenessMonitor</code> (See <a href="../../../core/liveness-checking/">Liveness Checking</a>) monitors the <code>Robot</code> and
+<p>The <code>LivenessMonitor</code> (See <a href="../../../concepts/liveness-checking/">Liveness Checking</a>) monitors the <code>Robot</code> and
  the <code>Navigator</code> to make sure the <code>Robot</code> always finishes the job, by serving a <code>Drink</code>.</p>
 <p>This &ldquo;liveness&rdquo; property can be enforced using a very simple <code>LivenessMonitor</code> as shown below:</p>
 <pre><code class="language-c#">internal class LivenessMonitor : Monitor

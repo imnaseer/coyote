@@ -139,7 +139,7 @@ do testing while developing, not after you are ready to ship :)
 <h4 id="how-much-additional-effort-is-needed-to-test-an-existing-system-with-coyote">How much additional effort is needed to test an existing system with Coyote?</h4>
 <p>Depends on what programming model and concurrency APIs you used for developing your existing system
 because, for Coyote testing to work, it needs to understand the
-<a href="../../core/non-determinism/">non-determinism</a> in your system. In some cases, this may be as simple as
+<a href="../../concepts/non-determinism/">non-determinism</a> in your system. In some cases, this may be as simple as
 replacing the <code>System.Threading.Tasks.Task</code> type with
 <a href="../../programming-models/tasks/overview/"><code>Microsoft.Coyote.Tasks.Task</code></a>. In other cases, you would
 also have to model additional non-determinism, such as timers and external services. In general, we

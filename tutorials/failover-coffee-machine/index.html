@@ -93,7 +93,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../image-gallery-aspnet/" class="btn btn-xs btn-link">
-        ASP.NET Core image gallery
+        Testing an ASP.NET service
       </a>
     </div>
     
@@ -149,7 +149,7 @@ across all instances of the <code>CoffeeMachine</code>.</p>
 <p>There is also a correctness assert in the <code>CoffeeMachine</code> to make sure the correct number of
 espresso shots are made and there is a <code>LivenessMonitor</code> that monitors the <code>CoffeeMachine</code> to make
 sure it never gets stuck, i.e., it always finishes the job it was given or it goes to an error state
-if the machine needs to be fixed. See <a href="../../core/liveness-checking.md">Liveness Checking</a>.</p>
+if the machine needs to be fixed. See <a href="../../concepts/liveness-checking.md">Liveness Checking</a>.</p>
 <p>A number of excellent bugs were found by <a href="../../tools/testing.md">coyote test</a> during the development of
 this sample, and this illustrates the fact that Coyote can be applied to any type of asynchronous
 software, not just cloud services. There is still one bug remaining in the code which you can find
@@ -348,7 +348,7 @@ scheduling strategy. Each process runs until the first one finds a bug, then the
 and the bug is reported. This can be useful when you want to leverage the full power of your
 computer to find those bugs that are particularly hard to find more quickly.</p>
 <h3 id="liveness-monitor">Liveness monitor</h3>
-<p>As described in the documentation on <a href="../../core/liveness-checking.md">Liveness Checking</a> the
+<p>As described in the documentation on <a href="../../concepts/liveness-checking.md">Liveness Checking</a> the
 <code>CoffeeMachine</code> must also eventually <code>finish</code> what it is doing. It must either make a coffee when
 requested and return to the <code>Ready</code> state, or it must find a problem and go to the <code>Error</code> state or
 the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can be enforced using a very simple
@@ -423,7 +423,7 @@ of production code using Coyote.</p>
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../image-gallery-aspnet/" class="btn btn-xs btn-link">
-        ASP.NET Core image gallery
+        Testing an ASP.NET service
       </a>
     </div>
     
