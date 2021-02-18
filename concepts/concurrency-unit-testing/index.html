@@ -138,7 +138,7 @@ error if it detects a type it does not support.</p>
 <p>Take the simple example that was used to explain concurrency <a href="../non-determinism/">non-determinism</a>.
 Notice that the code below is using the C# <code>Task</code> type. Coyote understands this <code>Task</code> type and is
 able to control its schedule during systematic testing, as discussed above and
-<a href="../../programming-models/tasks/overview/">here</a>.</p>
+<a href="../advanced-topics/tasks/overview.md">here</a>.</p>
 <pre><code class="language-c#">using System.Threading.Tasks;
 
 // Shared variable x.
@@ -205,11 +205,11 @@ tested in your system. Additionally, Coyote also offers ways of writing safety a
 <p>Besides the popular <a href="https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap">task-based programming
 model</a>
 of C#, which Coyote is able to support without you having to modify your code, the
-<code>Microsoft.Coyote</code> library also provides APIs for expressing in-memory <a href="../../programming-models/actors/overview/">asynchronous actors and
+<code>Microsoft.Coyote</code> library also provides APIs for expressing in-memory <a href="../advanced-topics/actors/overview.md">asynchronous actors and
 state machines</a>. Programs written using these more
 advanced types can also be systematically tested with Coyote similar to unmodified task-based
 programs.</p>
-<p>See this <a href="../../programming-models/actors/state-machine-demo/">demo</a> which shows the systematic
+<p>See this <a href="../advanced-topics/actors/state-machine-demo.md">demo</a> which shows the systematic
 testing process in action on a test application that implements the <a href="https://raft.github.io/">Raft consensus
 protocol</a> using Coyote state machines.</p>
 

@@ -68,58 +68,6 @@
      <lastmod>2021-02-18</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/tasks/overview/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/tasks/interleavings/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/tasks/rewriting/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/overview/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/state-machines/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/actor-semantics/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/termination/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/timers/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/event-groups/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/uncaught-exceptions/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/sharing-objects/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/state-machine-demo/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/programming-models/actors/why-actors/</loc>
-     <lastmod>2021-02-18</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
      <loc>https://microsoft.github.io/coyote/tutorials/first-concurrency-unit-test/</loc>
      <lastmod>2021-02-18</lastmod>
      <changefreq>daily</changefreq>
