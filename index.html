@@ -40,6 +40,7 @@
           {title: "Welcome to Coyote", url: "#_top", children: [
               {title: "Supported programming models", url: "#supported-programming-models" },
               {title: "Fearless coding for concurrent software", url: "#fearless-coding-for-concurrent-software" },
+              {title: "Get started with Coyote", url: "#get-started-with-coyote" },
           ]},
         ];
 
@@ -123,15 +124,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/about/" class="wm-article-link wm-toc-text">Vision</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/videos/" class="wm-article-link wm-toc-text">Videos</a>
-</li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="overview/benefits/" class="wm-article-link wm-toc-text">Key benefits</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/how/" class="wm-article-link wm-toc-text">How does it work</a>
 </li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="overview/faq/" class="wm-article-link wm-toc-text">Frequently asked questions</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/how/" class="wm-article-link wm-toc-text">How does it work</a>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/videos/" class="wm-article-link wm-toc-text">Videos</a>
 </li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="overview/publications/" class="wm-article-link wm-toc-text">Publications</a>
 </li>
@@ -189,24 +188,24 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/async/overview/" class="wm-article-link wm-toc-text">Overview</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/tasks/overview/" class="wm-article-link wm-toc-text">Overview</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/async/tcs/" class="wm-article-link wm-toc-text">Controlled task completion source</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/tasks/tcs/" class="wm-article-link wm-toc-text">Controlled task completion source</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/async/async-lock/" class="wm-article-link wm-toc-text">Controlled asynchronous lock</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/tasks/async-lock/" class="wm-article-link wm-toc-text">Controlled asynchronous lock</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/async/semaphore/" class="wm-article-link wm-toc-text">Controlled semaphore</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/tasks/semaphore/" class="wm-article-link wm-toc-text">Controlled semaphore</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/async/synchronized-block/" class="wm-article-link wm-toc-text">Controlled synchronized block</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/tasks/synchronized-block/" class="wm-article-link wm-toc-text">Controlled synchronized block</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/async/interleavings/" class="wm-article-link wm-toc-text">Improving coverage of fine-grained interleavings</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/tasks/interleavings/" class="wm-article-link wm-toc-text">Improving coverage of fine-grained interleavings</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/async/rewriting/" class="wm-article-link wm-toc-text">Rewriting binaries</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="programming-models/tasks/rewriting/" class="wm-article-link wm-toc-text">Rewriting binaries</a>
 </li>
   </ul>
 </li>
 
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Asynchronous actors</span>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Actors and state machines</span>
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
@@ -240,24 +239,38 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/hello-world-tasks/" class="wm-article-link wm-toc-text">Hello world tasks</a>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Asynchronous tasks</span>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/hello-world-actors/" class="wm-article-link wm-toc-text">Hello world actors</a>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/tasks/account-manager/" class="wm-article-link wm-toc-text">Account manager</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/failover-coffee-machine-actors/" class="wm-article-link wm-toc-text">Coffee machine failover (actors)</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/tasks/bounded-buffer/" class="wm-article-link wm-toc-text">Deadlock in bounded-buffer</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/failover-coffee-machine-tasks/" class="wm-article-link wm-toc-text">Coffee machine failover (tasks)</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/tasks/failover-coffee-machine/" class="wm-article-link wm-toc-text">Coffee machine failover</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/failover-robot-navigator-actors/" class="wm-article-link wm-toc-text">Robot navigator failover (actors)</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/tasks/image-gallery-aspnet/" class="wm-article-link wm-toc-text">ASP.NET Core image gallery</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/raft-azure/" class="wm-article-link wm-toc-text">Raft actor service (on Azure)</a>
+  </ul>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/raft-mocking/" class="wm-article-link wm-toc-text">Raft actor service (mocked)</a>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Actors and state machines</span>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/bounded-buffer/" class="wm-article-link wm-toc-text">Bounded Buffer Example</a>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/hello-world/" class="wm-article-link wm-toc-text">Hello world</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/image-gallery-aspnet/" class="wm-article-link wm-toc-text">ASP.NET Core Image Gallery</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/failover-coffee-machine/" class="wm-article-link wm-toc-text">Coffee machine failover</a>
 </li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/failover-robot-navigator/" class="wm-article-link wm-toc-text">Robot navigator failover</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/raft-azure/" class="wm-article-link wm-toc-text">Raft actor service (on Azure)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/raft-mocking/" class="wm-article-link wm-toc-text">Raft actor service (mocked)</a>
+</li>
+  </ul>
+</li>
+
   </ul>
 </li>
 
@@ -2073,12 +2086,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="overview/about/" class="btn btn-xs btn-default pull-right">
+      <a href="overview/benefits/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="overview/about/" class="btn btn-xs btn-link">
-        Vision
+      <a href="overview/benefits/" class="btn btn-xs btn-link">
+        Key benefits
       </a>
     </div>
     
@@ -2087,15 +2100,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       
 
       <h1 id="welcome-to-coyote">Welcome to Coyote</h1>
-<p>Coyote is a set of .NET libraries and tools designed to help ensure that your code is free of bugs.
-Too often developers are drowning in the complexity of their own code and many hours are wasted
+<p>Coyote is a set of .NET libraries and tools designed to help ensure that your code is free of bugs.</p>
+<p>Too often developers are drowning in the complexity of their own code and many hours are wasted
 trying to track down impossible-to-find bugs, especially when dealing with <em>concurrent</em> code or
 various other sources of <em>non-determinism</em> (like message ordering, failures, timeouts and so on).</p>
-<p>Coyote provides programming models to express concurrent systems. These programming models offer
-convenient ways to program at a high-level of abstraction. As mentioned below, Coyote currently
-supports two programming models: the familiar tasks-based programming model as well as a more
-advanced actor-based programming model. These programming models are built using asynchronous
-APIs, supported by a lightweight runtime, making it easy to program efficient non-blocking code.</p>
 <div class="embed-responsive embed-responsive-16by9">
     <video id="shortintro" class="embed-responsive-item" controls poster="assets/images/ShortIntro.png">
         <source  class="embed-responsive-item" src="https://github.com/microsoft/coyote-content/raw/master/assets/video/ShortIntro.mp4" type="video/mp4">
@@ -2155,6 +2163,11 @@ barrier to entry with almost immediate benefits for those who adopt it.</p>
 expensive to start over. Instead Coyote can be adopted gradually, adding more and more structure
 around your <em>Coyote-aware</em> code. The more of this structure you add the more benefit you get from
 Coyote, but it is certainly not an all or nothing proposition.</p>
+<p>For advanced users, Coyote also provides a powerful in-memory actor and state machine programming
+model that allows you to build reliable concurrent systems. This programming models offers
+convenient ways to program at a high-level of abstraction. Coyote actors are built using
+asynchronous C# APIs, supported by a lightweight runtime, making it easy to program efficient
+non-blocking code.</p>
 <p>So Coyote brings together elements of design, development and testing into an integrated package
 that works really well in the real world. See our <a href="case-studies/azure-batch-service/">case
 studies</a> for some great customer testimonials.</p>
@@ -2162,7 +2175,7 @@ studies</a> for some great customer testimonials.</p>
 <p>Coyote supports two main programming models:</p>
 <ul>
 <li>
-<p><a href="programming-models/async/overview/">Asynchronous tasks</a>, which follows the popular <a href="https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap">task-based
+<p><a href="programming-models/tasks/overview/">Asynchronous tasks</a>, which follows the popular <a href="https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap">task-based
   asynchronous
   pattern</a>.
   This programming model offers a <code>Task</code> type  that serves as a drop-in-replacement type for the
@@ -2172,7 +2185,7 @@ studies</a> for some great customer testimonials.</p>
   executes with the same semantics of a native <code>Task</code>. In fact, it is simply a thin wrapper around a
   native <code>Task</code> object. During testing, however, is where the magic happens. Coyote controls the
   execution of each Coyote <code>Task</code> so that it can explore various different interleavings to find
-  bugs. Alternatively, you can use the <a href="programming-models/async/rewriting/">binary rewriting</a>
+  bugs. Alternatively, you can use the <a href="programming-models/tasks/rewriting/">binary rewriting</a>
   feature of Coyote to automatically instrument your application, taking control of
   <code>System.Threading.Tasks.Task</code> objects and related concurrency types from the Task Parallel
   Library, without having to use Coyote&rsquo;s drop-in-replacement library.</p>
@@ -2189,13 +2202,13 @@ studies</a> for some great customer testimonials.</p>
 </li>
 </ul>
 <p>Note that you can only systematically test the above two programming models together using Coyote&rsquo;s
-<a href="programming-models/async/rewriting/">binary rewriting</a> to take control of
+<a href="programming-models/tasks/rewriting/">binary rewriting</a> to take control of
 <code>System.Threading.Tasks.Task</code> objects.</p>
 <h2 id="fearless-coding-for-concurrent-software">Fearless coding for concurrent software</h2>
 <p>As a result Coyote gives your team much more confidence in building mission-critical services that
 also push the limits on high concurrency, maximizing throughput and minimizing operational costs.</p>
 <p>With Coyote you can create highly reliable software in a way that is also highly productive.</p>
-<p>These are some direct quotes from Azure Engineers that uses Coyote:</p>
+<p>These are some direct quotes from Azure Engineers that use Coyote:</p>
 <ul>
 <li>
 <p><em>We often found bugs with Coyote in a matter of minutes that would have taken days with stress testing.</em></p>
@@ -2212,11 +2225,14 @@ also push the limits on high concurrency, maximizing throughput and minimizing o
   concurrency testing at each check-in, right on their desktops as the code was written.</em></p>
 </li>
 </ul>
-<p><a href="overview/about/">Learn more about Coyote</a></p>
-<p><a href="get-started/install/">Get started now, it is super easy</a></p>
-<p><a href="case-studies/azure-batch-service/">Read more about how Azure is using Coyote</a></p>
-<p><a href="programming-models/actors/state-machine-demo/">State machine demo</a></p>
-<p><a href="https://github.com/microsoft/coyote/">Code on Github</a></p>
+<h2 id="get-started-with-coyote">Get started with Coyote</h2>
+<p><a href="overview/benefits/">Learn about the key benefits</a></p>
+<p><a href="get-started/install/">Install the NuGet package and CLI tool, it is super easy</a></p>
+<p><a href="case-studies/azure-batch-service/">Read how Azure teams are using Coyote</a></p>
+<p><a href="tutorials/tasks/account-manager/">Dive into tutorials and samples</a></p>
+<p><a href="programming-models/actors/state-machine-demo/">Check out this cool Coyote state machine demo</a></p>
+<p><a href="https://gitter.im/Microsoft/coyote">Say hi on Gitter</a></p>
+<p><a href="https://github.com/microsoft/coyote/">Contribute on Github</a></p>
 
     <br>
       
@@ -2229,12 +2245,12 @@ also push the limits on high concurrency, maximizing throughput and minimizing o
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="overview/about/" class="btn btn-xs btn-default pull-right">
+      <a href="overview/benefits/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="overview/about/" class="btn btn-xs btn-link">
-        Vision
+      <a href="overview/benefits/" class="btn btn-xs btn-link">
+        Key benefits
       </a>
     </div>
     
@@ -2358,5 +2374,5 @@ GitHub</a>
 </html>
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-03 20:10:33.705374+00:00
+Build Date UTC : 2021-02-18 06:51:09.117308+00:00
 -->

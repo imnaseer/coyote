@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/programming-models/actors/why-actors/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/tasks/bounded-buffer/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Why Coyote actors? - Coyote</title>
+    <title>Deadlock in bounded-buffer - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,11 +35,14 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "How are Coyote Actors different from existing Microsoft Actor frameworks?", url: "#_top", children: [
+          {title: "Deadlock in bounded-buffer", url: "#_top", children: [
           ]},
-          {title: "How is it different from other actor implementations?", url: "#how-is-it-different-from-other-actor-implementations", children: [
+          {title: "What you will need", url: "#what-you-will-need", children: [
           ]},
-          {title: "What scenarios to use Coyote as opposed to other systems?", url: "#what-scenarios-to-use-coyote-as-opposed-to-other-systems", children: [
+          {title: "Build the samples", url: "#build-the-samples", children: [
+          ]},
+          {title: "Run the failover coffee machine application", url: "#run-the-failover-coffee-machine-application", children: [
+              {title: "Can you find the deadlock bug in BoundedBuffer class?", url: "#can-you-find-the-deadlock-bug-in-boundedbuffer-class" },
           ]},
         ];
 
@@ -77,20 +80,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../../tutorials/tasks/account-manager/" class="btn btn-xs btn-default pull-right">
+      <a href="../failover-coffee-machine/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../../tutorials/tasks/account-manager/" class="btn btn-xs btn-link">
-        Account manager
+      <a href="../failover-coffee-machine/" class="btn btn-xs btn-link">
+        Coffee machine failover
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../state-machine-demo/" class="btn btn-xs btn-default pull-left">
+      <a href="../account-manager/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../state-machine-demo/" class="btn btn-xs btn-link">
-        State machine demo
+        Previous</a><a href="../account-manager/" class="btn btn-xs btn-link">
+        Account manager
       </a>
     </div>
     
@@ -98,40 +101,55 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="how-are-coyote-actors-different-from-existing-microsoft-actor-frameworks">How are Coyote Actors different from existing Microsoft Actor frameworks?</h2>
-<p>As you build highly concurrent systems, designed to defending against race conditions, arbitrary
-faults, etc, how do you test such systems? How do you know that you got the code right? These
-questions were the motivation behind creating Coyote.</p>
-<p>Coyote focuses on writing <a href="../../../core/specifications/">specifications</a> and providing
-high-coverage testing via <a href="../../../core/systematic-testing/">systematic testing</a>. The
-capability of writing better tests, getting (much) better coverage, accelerates the development
-process.</p>
-<h2 id="how-is-it-different-from-other-actor-implementations">How is it different from other actor implementations?</h2>
-<p>Coyote does not have a distributed runtime, so it cannot be a replacement for systems like
-<a href="https://dotnet.github.io/orleans/">Orleans</a>, <a href="https://dapr.io/">dapr</a>, <a href="https://azure.microsoft.com/en-us/services/service-fabric/">Azure Service
-Fabric</a>, or <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-actors-introduction">Reliable
-Actors</a>,
-each of which provide distributed hosting goodies such as state persistence, networking,
-load-balancing, etc.</p>
-<p>Coyote embodies its ideas in programming models such as
-<a href="../overview/">actors</a> and
-<a href="../../tasks/overview/">tasks</a>. Each of these only have in-memory
-representations. Think of them in the same way as C# Tasks: they&rsquo;re just programming constructs.</p>
-<p>Coyote is complimentary to these other frameworks. Some Azure teams, for instance, use Service
-Fabric for hosting their application and Coyote for expressing the logic. There have also been
-instances where Reliable Actors were used, and each Reliable actor hosted a Coyote
-<a href="../state-machines/">StateMachine</a> inside. (The ReliableActor
-would receive messages and use them to drive the state machine.) Coyote testing vets correctness,
-and Service Fabric provides all the hosting capabilities.</p>
-<p>Coyote has minimal dependencies, so it should be easy to integrate.  There is also a tutorial on
-how to use Coyote Actors to implement a <a href="../../../tutorials/actors/raft-azure/">Raft server
-cluster</a> on top of Azure Service Bus.</p>
-<h2 id="what-scenarios-to-use-coyote-as-opposed-to-other-systems">What scenarios to use Coyote as opposed to other systems?</h2>
-<p>As mentioned above, using Coyote does not rule out the other systems. Use Coyote when there is
-complexity in your design and you&rsquo;re interested in high-coverage testing of your logic (against
-concurrency, failures, timers, race conditions, etc.)</p>
-<p>Coyote is not just for distributed systems. You can use it for single-box scenarios as well, e.g.,
-asynchronous code using Tasks (running on a multi-core machine).</p>
+      <h2 id="deadlock-in-bounded-buffer">Deadlock in bounded-buffer</h2>
+<p>Concurrent programming can be tricky. This tutorial shows a classic example of a deadlock and how
+Coyote can help you find and understand that deadlock. More details about this program and how
+Coyote can find this deadlock is found in this <a href="https://cloudblogs.microsoft.com/opensource/2020/07/14/extreme-programming-meets-systematic-testing-using-coyote/">blog
+article</a>.</p>
+<h2 id="what-you-will-need">What you will need</h2>
+<p>To run the <code>BoundedBuffer</code> example, you will need to:</p>
+<ul>
+<li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
+<li>Install the <a href="../get-started/install.md">.NET 5.0 version of the coyote tool</a>.</li>
+<li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../tools/testing.md">Testing</a>.</li>
+</ul>
+<h2 id="build-the-samples">Build the samples</h2>
+<p>Build the <code>coyote-samples</code> repo by running the following command:</p>
+<pre><code class="language-plain">powershell -f build.ps1
+</code></pre>
+<h2 id="run-the-failover-coffee-machine-application">Run the failover coffee machine application</h2>
+<p>Now you can run the <code>BoundedBuffer</code> application in a mode that should trigger the deadlock most of
+the time:</p>
+<pre><code class="language-plain">./bin/net5.0/BoundedBuffer.exe -m
+</code></pre>
+<p>And you can run it with a fix for the deadlock as follows:</p>
+<pre><code class="language-plain">./bin/net5.0/BoundedBuffer.exe -f
+</code></pre>
+<h3 id="can-you-find-the-deadlock-bug-in-boundedbuffer-class">Can you find the deadlock bug in BoundedBuffer class?</h3>
+<p>The BoundedBuffer is a producer consumer queue where the <code>Take</code> method blocks if the buffer is empty
+and the <code>Put</code> method blocks if the buffer has reached it&rsquo;s maximum allowed capacity and while the
+code looks correct it contains a nasty deadlock bug.</p>
+<p>Writing concurrent code is tricky and with the popular <code>async/await</code> feature in the C# Programming
+Language it is now extremely easy to write concurrent code.</p>
+<p>But how do we test concurrency in our code? Testing tools and frameworks have not kept up with the
+pace of language innovation and so this is where <code>Coyote</code> comes to the rescue. When you use Coyote
+to test your programs you will find concurrency bugs that are very hard to find any other way.</p>
+<p>Coyote rewrites your <code>async tasks</code> in a way that allows the <a href="../tools/testing.md">coyote test</a> tool
+to control all the concurrency and locking in your program and this allows it to find bugs using
+intelligent <a href="../core/systematic-testing.md">systematic testing</a>.</p>
+<p>For example, if you take the <code>BoundedBuffer.dll</code> from the above sample you can do the following:</p>
+<pre><code>coyote rewrite BoundedBuffer.dll
+coyote test BoundedBuffer.dll -m TestBoundedBufferMinimalDeadlock --iterations 100
+</code></pre>
+<p>This will report a deadlock error because Coyote has deadlock detection during testing. You will get
+a log file explaining all this, and more importantly you will also get a trace file that can be used
+to replay the bug in your debugger in a way that is 100% reproducible.</p>
+<p>Concurrency bugs tend to be the kind of bugs that keep people up late at night pulling their hair
+out because they are often not easily reproduced in any sort of predictable manner.</p>
+<p>Coyote solves this problem giving you an environment where concurrency bugs can be systematically
+found and reliably reproduced in a debugger &ndash; allowing developers to fully understand them and fix
+the core problem.</p>
 
     <br>
       
@@ -144,20 +162,20 @@ asynchronous code using Tasks (running on a multi-core machine).</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../../tutorials/tasks/account-manager/" class="btn btn-xs btn-default pull-right">
+      <a href="../failover-coffee-machine/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../../tutorials/tasks/account-manager/" class="btn btn-xs btn-link">
-        Account manager
+      <a href="../failover-coffee-machine/" class="btn btn-xs btn-link">
+        Coffee machine failover
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../state-machine-demo/" class="btn btn-xs btn-default pull-left">
+      <a href="../account-manager/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../state-machine-demo/" class="btn btn-xs btn-link">
-        State machine demo
+        Previous</a><a href="../account-manager/" class="btn btn-xs btn-link">
+        Account manager
       </a>
     </div>
     

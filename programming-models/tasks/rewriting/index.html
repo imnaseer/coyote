@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/overview/how/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/programming-models/tasks/rewriting/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>How does it work - Coyote</title>
+    <title>Rewriting binaries - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../css/main.css" rel="stylesheet">
-    <link href="../../css/player-controls.css" rel="stylesheet">
-    <link href="../../css/syntax.css" rel="stylesheet">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,7 +35,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "How does it work?", url: "#_top", children: [
+          {title: "Rewriting binaries", url: "#_top", children: [
+          ]},
+          {title: "Not supported", url: "#not-supported", children: [
           ]},
         ];
 
@@ -43,13 +45,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../assets/js/analytics.js"></script>
-      <script src="../../assets/js/plugins.js"></script>
-      <script src="../../assets/js/animate_trace.js"></script>
-      <script src="../../assets/js/animation.js"></script>
-      <script src="../../assets/js/progress_bar.js"></script>
-      <script src="../../assets/js/trace_model.js"></script>
-      <script src="../../assets/js/main.js"></script> 
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -73,20 +75,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../faq/" class="btn btn-xs btn-default pull-right">
+      <a href="../../actors/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../faq/" class="btn btn-xs btn-link">
-        Frequently asked questions
+      <a href="../../actors/overview/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../benefits/" class="btn btn-xs btn-default pull-left">
+      <a href="../interleavings/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../benefits/" class="btn btn-xs btn-link">
-        Key benefits
+        Previous</a><a href="../interleavings/" class="btn btn-xs btn-link">
+        Improving coverage of fine-grained interleavings
       </a>
     </div>
     
@@ -94,41 +96,49 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="how-does-it-work">How does it work?</h2>
-<p>There are two parts to how Coyote works.  First you need to write some code that uses the Coyote
-programming model.  This code then provides the metadata needed to enable the <code>coyote test</code> tool to
-do its magic.</p>
-<p>The <code>coyote test</code> tool takes over the scheduling of a Coyote program. It is able to do this reliably
-because it deeply understands the required <a href="../..">Coyote programming
-models</a>. Therefore, the tool knows all concurrent operations
-in a test as well as sources of synchronization between them. By controlling the scheduling, the
-tool can reliably explore different interleavings of operations. The tool will repeatedly run a
-test, each time exercising different scheduling choices. This methodology has proven to be very
-effective at providing high coverage, especially <em>concurrency</em> coverage, in a short amount of time.
-In a similar way, the tool can also take over other sources of non-determinism, such as the delivery
-of timeout messages or injection of failures.</p>
-<p>If a bug is found, the <code>coyote test</code> tool reports a <em>reproducible</em> bug trace that provides the
-global order of all scheduling decisions and nondeterministic choices made during the execution of a
-test. The trace can be replayed reliably over and over again, until the bug is identified. This
-makes a bug reported by the tool significantly easier to debug than regular unit-/integration-tests
-and logs from production or stress tests, which are typically nondeterministic. No more
-<a href="https://en.wikipedia.org/wiki/Heisenbug">Heisenbugs</a>!</p>
-<p>The exact mechanism Coyote uses to do this depends on the programming model you have chosen. For the
-<code>Task</code> model, the <code>coyote test</code> tool is able to intercept all task creation operations by
-overriding various .NET Task methods.  For the <code>Actor</code> model the <code>coyote test</code> tool can control when
-messages are dequeued by each Actor and therefore control the overall message scheduling.</p>
-<p>The next step is to pick a search strategy that explores all possible interleavings of asynchronous
-operations. The <code>coyote test</code> tool uses several state-of-the-art exploration strategies that have
-been known to find very deep bugs easily. The tool can run a <em>portfolio</em> of available strategies in
-parallel, maximizing chances of revealing bugs. Coyote refers to these exploration strategies as
-<em>scheduling strategies</em> and makes it easy to incorporate new strategies, as they come out of
-research. New scheduling strategies are being developed in Microsoft Research based on a wealth of
-experience gathered from the Microsoft product groups that are using Coyote today. See <a href="../../case-studies/azure-batch-service/">case
-studies</a>.</p>
-<p>See <a href="../../programming-models/actors/state-machine-demo/">animating state machine demo</a> for a
-visual explanation of what Coyote does when it is looking for bugs.</p>
-<p>For more information see <a href="../../core/systematic-testing/">Systematic Testing</a> and dealing with
-<a href="../../core/non-determinism/">Nondeterminism</a>.</p>
+      <h2 id="rewriting-binaries">Rewriting binaries</h2>
+<p><img alt="Rewriting is currently in-preview" src="https://img.shields.io/static/v1?style=flat&amp;color=red&amp;label=&amp;message=preview" /></p>
+<p>The <a href="../overview/">asynchronous tasks programming model</a> shows how Coyote can control the concurrency
+of asynchronous operations using the special Coyote Task types. You can choose to use this
+programming model by modifying your code to use these Coyote Task types but this takes some effort
+on your part. Instead, you can use the <a href="../../../tools/rewriting">coyote rewriting tool</a> which will
+automatically rewrite your binaries in a way that they can then be used in <code>coyote test</code> runs.</p>
+<p>This automatic rewriting currently supports rewriting the following constructs so they are testable
+with <code>coyote test</code>:</p>
+<ul>
+<li><code>Task</code>, all methods except <code>ConfigureAwait</code> and <code>ContinueWith</code></li>
+<li>C# lock statements and <code>Monitor</code> type.</li>
+<li>Exception handlers</li>
+</ul>
+<p>Note that during testing coyote needs to be able to terminate a test iteration at any time in order
+to support the <code>--max-steps</code> command line argument. This termination is done using a special coyote
+<code>ExecutionCancelledException</code>. The problem is when your code contains one of the following:</p>
+<pre><code class="language-c#">} catch {
+} catch (Exception) {
+} catch (RuntimeException) {
+</code></pre>
+<p>these will inadvertently catch the special Coyote exception, which then stops <code>--max-steps</code> from
+working. The recommended fix is to add a <code>when (!(e is Microsoft.Coyote.RuntimeException))</code>
+filter as shown in <a href="../../../tools/tester-requirements/">tester requirements</a>.</p>
+<p>The good news is that <code>coyote rewrite</code> can take care of this for you automatically so you do not
+need to modify any of your exception handlers.</p>
+<h2 id="not-supported">Not supported</h2>
+<p>The following concurrency constructs are not supported by <code>coyote rewrite</code>:</p>
+<ul>
+<li><code>Parallel</code> helper class.</li>
+<li><code>System.Collections.Current.BlockingCollection</code></li>
+<li><code>ThreadPool</code></li>
+<li><code>Thread</code></li>
+<li><code>ManualResetEvent</code>, <code>AutoResetEvent</code>, <code>SemaphoreSlim</code>, <code>Semaphore</code>, <code>SpinLock</code>, <code>SpinWait</code>, <code>ReaderWriterLock</code>, <code>Interlocked</code>, &hellip;</li>
+<li>Essentially any form of concurrency control that is not listed in the supported list above
+including native calls to Win32 API&rsquo;s that block the current thread or spawn new threads.</li>
+<li><a href="https://github.com/dotnet/roslyn/blob/master/docs/features/task-types.md">Task-like types</a></li>
+<li>Any .NET library that is a mixed-mode assembly.</li>
+<li>Any .NET library type or method that uses any of the above, especially blocking IO like
+<code>System.IO.Pipelines</code>, <code>System.IO.Channels</code>, etc.</li>
+</ul>
+<p>As you can see this is currently a long list, that will hopefully get shorter over time
+as development continues on this feature.</p>
 
     <br>
       
@@ -141,20 +151,20 @@ visual explanation of what Coyote does when it is looking for bugs.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../faq/" class="btn btn-xs btn-default pull-right">
+      <a href="../../actors/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../faq/" class="btn btn-xs btn-link">
-        Frequently asked questions
+      <a href="../../actors/overview/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../benefits/" class="btn btn-xs btn-default pull-left">
+      <a href="../interleavings/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../benefits/" class="btn btn-xs btn-link">
-        Key benefits
+        Previous</a><a href="../interleavings/" class="btn btn-xs btn-link">
+        Improving coverage of fine-grained interleavings
       </a>
     </div>
     
