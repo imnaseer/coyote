@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/tasks/account-manager/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/tasks/first-concurrency-unit-test/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Account manager - Coyote</title>
+    <title>First concurrency unit test - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -70,33 +70,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="container-fluid">
     <a name="_top"></a>
       
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../bounded-buffer/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../bounded-buffer/" class="btn btn-xs btn-link">
-        Deadlock in bounded-buffer
-      </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../../../programming-models/actors/why-actors/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../../../programming-models/actors/why-actors/" class="btn btn-xs btn-link">
-        Why Coyote actors?
-      </a>
-    </div>
-    
-  </div>
 
       
 
@@ -318,8 +291,7 @@ public static async Task TestConcurrentAccountCreation()
 <p>Try run this concurrent test. The assertion will <em>most likely</em> fail. The reason we say most likely
 instead of a guaranteed failure is that there are some task interleavings where it passes, and
 others where it fails with the following exception:</p>
-<pre><code class="language-plain">.\AccountManager.exe -c
-Unhandled exception. RowAlreadyExistsException: Exception of type 'RowAlreadyExistsException' was thrown.
+<pre><code class="language-plain">Unhandled exception. RowAlreadyExistsException: Exception of type 'RowAlreadyExistsException' was thrown.
 ...
 </code></pre>
 <p>Let&rsquo;s dig into why the concurrent test failed.</p>
@@ -447,33 +419,6 @@ coyote replay .\AccountManager.dll -schedule AccountManager_0_0.schedule -m Test
 
     <br>
       
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../bounded-buffer/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../bounded-buffer/" class="btn btn-xs btn-link">
-        Deadlock in bounded-buffer
-      </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../../../programming-models/actors/why-actors/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../../../programming-models/actors/why-actors/" class="btn btn-xs btn-link">
-        Why Coyote actors?
-      </a>
-    </div>
-    
-  </div>
 
       <br>
   </div>

@@ -37,7 +37,7 @@
       var is_top_frame = (window === window.parent);
         
         var pageToc = [
-          {title: "Welcome to Coyote", url: "#_top", children: [
+          {title: "Coyote &ndash; Concurrency Unit Testing for .NET", url: "#_top", children: [
               {title: "Supported programming models", url: "#supported-programming-models" },
               {title: "Fearless coding for concurrent software", url: "#fearless-coding-for-concurrent-software" },
               {title: "Get started with Coyote", url: "#get-started-with-coyote" },
@@ -243,7 +243,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/tasks/account-manager/" class="wm-article-link wm-toc-text">Account manager</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/tasks/first-concurrent-unit-test.md" class="wm-article-link wm-toc-text">Write your first concurrent unit test</a>
 </li>
       <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/tasks/bounded-buffer/" class="wm-article-link wm-toc-text">Deadlock in bounded-buffer</a>
 </li>
@@ -2099,7 +2099,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h1 id="welcome-to-coyote">Welcome to Coyote</h1>
+      <h1 id="coyote-concurrency-unit-testing-for-net">Coyote &ndash; Concurrency Unit Testing for .NET</h1>
 <p>Coyote is a set of .NET libraries and tools designed to help ensure that your code is free of bugs.</p>
 <p>Too often developers are drowning in the complexity of their own code and many hours are wasted
 trying to track down impossible-to-find bugs, especially when dealing with <em>concurrent</em> code or
@@ -2147,13 +2147,14 @@ various other sources of <em>non-determinism</em> (like message ordering, failur
 
 </script>
 
-<p>Coyote helps write powerful, expressive tests for your code. You can declare sources of
-non-determinism (such as timers, failures, etc.) as part of your tests. The Coyote testing tool can
-<em>systematically</em> explore a large number of interleavings of concurrent operations as well as
-non-deterministic choices so that it covers a large set of behaviors in a very short time. This is
-different from <em>stress testing</em>. Coyote takes control of the concurrency so that it can manipulate
-every possible scheduling. With appropriate <em>mocking</em>, Coyote can also do this in &ldquo;developer&rdquo; mode
-on a single laptop with little or no dependence on the bigger production environment.</p>
+<p>Coyote helps write powerful, expressive tests for your code. We call these <em>concurrency unit tests</em>.
+You can declare sources of non-determinism (such as timers, failures, etc.) as part of your Coyote
+tests. The Coyote testing tool can <em>systematically</em> explore a large number of interleavings of
+concurrent operations as well as non-deterministic choices so that it covers a large set of
+behaviors in a very short time. This is different from <em>stress testing</em>. Coyote takes control of the
+concurrency so that it can manipulate every possible scheduling. With appropriate <em>mocking</em>, Coyote
+can also do this in &ldquo;developer&rdquo; mode on a single laptop with little or no dependence on the bigger
+production environment.</p>
 <p>Coyote is not a verification system. It does not use theorem proving to make correctness guarantees,
 instead it uses intelligent search strategies to drive systematic testing, based on deep
 understanding of concurrency primitives that you have used in your code. This approach has proven to
@@ -2229,7 +2230,7 @@ also push the limits on high concurrency, maximizing throughput and minimizing o
 <p><a href="overview/benefits/">Learn about the key benefits</a></p>
 <p><a href="get-started/install/">Install the NuGet package and CLI tool, it is super easy</a></p>
 <p><a href="case-studies/azure-batch-service/">Read how Azure teams are using Coyote</a></p>
-<p><a href="tutorials/tasks/account-manager/">Dive into tutorials and samples</a></p>
+<p><a href="tutorials/tasks/account-manager.md">Dive into tutorials and samples</a></p>
 <p><a href="programming-models/actors/state-machine-demo/">Check out this cool Coyote state machine demo</a></p>
 <p><a href="https://gitter.im/Microsoft/coyote">Say hi on Gitter</a></p>
 <p><a href="https://github.com/microsoft/coyote/">Contribute on Github</a></p>
@@ -2374,5 +2375,5 @@ GitHub</a>
 </html>
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-18 07:21:58.498547+00:00
+Build Date UTC : 2021-02-18 17:01:02.236104+00:00
 -->
