@@ -113,13 +113,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <h2 id="raft-consensus-protocol-on-azure">Raft consensus protocol on Azure</h2>
 <p>The <a href="https://github.com/microsoft/coyote-samples/tree/main/CloudMessaging">CloudMessaging</a> sample
 implements the <a href="https://raft.github.io/">Raft consensus algorithm</a> as an Azure Service built on the
-<a href="https://azure.microsoft.com/en-us/services/service-bus/">Azure Service Bus</a>. See <a href="../programming-models/actors/state-machine-demo.md">animating state
+<a href="https://azure.microsoft.com/en-us/services/service-bus/">Azure Service Bus</a>. See <a href="../../../programming-models/actors/state-machine-demo/">animating state
 machine demo</a> which shows the Coyote
-<a href="../core/systematic-testing.md">systematic testing process</a> in action on this application.</p>
+<a href="../../../core/systematic-testing/">systematic testing process</a> in action on this application.</p>
 <p>This example is organized into the following projects:</p>
 <ul>
 <li><strong>Raft</strong> - a .NET Core C# class library that implements the <a href="https://raft.github.io/">Raft Consensus
-  Algorithm</a> using the Coyote <a href="../programming-models/actors/overview.md">Actor Programming
+  Algorithm</a> using the Coyote <a href="../../../programming-models/actors/overview/">Actor Programming
   Model</a>.</li>
 <li><strong>Raft.Azure</strong> - a C# executable that shows how to run Coyote messages through an <a href="https://azure.microsoft.com/en-us/services/service-bus/">Azure Service
   Bus</a>.</li>
@@ -138,9 +138,9 @@ is called the <code>Azure CLI</code>.</p>
 <p>You will also need to:</p>
 <ul>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
-<li>Install the <a href="../get-started/install.md">.NET 5.0 version of the coyote tool</a>.</li>
+<li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../tools/testing.md">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../tools/testing/">Testing</a>.</li>
 </ul>
 <h2 id="setup-azure">Setup Azure</h2>
 <ul>
@@ -168,11 +168,11 @@ the contents of the field named <code>Primary Connection String</code>.</p>
 <p>Note: you don&rsquo;t want to try and run Raft.Azure client using the <code>coyote test</code> tool until you
 complete the <a href="../raft-mocking/">mocking</a> of the Azure Message Bus calls.</p>
 <h2 id="design">Design</h2>
-<p>The <code>Raft.dll</code> library contains a <code>Server</code> <a href="../programming-models/actors/state-machines.md">state
+<p>The <code>Raft.dll</code> library contains a <code>Server</code> <a href="../../../programming-models/actors/state-machines/">state
 machine</a>, and a <code>ClusterManager</code> state machine. It also
 contains an interface named <code>IServerManager</code> and some Coyote <code>Event</code> declarations which describe the
 message types that are sent between the Server instances and the Client.</p>
-<p><img alt="cloudmessaging" src="../assets/images/cloudmessaging.svg" /></p>
+<p><img alt="cloudmessaging" src="../../../assets/images/cloudmessaging.svg" /></p>
 <p>The <code>ClusterManager</code> is an abstract state machine that models the concept of being able to broadcast
 messages to all <code>Servers</code> registered in a cluster. Sending an event to this cluster will result in
 all <code>Servers</code> getting that same event. So, as the raft protocol requires, broadcasting
@@ -219,7 +219,7 @@ why Coyote does not force you to use any particular message platform.</p>
 process is the <code>Client</code> process, then each subsequent one is a <code>Server</code> instance according to the
 specified <code>--local-cluster-size</code> command line argument. The following diagram shows what this looks
 like when we have 2 servers in the cluster:</p>
-<p><img alt="servers" src="../assets/images/RaftServers.svg" /></p>
+<p><img alt="servers" src="../../../assets/images/RaftServers.svg" /></p>
 <p>The startup sequence for all this can be found in <code>Program.cs</code> and goes like this:</p>
 <ol>
 <li>Parse the command line for the client process and call <code>RunAsync</code>.</li>
@@ -288,7 +288,7 @@ website</a>. Please check that out, as it will make the <code>Server</code> code
 to understand. This <a href="http://thesecretlivesofdata.com/raft/">more detailed walkthrough</a> of the
 protocol can also help make things even more clear.</p>
 <p>The overall <code>Server</code> state machine flow looks like this:</p>
-<p><img alt="raft_server" src="../assets/images/RaftStateMachine.svg" /></p>
+<p><img alt="raft_server" src="../../../assets/images/RaftStateMachine.svg" /></p>
 <p>In a nutshell, each <code>Server</code> instance can be in one of three states, <code>Follower</code>, <code>Candidate</code> or
 <code>Leader</code>. Each <code>Server</code> starts in the <code>Follower</code> state. If these followers don&rsquo;t hear from a leader
 in a small timeout period then they promote themselves to <code>Candidate</code> state where each candidate
@@ -318,7 +318,7 @@ Coyote commit continues, otherwise it is rolled back.</p>
    machine design can be continually maintained in your code, and this way Coyote is ensuring design
    and implementation remain in sync over time.</li>
 <li>How to reserve an <code>ActorId</code> before creating an <code>Actor</code> using <code>CreateActorIdFromName</code>.</li>
-<li>How to great <a href="../tools/dgml.md">DGML diagram</a> of production runs by registering the
+<li>How to great <a href="../../../tools/dgml/">DGML diagram</a> of production runs by registering the
    <code>ActorRuntimeLogGraphBuilder</code>.</li>
 </ol>
 <p>Now you need to be sure this <code>Server</code> protocol implementation is trustworthy, and for that you can

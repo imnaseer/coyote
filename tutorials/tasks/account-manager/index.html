@@ -115,9 +115,9 @@ us in writing correct concurrent code.</p>
 <p>To run the <code>AccountManager</code> example, you will need to:</p>
 <ul>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
-<li>Install the <a href="../get-started/install.md">.NET 5.0 version of the coyote tool</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../tools/testing.md">Testing</a>.</li>
-<li>Be familiar with the <code>coyote rewrite</code> tool. See <a href="../tools/rewriting.md">Rewriting</a>.</li>
+<li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../tools/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote rewrite</code> tool. See <a href="../../../tools/rewriting/">Rewriting</a>.</li>
 </ul>
 <h2 id="walkthrough">Walkthrough</h2>
 <p>Without further ado, let&rsquo;s look at the signature of the <code>AccountManager</code> class:</p>
@@ -358,9 +358,9 @@ make it very time consuming to debug and fix.</p>
 explore the various task interleavings in test mode as opposed to leaving that to luck (i.e. the
 operating system scheduler). Coyote gives you <em>exactly</em> this.</p>
 <p>To use Coyote on your task-based program is very easy in most cases. All you need to do is to invoke
-the <code>coyote rewrite</code> tool which <a href="../tools/rewriting.md">rewrites</a> your assembly (for testing only)
+the <code>coyote rewrite</code> tool which <a href="../../../tools/rewriting/">rewrites</a> your assembly (for testing only)
 so that Coyote can inject logic that allows it to take control of the schedule of C# tasks. Then,
-you can invoke the <code>coyote test</code> tool which <a href="../core/systematic-testing.md">systematically explores</a>
+you can invoke the <code>coyote test</code> tool which <a href="../../../core/systematic-testing/">systematically explores</a>
 task interleavings to uncover bug. If a bug is uncovered, Coyote allows you to deterministically
 reproduce it every single time.</p>
 <p>Let&rsquo;s now run our test, without changing a single line of code, under the control of Coyote. First use
@@ -376,7 +376,7 @@ Coyote to rewrite the assembly:</p>
 </code></pre>
 <p>The above command tells Coyote to execute the test method <code>TestConcurrentAccountCreation</code> for 100
 iterations. Each iteration will try explore different interleavings to try unearth the bug. You can
-read more about other Coyote tool options <a href="../tools/testing.md">here</a>.</p>
+read more about other Coyote tool options <a href="../../../tools/testing/">here</a>.</p>
 <p>Let&rsquo;s see if Coyote finds the bug now that the concurrent program execution is under its control.
 Indeed after just 4 iterations and 0.22 seconds:</p>
 <pre><code class="language-plain">. Testing .\AccountManager.dll

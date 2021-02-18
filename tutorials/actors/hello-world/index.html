@@ -112,15 +112,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       <h2 id="hello-world-example-with-actors">Hello world example with actors</h2>
 <p><a href="http://github.com/microsoft/coyote-samples/">HelloWorldActors</a> is a simple program to get you
-started using the Coyote <a href="../programming-models/actors/overview.md">actors programming
+started using the Coyote <a href="../../../programming-models/actors/overview/">actors programming
 model</a>.</p>
 <h2 id="what-you-will-need">What you will need</h2>
 <p>To run the Hello World Actors  example, you will need to:</p>
 <ul>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
-<li>Install the <a href="../get-started/install.md">.NET 5.0 version of the coyote tool</a>.</li>
+<li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../tools/testing.md">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../tools/testing/">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -148,7 +148,7 @@ Received greeting: Good Morning
 Too many greetings returned!
 </code></pre>
 <h2 id="finding-the-bug-using-coyote-test-tool">Finding the bug using Coyote test tool</h2>
-<p>See <a href="../get-started/using-coyote.md">Using Coyote</a> for information on how to
+<p>See <a href="../../../get-started/using-coyote/">Using Coyote</a> for information on how to
 find the <code>coyote</code> test tool and setup your environment to use it.</p>
 <p>Enter the following from the command line:</p>
 <pre><code class="language-plain">coyote test ./bin/net5.0/HelloWorldActors.dll --iterations 30
@@ -179,10 +179,10 @@ Starting TestingProcessScheduler in process 16432
 manually. When using Coyote for testing more complex, real-world systems the time savings can be
 huge! This will give you the ability to find and fix even the most difficult to reproduce
 concurrency bugs <strong>before pushing to production</strong>.</p>
-<p>To learn more about testing with Coyote read <a href="../tools/testing.md">Testing Coyote programs end-to-end and reproducing
+<p>To learn more about testing with Coyote read <a href="../../../tools/testing/">Testing Coyote programs end-to-end and reproducing
 bugs</a>.</p>
 <h2 id="the-greeter">The Greeter</h2>
-<p>Please read <a href="../programming-models/actors/overview.md">Programming model: asynchronous
+<p>Please read <a href="../../../programming-models/actors/overview/">Programming model: asynchronous
 actors</a> to gain a basic understanding of the
 Actors programming model.</p>
 <p>The core of an <code>Actor</code> based Coyote program, is, well, an <code>Actor</code> class! The following <code>Actor</code> named
@@ -302,7 +302,7 @@ tool has ways of interrupting and restarting this <code>Execute</code> method ba
 <p>A special coyote <code>TestingEngine</code> was created, it invoked the <code>Execute</code> method 30 times, and during
 those executions the test engine took over all concurrent activity and the non-determinism (like
 <code>RandomInteger</code>) to ensure the program covered lots of async non-deterministic choices, and recorded
-all this in a way that when a bug was found, it is able to reproduce that bug.  See also <a href="../get-started/using-coyote.md">Using
+all this in a way that when a bug was found, it is able to reproduce that bug.  See also <a href="../../../get-started/using-coyote/">Using
 Coyote</a> for information on how to replay a test that found a bug
 using <code>coyote replay</code>.</p>
 <h2 id="summary">Summary</h2>
