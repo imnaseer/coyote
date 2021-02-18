@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/concepts/logging/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/actors/logging/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>Logging - Coyote</title>
@@ -16,9 +16,9 @@
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../css/main.css" rel="stylesheet">
-    <link href="../../css/player-controls.css" rel="stylesheet">
-    <link href="../../css/syntax.css" rel="stylesheet">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -51,13 +51,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../assets/js/analytics.js"></script>
-      <script src="../../assets/js/plugins.js"></script>
-      <script src="../../assets/js/animate_trace.js"></script>
-      <script src="../../assets/js/animation.js"></script>
-      <script src="../../assets/js/progress_bar.js"></script>
-      <script src="../../assets/js/trace_model.js"></script>
-      <script src="../../assets/js/main.js"></script> 
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -81,20 +81,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../advanced-topics/tasks/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../state-machine-demo/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../advanced-topics/tasks/overview/" class="btn btn-xs btn-link">
-        Overview
+      <a href="../state-machine-demo/" class="btn btn-xs btn-link">
+        State machine demo
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../liveness-checking/" class="btn btn-xs btn-default pull-left">
+      <a href="../sharing-objects/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../liveness-checking/" class="btn btn-xs btn-link">
-        Effective liveness checking
+        Previous</a><a href="../sharing-objects/" class="btn btn-xs btn-link">
+        Sharing objects
       </a>
     </div>
     
@@ -230,7 +230,7 @@ using the installed <code>Logger</code>.</p>
 the <code>RegisterLog</code> method on <code>IActorRuntime</code>.  This is additive so you can have the default
 <code>ActorRuntimeLogTextFormatter</code> and another logger running at the same time.  For example, see the
 <code>ActorRuntimeLogGraphBuilder</code> class which implements <code>IActorRuntimeLog</code> and generates a directed
-graph representing all activities that happened during the execution of your actors. See <a href="../../tools/coverage/">activity
+graph representing all activities that happened during the execution of your actors. See <a href="../tools/coverage.md">activity
 coverage</a> for an example graph output. The <code>coyote</code> test tool sets this up for
 you when you specify <code>--graph</code> or <code>--coverage activity</code> command line options.</p>
 <p>The <code>--verbosity</code> command line option can also affect the default logging behavior. When
@@ -240,7 +240,7 @@ minimal</code> to see only error messages and <code>--verbosity normal</code> to
 produce a lot of output especially if you run many testing iterations. It is usually more useful to
 only capture the output of the one failing iteration in a log file and this is done automatically
 by the testing runtime when <code>--verbosity</code> is not specified.</p>
-<p>See <a href="../../ref/Microsoft.Coyote.Actors/IActorRuntimeLog/">IActorRuntimeLog API documentation</a>.</p>
+<p>See <a href="../ref/Microsoft.Coyote.Actors/IActorRuntimeLog.md">IActorRuntimeLog API documentation</a>.</p>
 <h2 id="example-of-a-custom-iactorruntimelog">Example of a custom IActorRuntimeLog</h2>
 <p>You can also implement your own <code>IActorRuntimeLog</code>. The following is an example of how to do this:</p>
 <pre><code class="language-c#">internal class CustomLogWriter : IActorRuntimeLog
@@ -297,7 +297,7 @@ the following <code>IActorRuntime</code> method:</p>
 </code></pre>
 <p>The above method replaces the previously installed <code>ActorRuntimeLogTextFormatter</code> with the specified
 one.</p>
-<p>See <a href="../../ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/">ActorRuntimeLogTextFormatter</a>
+<p>See <a href="../ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter.md">ActorRuntimeLogTextFormatter</a>
 documentation.</p>
 
     <br>
@@ -311,20 +311,20 @@ documentation.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../advanced-topics/tasks/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../state-machine-demo/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../advanced-topics/tasks/overview/" class="btn btn-xs btn-link">
-        Overview
+      <a href="../state-machine-demo/" class="btn btn-xs btn-link">
+        State machine demo
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../liveness-checking/" class="btn btn-xs btn-default pull-left">
+      <a href="../sharing-objects/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../liveness-checking/" class="btn btn-xs btn-link">
-        Effective liveness checking
+        Previous</a><a href="../sharing-objects/" class="btn btn-xs btn-link">
+        Sharing objects
       </a>
     </div>
     
