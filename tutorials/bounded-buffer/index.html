@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/tasks/bounded-buffer/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/bounded-buffer/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>Deadlock in bounded-buffer - Coyote</title>
@@ -16,9 +16,9 @@
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../../css/main.css" rel="stylesheet">
-    <link href="../../../css/player-controls.css" rel="stylesheet">
-    <link href="../../../css/syntax.css" rel="stylesheet">
+    <link href="../../css/main.css" rel="stylesheet">
+    <link href="../../css/player-controls.css" rel="stylesheet">
+    <link href="../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -50,13 +50,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../../assets/js/analytics.js"></script>
-      <script src="../../../assets/js/plugins.js"></script>
-      <script src="../../../assets/js/animate_trace.js"></script>
-      <script src="../../../assets/js/animation.js"></script>
-      <script src="../../../assets/js/progress_bar.js"></script>
-      <script src="../../../assets/js/trace_model.js"></script>
-      <script src="../../../assets/js/main.js"></script> 
+      <script src="../../assets/js/analytics.js"></script>
+      <script src="../../assets/js/plugins.js"></script>
+      <script src="../../assets/js/animate_trace.js"></script>
+      <script src="../../assets/js/animation.js"></script>
+      <script src="../../assets/js/progress_bar.js"></script>
+      <script src="../../assets/js/trace_model.js"></script>
+      <script src="../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -110,9 +110,9 @@ article</a>.</p>
 <p>To run the <code>BoundedBuffer</code> example, you will need to:</p>
 <ul>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
-<li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
+<li>Install the <a href="../../get-started/install.md">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../tools/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../tools/testing.md">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -135,9 +135,9 @@ Language it is now extremely easy to write concurrent code.</p>
 <p>But how do we test concurrency in our code? Testing tools and frameworks have not kept up with the
 pace of language innovation and so this is where <code>Coyote</code> comes to the rescue. When you use Coyote
 to test your programs you will find concurrency bugs that are very hard to find any other way.</p>
-<p>Coyote rewrites your <code>async tasks</code> in a way that allows the <a href="../../../tools/testing/">coyote test</a> tool
+<p>Coyote rewrites your <code>async tasks</code> in a way that allows the <a href="../../tools/testing.md">coyote test</a> tool
 to control all the concurrency and locking in your program and this allows it to find bugs using
-intelligent <a href="../../../core/concurrency-unit-testing/">systematic testing</a>.</p>
+intelligent <a href="../../core/concurrency-unit-testing.md">systematic testing</a>.</p>
 <p>For example, if you take the <code>BoundedBuffer.dll</code> from the above sample you can do the following:</p>
 <pre><code>coyote rewrite BoundedBuffer.dll
 coyote test BoundedBuffer.dll -m TestBoundedBufferMinimalDeadlock --iterations 100

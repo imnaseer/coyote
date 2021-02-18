@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/tasks/failover-coffee-machine/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/failover-coffee-machine/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>Coffee machine failover - Coyote</title>
@@ -16,9 +16,9 @@
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../../css/main.css" rel="stylesheet">
-    <link href="../../../css/player-controls.css" rel="stylesheet">
-    <link href="../../../css/syntax.css" rel="stylesheet">
+    <link href="../../css/main.css" rel="stylesheet">
+    <link href="../../css/player-controls.css" rel="stylesheet">
+    <link href="../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -58,13 +58,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../../assets/js/analytics.js"></script>
-      <script src="../../../assets/js/plugins.js"></script>
-      <script src="../../../assets/js/animate_trace.js"></script>
-      <script src="../../../assets/js/animation.js"></script>
-      <script src="../../../assets/js/progress_bar.js"></script>
-      <script src="../../../assets/js/trace_model.js"></script>
-      <script src="../../../assets/js/main.js"></script> 
+      <script src="../../assets/js/analytics.js"></script>
+      <script src="../../assets/js/plugins.js"></script>
+      <script src="../../assets/js/animate_trace.js"></script>
+      <script src="../../assets/js/animation.js"></script>
+      <script src="../../assets/js/progress_bar.js"></script>
+      <script src="../../assets/js/trace_model.js"></script>
+      <script src="../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -116,7 +116,7 @@ failure or abnormal termination of the previously active application, server, sy
 component, or network. Systems designers usually provide failover capability in servers, systems or
 networks requiring near-continuous availability and a high degree of reliability.&rdquo;</p>
 <p>This sample applies the failover concept to the firmware of an automated espresso machine using the
-Coyote <a href="../../../programming-models/tasks/overview/">asynchronous tasks</a> programming model. Imagine what
+Coyote <a href="../../programming-models/tasks/overview.md">asynchronous tasks</a> programming model. Imagine what
 would happen if the tiny CPU running the machine rebooted in the middle of making a coffee. What
 bad things might happen? Can we design a code that can handle this scenario and provide a more fault
 tolerant coffee machine?</p>
@@ -124,9 +124,9 @@ tolerant coffee machine?</p>
 actors</a> programming model.</p>
 <p>The following diagram shows how Coyote can be used to test this scenario and help you design more
 reliable software.</p>
-<p><img alt="FailoverCoffeeMachine" src="../../../assets/images/FailoverCoffeeMachine.svg" /></p>
+<p><img alt="FailoverCoffeeMachine" src="../../assets/images/FailoverCoffeeMachine.svg" /></p>
 <p>The <code>CoffeeMachine</code> is modeled as an asynchronous interface using
-<a href="../../../programming-models/tasks/overview/">controlled Tasks</a>. This example it not providing real
+<a href="../../programming-models/tasks/overview.md">controlled Tasks</a>. This example it not providing real
 firmware, instead it <code>mocks</code> the hardware sensor platform built into the machine. This is done in
 the asynchronous <code>MockSensors</code> class. This class provides async ways of reading sensor values like
 the water temperature and setting things like the power button, or turning on and off the coffee
@@ -149,8 +149,8 @@ across all instances of the <code>CoffeeMachine</code>.</p>
 <p>There is also a correctness assert in the <code>CoffeeMachine</code> to make sure the correct number of
 espresso shots are made and there is a <code>LivenessMonitor</code> that monitors the <code>CoffeeMachine</code> to make
 sure it never gets stuck, i.e., it always finishes the job it was given or it goes to an error state
-if the machine needs to be fixed. See <a href="../../../core/liveness-checking/">Liveness Checking</a>.</p>
-<p>A number of excellent bugs were found by <a href="../../../tools/testing/">coyote test</a> during the development of
+if the machine needs to be fixed. See <a href="../../core/liveness-checking.md">Liveness Checking</a>.</p>
+<p>A number of excellent bugs were found by <a href="../../tools/testing.md">coyote test</a> during the development of
 this sample, and this illustrates the fact that Coyote can be applied to any type of asynchronous
 software, not just cloud services. There is still one bug remaining in the code which you can find
 using <code>coyote test</code>, and it happens after failover just to prove the usefulness of this testing
@@ -159,9 +159,9 @@ methodology.</p>
 <p>To run the <code>CoffeeMachine</code> example, you will need to:</p>
 <ul>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
-<li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
+<li>Install the <a href="../../get-started/install.md">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../tools/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../tools/testing.md">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -175,9 +175,9 @@ methodology.</p>
 <p>There are many different types of coffee machines. This example is based on the following machine
 which can automatically heat water, grind beans, and make an espresso shot all with the press of a
 button:</p>
-<p><img alt="image" src="../../../assets/images/GaggiaEspresso.png" /></p>
+<p><img alt="image" src="../../assets/images/GaggiaEspresso.png" /></p>
 <p>The following diagram shows the abstract state machine that is implemented in C# code:</p>
-<p><img alt="image" src="../../../assets/images/CoffeeMachineTasks.svg" /></p>
+<p><img alt="image" src="../../assets/images/CoffeeMachineTasks.svg" /></p>
 <p>Run the executable without using <code>coyote test</code> (this is called running in <code>production mode</code>), you
 will see the following console output. Notice in the output below that the <code>FailoverDriver</code> forces
 the termination of the <code>CoffeeMachine</code> right in the middle of making a coffee. Then when the
@@ -257,7 +257,7 @@ next coffee without incident. Eventually a <code>CoffeeMachine</code> will repor
 coffee beans and then it will stop with an error message saying the machine needs to be manually
 refilled.</p>
 <h2 id="coyote-testing">Coyote testing</h2>
-<p>You can now use <a href="../../../tools/testing/">coyote test</a> to exercise the code and see if any bugs
+<p>You can now use <a href="../../tools/testing.md">coyote test</a> to exercise the code and see if any bugs
 can be found. From the <code>coyote-samples</code> folder:</p>
 <pre><code class="language-plain">coyote test ./bin/net5.0/CoffeeMachineTasks.dll -i 1000 -ms 500 --sch-pct 10
 </code></pre>
@@ -348,7 +348,7 @@ scheduling strategy. Each process runs until the first one finds a bug, then the
 and the bug is reported. This can be useful when you want to leverage the full power of your
 computer to find those bugs that are particularly hard to find more quickly.</p>
 <h3 id="liveness-monitor">Liveness monitor</h3>
-<p>As described in the documentation on <a href="../../../core/liveness-checking/">Liveness Checking</a> the
+<p>As described in the documentation on <a href="../../core/liveness-checking.md">Liveness Checking</a> the
 <code>CoffeeMachine</code> must also eventually <code>finish</code> what it is doing. It must either make a coffee when
 requested and return to the <code>Ready</code> state, or it must find a problem and go to the <code>Error</code> state or
 the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can be enforced using a very simple
@@ -371,7 +371,7 @@ the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can 
     private class Busy : State { }
 }
 </code></pre>
-<p>This type of <code>Monitor</code> is also a special kind of limited <a href="../../../programming-models/actors/state-machines/">state
+<p>This type of <code>Monitor</code> is also a special kind of limited <a href="../../programming-models/actors/state-machines.md">state
 machine</a>. The <code>CoffeeMachine</code> can send
 events to this monitor to tell it when it has switched into <code>Busy</code> state or <code>Idle</code> state. When the
 <code>CoffeeMachine</code> starts heating water, or making coffee it sends this event:</p>
