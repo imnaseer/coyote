@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/overview/videos/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/actors/why-actors/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Videos - Coyote</title>
+    <title>Why Coyote actors? - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../css/main.css" rel="stylesheet">
-    <link href="../../css/player-controls.css" rel="stylesheet">
-    <link href="../../css/syntax.css" rel="stylesheet">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,11 +35,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Webinar", url: "#_top", children: [
+          {title: "How are Coyote Actors different from existing Microsoft Actor frameworks?", url: "#_top", children: [
           ]},
-          {title: "The async tasks programming model", url: "#the-async-tasks-programming-model", children: [
+          {title: "How is it different from other actor implementations?", url: "#how-is-it-different-from-other-actor-implementations", children: [
           ]},
-          {title: "The actor programming model", url: "#the-actor-programming-model", children: [
+          {title: "What scenarios to use Coyote as opposed to other systems?", url: "#what-scenarios-to-use-coyote-as-opposed-to-other-systems", children: [
           ]},
         ];
 
@@ -47,13 +47,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../assets/js/analytics.js"></script>
-      <script src="../../assets/js/plugins.js"></script>
-      <script src="../../assets/js/animate_trace.js"></script>
-      <script src="../../assets/js/animation.js"></script>
-      <script src="../../assets/js/progress_bar.js"></script>
-      <script src="../../assets/js/trace_model.js"></script>
-      <script src="../../assets/js/main.js"></script> 
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -77,20 +77,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../publications/" class="btn btn-xs btn-default pull-right">
+      <a href="../../../tutorials/first-concurrency-unit-test/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../publications/" class="btn btn-xs btn-link">
-        Publications
+      <a href="../../../tutorials/first-concurrency-unit-test/" class="btn btn-xs btn-link">
+        Write your first concurrency unit test
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../faq/" class="btn btn-xs btn-default pull-left">
+      <a href="../state-machine-demo/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../faq/" class="btn btn-xs btn-link">
-        Frequently asked questions
+        Previous</a><a href="../state-machine-demo/" class="btn btn-xs btn-link">
+        State machine demo
       </a>
     </div>
     
@@ -98,15 +98,40 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="webinar">Webinar</h2>
-<p>This is an 1 hour Microsoft Research Webinar on Coyote. Sign up to watch the video and you will receive a link to the video in email:</p>
-<p><a href="https://note.microsoft.com/MSR-Webinar-Coyote-Registration-On-Demand.html"><img alt="image" src="../../assets/images/webinar.png" /></a></p>
-<h2 id="the-async-tasks-programming-model">The async tasks programming model</h2>
-<p>This Channel 9 On-NET show is a deeper dive into the <a href="../../advanced-topics/tasks/overview/">async tasks programming model</a>:</p>
-<p><a href="https://channel9.msdn.com/Shows/On-NET/Reliable-Async-Systems-with-Coyote-Part-1"><img alt="image" src="../../assets/images/channel9_tasks.png" /></a></p>
-<h2 id="the-actor-programming-model">The actor programming model</h2>
-<p>This Channel 9 On-NET show is a deeper dive into the <a href="../../advanced-topics/actors/overview/">actor programming model</a>:</p>
-<p><a href="https://channel9.msdn.com/Shows/On-NET/Reliable-Async-Systems-with-Coyote-Part-2"><img alt="image" src="../../assets/images/channel9_actors.png" /></a></p>
+      <h2 id="how-are-coyote-actors-different-from-existing-microsoft-actor-frameworks">How are Coyote Actors different from existing Microsoft Actor frameworks?</h2>
+<p>As you build highly concurrent systems, designed to defending against race conditions, arbitrary
+faults, etc, how do you test such systems? How do you know that you got the code right? These
+questions were the motivation behind creating Coyote.</p>
+<p>Coyote focuses on writing <a href="../../../concepts/specifications/">specifications</a> and providing
+high-coverage testing via <a href="../../../concepts/concurrency-unit-testing/">systematic testing</a>. The
+capability of writing better tests, getting (much) better coverage, accelerates the development
+process.</p>
+<h2 id="how-is-it-different-from-other-actor-implementations">How is it different from other actor implementations?</h2>
+<p>Coyote does not have a distributed runtime, so it cannot be a replacement for systems like
+<a href="https://dotnet.github.io/orleans/">Orleans</a>, <a href="https://dapr.io/">dapr</a>, <a href="https://azure.microsoft.com/en-us/services/service-fabric/">Azure Service
+Fabric</a>, or <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-actors-introduction">Reliable
+Actors</a>,
+each of which provide distributed hosting goodies such as state persistence, networking,
+load-balancing, etc.</p>
+<p>Coyote embodies its ideas in programming models such as
+<a href="../overview/">actors</a> and
+<a href="../../tasks/overview/">tasks</a>. Each of these only have in-memory
+representations. Think of them in the same way as C# Tasks: they&rsquo;re just programming constructs.</p>
+<p>Coyote is complimentary to these other frameworks. Some Azure teams, for instance, use Service
+Fabric for hosting their application and Coyote for expressing the logic. There have also been
+instances where Reliable Actors were used, and each Reliable actor hosted a Coyote
+<a href="../state-machines/">StateMachine</a> inside. (The ReliableActor
+would receive messages and use them to drive the state machine.) Coyote testing vets correctness,
+and Service Fabric provides all the hosting capabilities.</p>
+<p>Coyote has minimal dependencies, so it should be easy to integrate.  There is also a tutorial on
+how to use Coyote Actors to implement a <a href="../../../tutorials/actors/raft-azure/">Raft server
+cluster</a> on top of Azure Service Bus.</p>
+<h2 id="what-scenarios-to-use-coyote-as-opposed-to-other-systems">What scenarios to use Coyote as opposed to other systems?</h2>
+<p>As mentioned above, using Coyote does not rule out the other systems. Use Coyote when there is
+complexity in your design and you&rsquo;re interested in high-coverage testing of your logic (against
+concurrency, failures, timers, race conditions, etc.)</p>
+<p>Coyote is not just for distributed systems. You can use it for single-box scenarios as well, e.g.,
+asynchronous code using Tasks (running on a multi-core machine).</p>
 
     <br>
       
@@ -119,20 +144,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../publications/" class="btn btn-xs btn-default pull-right">
+      <a href="../../../tutorials/first-concurrency-unit-test/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../publications/" class="btn btn-xs btn-link">
-        Publications
+      <a href="../../../tutorials/first-concurrency-unit-test/" class="btn btn-xs btn-link">
+        Write your first concurrency unit test
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../faq/" class="btn btn-xs btn-default pull-left">
+      <a href="../state-machine-demo/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../faq/" class="btn btn-xs btn-link">
-        Frequently asked questions
+        Previous</a><a href="../state-machine-demo/" class="btn btn-xs btn-link">
+        State machine demo
       </a>
     </div>
     

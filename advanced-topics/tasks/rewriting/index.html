@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/overview/videos/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/tasks/rewriting/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Videos - Coyote</title>
+    <title>Rewriting binaries - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../css/main.css" rel="stylesheet">
-    <link href="../../css/player-controls.css" rel="stylesheet">
-    <link href="../../css/syntax.css" rel="stylesheet">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,11 +35,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Webinar", url: "#_top", children: [
+          {title: "Rewriting binaries", url: "#_top", children: [
           ]},
-          {title: "The async tasks programming model", url: "#the-async-tasks-programming-model", children: [
-          ]},
-          {title: "The actor programming model", url: "#the-actor-programming-model", children: [
+          {title: "Not supported", url: "#not-supported", children: [
           ]},
         ];
 
@@ -47,13 +45,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../assets/js/analytics.js"></script>
-      <script src="../../assets/js/plugins.js"></script>
-      <script src="../../assets/js/animate_trace.js"></script>
-      <script src="../../assets/js/animation.js"></script>
-      <script src="../../assets/js/progress_bar.js"></script>
-      <script src="../../assets/js/trace_model.js"></script>
-      <script src="../../assets/js/main.js"></script> 
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -77,20 +75,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../publications/" class="btn btn-xs btn-default pull-right">
+      <a href="../../actors/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../publications/" class="btn btn-xs btn-link">
-        Publications
+      <a href="../../actors/overview/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../faq/" class="btn btn-xs btn-default pull-left">
+      <a href="../interleavings/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../faq/" class="btn btn-xs btn-link">
-        Frequently asked questions
+        Previous</a><a href="../interleavings/" class="btn btn-xs btn-link">
+        Improving coverage of fine-grained interleavings
       </a>
     </div>
     
@@ -98,15 +96,48 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="webinar">Webinar</h2>
-<p>This is an 1 hour Microsoft Research Webinar on Coyote. Sign up to watch the video and you will receive a link to the video in email:</p>
-<p><a href="https://note.microsoft.com/MSR-Webinar-Coyote-Registration-On-Demand.html"><img alt="image" src="../../assets/images/webinar.png" /></a></p>
-<h2 id="the-async-tasks-programming-model">The async tasks programming model</h2>
-<p>This Channel 9 On-NET show is a deeper dive into the <a href="../../advanced-topics/tasks/overview/">async tasks programming model</a>:</p>
-<p><a href="https://channel9.msdn.com/Shows/On-NET/Reliable-Async-Systems-with-Coyote-Part-1"><img alt="image" src="../../assets/images/channel9_tasks.png" /></a></p>
-<h2 id="the-actor-programming-model">The actor programming model</h2>
-<p>This Channel 9 On-NET show is a deeper dive into the <a href="../../advanced-topics/actors/overview/">actor programming model</a>:</p>
-<p><a href="https://channel9.msdn.com/Shows/On-NET/Reliable-Async-Systems-with-Coyote-Part-2"><img alt="image" src="../../assets/images/channel9_actors.png" /></a></p>
+      <h2 id="rewriting-binaries">Rewriting binaries</h2>
+<p>The <a href="../overview/">asynchronous tasks programming model</a> shows how Coyote can control the concurrency
+of asynchronous operations using the special Coyote Task types. You can choose to use this
+programming model by modifying your code to use these Coyote Task types but this takes some effort
+on your part. Instead, you can use the <a href="../../../tools/rewriting">coyote rewriting tool</a> which will
+automatically rewrite your binaries in a way that they can then be used in <code>coyote test</code> runs.</p>
+<p>This automatic rewriting currently supports rewriting the following constructs so they are testable
+with <code>coyote test</code>:</p>
+<ul>
+<li><code>Task</code>, all methods except <code>ConfigureAwait</code> and <code>ContinueWith</code></li>
+<li>C# lock statements and <code>Monitor</code> type.</li>
+<li>Exception handlers</li>
+</ul>
+<p>Note that during testing coyote needs to be able to terminate a test iteration at any time in order
+to support the <code>--max-steps</code> command line argument. This termination is done using a special coyote
+<code>ExecutionCancelledException</code>. The problem is when your code contains one of the following:</p>
+<pre><code class="language-c#">} catch {
+} catch (Exception) {
+} catch (RuntimeException) {
+</code></pre>
+<p>these will inadvertently catch the special Coyote exception, which then stops <code>--max-steps</code> from
+working. The recommended fix is to add a <code>when (!(e is Microsoft.Coyote.RuntimeException))</code>
+filter as shown in <a href="../../../tools/tester-requirements/">tester requirements</a>.</p>
+<p>The good news is that <code>coyote rewrite</code> can take care of this for you automatically so you do not
+need to modify any of your exception handlers.</p>
+<h2 id="not-supported">Not supported</h2>
+<p>The following concurrency constructs are not supported by <code>coyote rewrite</code>:</p>
+<ul>
+<li><code>Parallel</code> helper class.</li>
+<li><code>System.Collections.Current.BlockingCollection</code></li>
+<li><code>ThreadPool</code></li>
+<li><code>Thread</code></li>
+<li><code>ManualResetEvent</code>, <code>AutoResetEvent</code>, <code>SemaphoreSlim</code>, <code>Semaphore</code>, <code>SpinLock</code>, <code>SpinWait</code>, <code>ReaderWriterLock</code>, <code>Interlocked</code>, &hellip;</li>
+<li>Essentially any form of concurrency control that is not listed in the supported list above
+including native calls to Win32 API&rsquo;s that block the current thread or spawn new threads.</li>
+<li><a href="https://github.com/dotnet/roslyn/blob/master/docs/features/task-types.md">Task-like types</a></li>
+<li>Any .NET library that is a mixed-mode assembly.</li>
+<li>Any .NET library type or method that uses any of the above, especially blocking IO like
+<code>System.IO.Pipelines</code>, <code>System.IO.Channels</code>, etc.</li>
+</ul>
+<p>As you can see this is currently a long list, that will hopefully get shorter over time
+as development continues on this feature.</p>
 
     <br>
       
@@ -119,20 +150,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../publications/" class="btn btn-xs btn-default pull-right">
+      <a href="../../actors/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../publications/" class="btn btn-xs btn-link">
-        Publications
+      <a href="../../actors/overview/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../faq/" class="btn btn-xs btn-default pull-left">
+      <a href="../interleavings/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../faq/" class="btn btn-xs btn-link">
-        Frequently asked questions
+        Previous</a><a href="../interleavings/" class="btn btn-xs btn-link">
+        Improving coverage of fine-grained interleavings
       </a>
     </div>
     

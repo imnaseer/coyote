@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/overview/videos/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/actors/uncaught-exceptions/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Videos - Coyote</title>
+    <title>Semantics of unhandled exceptions - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../css/main.css" rel="stylesheet">
-    <link href="../../css/player-controls.css" rel="stylesheet">
-    <link href="../../css/syntax.css" rel="stylesheet">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,11 +35,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Webinar", url: "#_top", children: [
+          {title: "Semantics of unhandled exceptions", url: "#_top", children: [
           ]},
-          {title: "The async tasks programming model", url: "#the-async-tasks-programming-model", children: [
-          ]},
-          {title: "The actor programming model", url: "#the-actor-programming-model", children: [
+          {title: "Call Stack and debugging", url: "#call-stack-and-debugging", children: [
           ]},
         ];
 
@@ -47,13 +45,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../assets/js/analytics.js"></script>
-      <script src="../../assets/js/plugins.js"></script>
-      <script src="../../assets/js/animate_trace.js"></script>
-      <script src="../../assets/js/animation.js"></script>
-      <script src="../../assets/js/progress_bar.js"></script>
-      <script src="../../assets/js/trace_model.js"></script>
-      <script src="../../assets/js/main.js"></script> 
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -77,20 +75,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../publications/" class="btn btn-xs btn-default pull-right">
+      <a href="../sharing-objects/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../publications/" class="btn btn-xs btn-link">
-        Publications
+      <a href="../sharing-objects/" class="btn btn-xs btn-link">
+        Sharing objects
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../faq/" class="btn btn-xs btn-default pull-left">
+      <a href="../event-groups/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../faq/" class="btn btn-xs btn-link">
-        Frequently asked questions
+        Previous</a><a href="../event-groups/" class="btn btn-xs btn-link">
+        Event groups
       </a>
     </div>
     
@@ -98,15 +96,52 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="webinar">Webinar</h2>
-<p>This is an 1 hour Microsoft Research Webinar on Coyote. Sign up to watch the video and you will receive a link to the video in email:</p>
-<p><a href="https://note.microsoft.com/MSR-Webinar-Coyote-Registration-On-Demand.html"><img alt="image" src="../../assets/images/webinar.png" /></a></p>
-<h2 id="the-async-tasks-programming-model">The async tasks programming model</h2>
-<p>This Channel 9 On-NET show is a deeper dive into the <a href="../../advanced-topics/tasks/overview/">async tasks programming model</a>:</p>
-<p><a href="https://channel9.msdn.com/Shows/On-NET/Reliable-Async-Systems-with-Coyote-Part-1"><img alt="image" src="../../assets/images/channel9_tasks.png" /></a></p>
-<h2 id="the-actor-programming-model">The actor programming model</h2>
-<p>This Channel 9 On-NET show is a deeper dive into the <a href="../../advanced-topics/actors/overview/">actor programming model</a>:</p>
-<p><a href="https://channel9.msdn.com/Shows/On-NET/Reliable-Async-Systems-with-Coyote-Part-2"><img alt="image" src="../../assets/images/channel9_actors.png" /></a></p>
+      <h2 id="semantics-of-unhandled-exceptions">Semantics of unhandled exceptions</h2>
+<p>Coyote <code>Actors</code> can execute arbitrary C# code in their event handlers. This page discusses what
+happens if such code throws an exception that is not handled inside the action itself. As is usual
+in <a href="https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/exception-handling-task-parallel-library">asynchronous
+programming</a>,
+one should be careful with unhandled exceptions.</p>
+<p>In test mode (i.e., when running a test with <code>coyote test ...</code>), all unhandled exceptions are an
+error and the test will fail. The <code>coyote</code> tester will stop the execution at that point and report
+an error.</p>
+<p>In production mode (i.e., when running a Coyote program outside of <code>coyote test</code>), the Coyote
+runtime intercepts any unhandled exception in an actor. The exception is then delivered to the
+<code>OnFailure</code> delegate of the runtime. At this point, it is your responsibility to take the
+appropriate action. For instance, you can cause the program to crash and create a dump (for
+debugging later) as follows:</p>
+<pre><code class="language-c#">runtime.OnFailure += delegate (Exception exception)
+{
+   Environment.FailFast(exception.ToString(), exception);
+};
+</code></pre>
+<p>It is important that you induce a crash to stop the program, after perhaps taking some cleanup
+actions. If you don&rsquo;t do so, the runtime automatically enters a &ldquo;failure&rdquo; mode. Actors may continue
+running their current action, but no additional work will take place. The runtime stops all
+<code>Enqueue</code> and <code>Dequeue</code> operations in the program. Thus, messages sent will not be delivered, and
+already-received messages will not be dequeued. If you wish to suppress an exception and have the
+rest of the program continue normal operation, then it is best to catch the exception in the action
+itself using a usual <code>try { } catch { }</code> block, or override the actor&rsquo;s <code>OnException</code> method to
+handle exceptions in one place.  This override can return one of the following outcomes:</p>
+<pre><code class="language-c#">// The outcome when an Microsoft.Coyote.Actors.Actor throws an exception.
+public enum OnExceptionOutcome
+{
+   // The actor throws the exception causing the runtime to fail.
+   ThrowException = 0,
+
+   // The actor handles the exception and resumes execution.
+   HandledException = 1,
+
+   // The actor handles the exception and halts.
+   Halt = 2
+}
+</code></pre>
+<h2 id="call-stack-and-debugging">Call Stack and debugging</h2>
+<p>The runtime tries to call the <code>OnFailure</code> delegate with the stack intact. That is, if you launch a
+debugger from inside the <code>OnFailure</code> method, you will see the stack (with local variables) at the
+point the exception was thrown. However, this is not always the case. If the exception was thrown
+from an <code>async</code> action, then the stack may have gotten unwound even before the runtime gets to know
+of the exception (because of the way <code>async</code> continuations get compiled).</p>
 
     <br>
       
@@ -119,20 +154,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../publications/" class="btn btn-xs btn-default pull-right">
+      <a href="../sharing-objects/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../publications/" class="btn btn-xs btn-link">
-        Publications
+      <a href="../sharing-objects/" class="btn btn-xs btn-link">
+        Sharing objects
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../faq/" class="btn btn-xs btn-default pull-left">
+      <a href="../event-groups/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../faq/" class="btn btn-xs btn-link">
-        Frequently asked questions
+        Previous</a><a href="../event-groups/" class="btn btn-xs btn-link">
+        Event groups
       </a>
     </div>
     

@@ -168,7 +168,7 @@ lost, and the <code>Robot</code> will not stop doing its job.</p>
  3. The sample uses the <em>FailoverDriver</em> component to perform the termination of the <em>Navigator</em> and
     the creation of a new <em>Navigator</em>. Also a <code>MockStorage</code> component is used to store the state
     needed to restart the newly-created instance without loss of state.</p>
-<p>The <code>Robot</code> and the <code>Navigator</code> are modeled as  <a href="../../advanced-topics/actors/state-machines.md">state
+<p>The <code>Robot</code> and the <code>Navigator</code> are modeled as  <a href="../../../advanced-topics/actors/state-machines/">state
 machines</a> and they are started by another state machine
 called <code>FailoverDriver</code>.</p>
 <p>The FailoverDriver lets the first <code>Navigator</code> instance run for a bit then it randomly kills it by
