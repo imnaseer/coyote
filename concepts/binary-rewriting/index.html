@@ -100,7 +100,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The <a href="overview.md">asynchronous tasks programming model</a> shows how Coyote can control the concurrency
 of asynchronous operations using the special Coyote Task types. You can choose to use this
 programming model by modifying your code to use these Coyote Task types but this takes some effort
-on your part. Instead, you can use the <a href="../../../tools/rewriting">coyote rewriting tool</a> which will
+on your part. Instead, you can use the <a href="../tools/rewriting">coyote rewriting tool</a> which will
 automatically rewrite your binaries in a way that they can then be used in <code>coyote test</code> runs.</p>
 <p>This automatic rewriting currently supports rewriting the following constructs so they are testable
 with <code>coyote test</code>:</p>
@@ -118,7 +118,7 @@ to support the <code>--max-steps</code> command line argument. This termination 
 </code></pre>
 <p>these will inadvertently catch the special Coyote exception, which then stops <code>--max-steps</code> from
 working. The recommended fix is to add a <code>when (!(e is Microsoft.Coyote.RuntimeException))</code>
-filter as shown in <a href="../../tools/tester-requirements.md">tester requirements</a>.</p>
+filter as shown in <a href="../../tools/tester-requirements/">tester requirements</a>.</p>
 <p>The good news is that <code>coyote rewrite</code> can take care of this for you automatically so you do not
 need to modify any of your exception handlers.</p>
 <h2 id="not-supported">Not supported</h2>

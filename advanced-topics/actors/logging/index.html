@@ -230,7 +230,7 @@ using the installed <code>Logger</code>.</p>
 the <code>RegisterLog</code> method on <code>IActorRuntime</code>.  This is additive so you can have the default
 <code>ActorRuntimeLogTextFormatter</code> and another logger running at the same time.  For example, see the
 <code>ActorRuntimeLogGraphBuilder</code> class which implements <code>IActorRuntimeLog</code> and generates a directed
-graph representing all activities that happened during the execution of your actors. See <a href="../tools/coverage.md">activity
+graph representing all activities that happened during the execution of your actors. See <a href="../../../tools/coverage/">activity
 coverage</a> for an example graph output. The <code>coyote</code> test tool sets this up for
 you when you specify <code>--graph</code> or <code>--coverage activity</code> command line options.</p>
 <p>The <code>--verbosity</code> command line option can also affect the default logging behavior. When
@@ -240,7 +240,7 @@ minimal</code> to see only error messages and <code>--verbosity normal</code> to
 produce a lot of output especially if you run many testing iterations. It is usually more useful to
 only capture the output of the one failing iteration in a log file and this is done automatically
 by the testing runtime when <code>--verbosity</code> is not specified.</p>
-<p>See <a href="../ref/Microsoft.Coyote.Actors/IActorRuntimeLog.md">IActorRuntimeLog API documentation</a>.</p>
+<p>See <a href="../../../ref/Microsoft.Coyote.Actors/IActorRuntimeLog/">IActorRuntimeLog API documentation</a>.</p>
 <h2 id="example-of-a-custom-iactorruntimelog">Example of a custom IActorRuntimeLog</h2>
 <p>You can also implement your own <code>IActorRuntimeLog</code>. The following is an example of how to do this:</p>
 <pre><code class="language-c#">internal class CustomLogWriter : IActorRuntimeLog
@@ -297,7 +297,7 @@ the following <code>IActorRuntime</code> method:</p>
 </code></pre>
 <p>The above method replaces the previously installed <code>ActorRuntimeLogTextFormatter</code> with the specified
 one.</p>
-<p>See <a href="../ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter.md">ActorRuntimeLogTextFormatter</a>
+<p>See <a href="../../../ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/">ActorRuntimeLogTextFormatter</a>
 documentation.</p>
 
     <br>
