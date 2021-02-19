@@ -37,9 +37,7 @@
         var pageToc = [
           {title: "Concurrency unit testing", url: "#_top", children: [
           ]},
-          {title: "Systematic testing", url: "#systematic-testing", children: [
-          ]},
-          {title: "Binary rewriting for testing unmodified code", url: "#binary-rewriting-for-testing-unmodified-code", children: [
+          {title: "Systematic testing of unmodified programs", url: "#systematic-testing-of-unmodified-programs", children: [
           ]},
           {title: "Expressing nondeterminism and mocking", url: "#expressing-nondeterminism-and-mocking", children: [
           ]},
@@ -114,7 +112,7 @@ trace that led to the bug 100% of the time, and as many times as you want. Coyot
 automatically replaying all nondeterministic choices in your test that led to this bug. This is a
 game changer!</p>
 <p>Let&rsquo;s see how this kind of testing works in practice.</p>
-<h2 id="systematic-testing">Systematic testing</h2>
+<h2 id="systematic-testing-of-unmodified-programs">Systematic testing of unmodified programs</h2>
 <p>During testing, Coyote takes over the non-determinism in your program. Once Coyote has control over
 the non-determinism, it will repeatedly run the concurrency unit test from start to completion, each
 time exercising a different set of non-deterministic choices, offering much better coverage than
@@ -122,19 +120,11 @@ using traditional techniques such as stress testing (which rely on luck). This t
 Coyote performs is known as <em>systematic testing</em>.</p>
 <p>This powerful testing ability, however, has one requirement: you must declare <em>all</em> sources of
 non-determinism in your logic in a way that Coyote understands. Luckily, in most common cases you do
-not need to do much thanks to the awesome <a href="../../tools/rewriting/">binary rewriting tool</a> of Coyote.</p>
-<h2 id="binary-rewriting-for-testing-unmodified-code">Binary rewriting for testing unmodified code</h2>
-<p>Through binary rewriting, Coyote loads one or more of your assemblies and rewrites them for
-systematic testing (for production just use the original unmodified assemblies). This can be easily
-done in a post-build task. The rewritten code maintains exact semantics with the production version
-(so you don&rsquo;t need to worry about false bugs), but has stubs and hooks injected that allow Coyote to
-take control of concurrent execution and various sources of nondeterminism in a program.</p>
-<p>Out of the box, Coyote supports most common <code>System.Threading.Tasks</code> types and methods available in
-the .NET Task Parallel Library, such as the <code>Task</code>, <code>Task&lt;TResult&gt;</code> and
-<code>TaskCompletionSource&lt;TResult&gt;</code> types, as well as the <code>async</code>, <code>await</code> and <code>lock</code> C# keywords. We
-are adding support for more APIs over time, but if something you need is missing please reach out on
-<a href="https://github.com/microsoft/coyote/issues">GitHub</a>! Coyote will let you know with an informative
-error if it detects a type it does not support.</p>
+not need to do much thanks to the awesome <a href="../../tools/rewriting/">binary rewriting</a> that Coyote does
+to enable testing of unmodified programs. Out of the box, Coyote supports most common types and
+methods available in the .NET Task Parallel Library (such as <code>Task</code>, <code>Task&lt;TResult&gt;</code> and
+<code>TaskCompletionSource&lt;TResult&gt;</code>), as well as the <code>async</code>, <code>await</code> and <code>lock</code> C# keywords, and we are
+adding more types and APIs over time.</p>
 <p>Take the simple example that was used to explain concurrency <a href="../non-determinism/">non-determinism</a>.
 Notice that the code below is using the C# <code>Task</code> type. Coyote understands this <code>Task</code> type and is
 able to control its schedule during systematic testing, as discussed above and
@@ -158,6 +148,7 @@ int foo()
 <p>When this method <code>foo</code> executes as part of a test case, the Coyote tester will understand that it is
 spawning two tasks that can run concurrently. The tester will explore different ways of executing
 the tasks to systematically cover all possibilities.</p>
+<p>You can read more about binary rewriting in Coyote <a href="../binary-rewriting/">here</a>.</p>
 <h2 id="expressing-nondeterminism-and-mocking">Expressing nondeterminism and mocking</h2>
 <p>Coyote also offers APIs for expressing other forms of non-determinism that are not supported out of
 the box using binary rewriting. The <code>CoyoteRuntime.Random</code> API, for instance, returns a

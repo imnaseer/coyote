@@ -35,9 +35,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Rewriting binaries", url: "#_top", children: [
+          {title: "Binary rewriting for systematic testing", url: "#_top", children: [
           ]},
-          {title: "Not supported", url: "#not-supported", children: [
+          {title: "Supported APIs", url: "#supported-apis", children: [
+          ]},
+          {title: "Quality of life improvements through rewriting", url: "#quality-of-life-improvements-through-rewriting", children: [
           ]},
         ];
 
@@ -96,21 +98,31 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="rewriting-binaries">Rewriting binaries</h2>
-<p>The <a href="overview.md">asynchronous tasks programming model</a> shows how Coyote can control the concurrency
-of asynchronous operations using the special Coyote Task types. You can choose to use this
-programming model by modifying your code to use these Coyote Task types but this takes some effort
-on your part. Instead, you can use the <a href="../../tools/rewriting/">coyote rewriting tool</a> which will
-automatically rewrite your binaries in a way that they can then be used in <code>coyote test</code> runs.</p>
-<p>This automatic rewriting currently supports rewriting the following constructs so they are testable
-with <code>coyote test</code>:</p>
+      <h2 id="binary-rewriting-for-systematic-testing">Binary rewriting for systematic testing</h2>
+<p>To enable systematic testing of unmodified programs, Coyote performs <em>binary rewriting</em> of managed
+.NET assemblies. This process loads one or more of your assemblies and rewrites them for systematic
+testing (for production just use the original unmodified assemblies). This can be easily done in a
+post-build task. The rewritten code maintains exact semantics with the production version (so you
+don&rsquo;t need to worry about false bugs), but has stubs and hooks injected that allow Coyote to take
+control of concurrent execution and various sources of nondeterminism in a program.</p>
+<p>To learn how to run the binary rewriter of Coyote before testing your application read
+<a href="../../tools/rewriting/">here</a> as well as check out our tutorial on <a href="../../tutorials/first-concurrency-unit-test/">writing your first concurrency
+unit test</a>.</p>
+<h2 id="supported-apis">Supported APIs</h2>
+<p>Out of the box, Coyote supports programs written using:</p>
 <ul>
-<li><code>Task</code>, all methods except <code>ConfigureAwait</code> and <code>ContinueWith</code></li>
-<li>C# lock statements and <code>Monitor</code> type.</li>
-<li>Exception handlers</li>
+<li>The <code>async</code>, <code>await</code> and <code>lock</code> C# keywords.</li>
+<li>The most common <code>System.Threading.Tasks</code> types in the .NET Task Parallel Library:</li>
+<li>Including the <code>Task</code>, <code>Task&lt;TResult&gt;</code> and <code>TaskCompletionSource&lt;TResult&gt;</code> types.</li>
+<li>The <code>Monitor</code> type in <code>System.Threading</code>.</li>
 </ul>
-<p>Note that during testing coyote needs to be able to terminate a test iteration at any time in order
-to support the <code>--max-steps</code> command line argument. This termination is done using a special coyote
+<p>Coyote will let you know with an informative error if it detects a type it does not support. We are
+adding support for more APIs over time, but if something you need is missing please reach out on
+<a href="https://github.com/microsoft/coyote/issues">GitHub</a>!</p>
+<h2 id="quality-of-life-improvements-through-rewriting">Quality of life improvements through rewriting</h2>
+<p>Coyote will automatically rewrite certain parts of your test code (without changing the application semantics) to improve the testing experience. For example:</p>
+<p>During testing coyote needs to be able to terminate a test iteration at any time in order to support
+the <code>--max-steps</code> command line argument. This termination is done using a special coyote
 <code>ExecutionCancelledException</code>. The problem is when your code contains one of the following:</p>
 <pre><code class="language-c#">} catch {
 } catch (Exception) {
@@ -121,23 +133,6 @@ working. The recommended fix is to add a <code>when (!(e is Microsoft.Coyote.Run
 filter as shown in <a href="../../tools/tester-requirements/">tester requirements</a>.</p>
 <p>The good news is that <code>coyote rewrite</code> can take care of this for you automatically so you do not
 need to modify any of your exception handlers.</p>
-<h2 id="not-supported">Not supported</h2>
-<p>The following concurrency constructs are not supported by <code>coyote rewrite</code>:</p>
-<ul>
-<li><code>Parallel</code> helper class.</li>
-<li><code>System.Collections.Current.BlockingCollection</code></li>
-<li><code>ThreadPool</code></li>
-<li><code>Thread</code></li>
-<li><code>ManualResetEvent</code>, <code>AutoResetEvent</code>, <code>SemaphoreSlim</code>, <code>Semaphore</code>, <code>SpinLock</code>, <code>SpinWait</code>, <code>ReaderWriterLock</code>, <code>Interlocked</code>, &hellip;</li>
-<li>Essentially any form of concurrency control that is not listed in the supported list above
-including native calls to Win32 API&rsquo;s that block the current thread or spawn new threads.</li>
-<li><a href="https://github.com/dotnet/roslyn/blob/master/docs/features/task-types.md">Task-like types</a></li>
-<li>Any .NET library that is a mixed-mode assembly.</li>
-<li>Any .NET library type or method that uses any of the above, especially blocking IO like
-<code>System.IO.Pipelines</code>, <code>System.IO.Channels</code>, etc.</li>
-</ul>
-<p>As you can see this is currently a long list, that will hopefully get shorter over time
-as development continues on this feature.</p>
 
     <br>
       
