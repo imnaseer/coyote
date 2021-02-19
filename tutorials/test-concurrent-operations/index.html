@@ -103,7 +103,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <h2 id="test-concurrent-crud-operations-with-coyote">Test concurrent CRUD operations with Coyote</h2>
 <p>In the previous <a href="../first-concurrency-unit-test/">tutorial</a>, we explored how to write our first
 <em>concurrency unit test</em> for <code>AccountManager</code>, and reliably reproduce a race condition in the
-<code>CreateAccount</code> logic using Coyote. As a typical resource provider, <code>AccountManager</code> exposes an API
+<code>CreateAccount</code> logic using Coyote. As a typical resource controller, <code>AccountManager</code> exposes an API
 for creating, getting and deleting accounts. Such operations (including updating, which we skip here
 for simplicity) are commonly known as <a href="https://en.wikipedia.org/wiki/CRUD">CRUD</a>.</p>
 <p>In this follow-up tutorial, we will write a few more tests that exercise the concurrency in the
