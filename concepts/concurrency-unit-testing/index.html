@@ -121,10 +121,11 @@ Coyote performs is known as <em>systematic testing</em>.</p>
 <p>This powerful testing ability, however, has one requirement: you must declare <em>all</em> sources of
 non-determinism in your logic in a way that Coyote understands. Luckily, in most common cases you do
 not need to do much thanks to the awesome <a href="../../tools/rewriting/">binary rewriting</a> that Coyote does
-to enable testing of unmodified programs. Out of the box, Coyote supports most common types and
-methods available in the .NET Task Parallel Library (such as <code>Task</code>, <code>Task&lt;TResult&gt;</code> and
-<code>TaskCompletionSource&lt;TResult&gt;</code>), as well as the <code>async</code>, <code>await</code> and <code>lock</code> C# keywords, and we are
-adding more types and APIs over time.</p>
+to enable testing of unmodified programs.</p>
+<p>Out of the box, Coyote supports most common types and methods available in the .NET Task Parallel
+Library (such as <code>Task</code>, <code>Task&lt;TResult&gt;</code> and <code>TaskCompletionSource&lt;TResult&gt;</code>), as well as the
+<code>async</code>, <code>await</code> and <code>lock</code> C# keywords, and we are adding more types and APIs over time. You can
+read more about this <a href="../../tools/rewriting/">here</a>.</p>
 <p>Take the simple example that was used to explain concurrency <a href="../non-determinism/">non-determinism</a>.
 Notice that the code below is using the C# <code>Task</code> type. Coyote understands this <code>Task</code> type and is
 able to control its schedule during systematic testing, as discussed above and
