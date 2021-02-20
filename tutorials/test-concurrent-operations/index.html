@@ -103,10 +103,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <h2 id="test-concurrent-crud-operations-with-coyote">Test concurrent CRUD operations with Coyote</h2>
 <p>In the previous <a href="../first-concurrency-unit-test/">tutorial</a>, we explored how to write our first
 <em>concurrency unit test</em> for <code>AccountManager</code>, and reliably reproduce a race condition in the
-<code>CreateAccount</code> logic using Coyote. As a typical resource controller, <code>AccountManager</code> exposes an API
-for creating, getting and deleting accounts. Such operations (including updating, which we skip here
-for simplicity) are commonly known as <a href="https://en.wikipedia.org/wiki/CRUD">CRUD</a>.</p>
-<p>In this follow-up tutorial, we will write a few more tests that exercise the concurrency in the
+<code>CreateAccount</code> logic using Coyote. As a typical resource controller, <code>AccountManager</code> exposes an
+API for creating, reading and deleting accounts. Such operations (including updating, which is
+skipped here for simplicity) are commonly known as <a href="https://en.wikipedia.org/wiki/CRUD">CRUD</a>.</p>
+<p>In this follow-up tutorial, you will write a few more tests that exercise the concurrency in the
 <code>AccountManager</code> CRUD operations.</p>
 <h2 id="what-you-will-need">What you will need</h2>
 <p>To run the <code>AccountManager</code> example, you will need to:</p>
@@ -119,8 +119,8 @@ for simplicity) are commonly known as <a href="https://en.wikipedia.org/wiki/CRU
 <h2 id="walkthrough">Walkthrough</h2>
 <p>Our <a href="../first-concurrency-unit-test/">first concurrency unit test</a>, <code>TestConcurrentAccountCreation</code>,
 exercised a race between two concurrent <code>CreateAccount</code> requests. A logical next test would be to
-create two <code>DeleteAccount</code> requests and see what happens whey execute concurrently (as if the system
-was running in production). Let&rsquo;s write this test.</p>
+create two <code>DeleteAccount</code> requests and see what happens when they execute concurrently (as if the
+system was running in production). Here is one such test:</p>
 <pre><code class="language-c#">[Test]
 public static async Task TestConcurrentAccountDeletion()
 {
@@ -151,10 +151,10 @@ public static async Task TestConcurrentAccountDeletion()
 </code></pre>
 <p>The test looks pretty similar to the <code>TestConcurrentAccountCreation</code> from the previous tutorial. The
 main difference is that it first runs a <code>CreateAccount</code> request and waits it to complete, because
-without first creating an account we cannot test its deletion! The test then invokes two
+without first creating an account you cannot test its deletion! The test then invokes two
 <code>DeleteAccount</code> requests, without waiting so that they can run at the same time, then waits for both
 to complete before finally asserting that only one deletion happened (and the other was ignored).</p>
-<p>Let&rsquo;s run this <code>TestConcurrentAccountDeletion</code> test using Coyote (remember to use <code>coyote rewrite</code>
+<p>Run this <code>TestConcurrentAccountDeletion</code> test using Coyote (remember to use <code>coyote rewrite</code>
 first!):</p>
 <pre><code class="language-plain">coyote rewrite .\AccountManager.dll
 coyote test .\AccountManager.dll -m TestConcurrentAccountDeletion -i 100
@@ -217,7 +217,7 @@ public async Task&lt;bool&gt; DeleteAccount(string userName)
   }
 }
 </code></pre>
-<p>The above implementation avoids using the <code>DoesRowExist</code> method, because we can never be sure that
+<p>The above implementation avoids using the <code>DoesRowExist</code> method, because you can never be sure that
 some other concurrent request did not already delete the same row while this method is executing
 between the <code>DoesRowExist</code> and  <code>DeleteRow</code> calls. Such race conditions might not happen <em>most</em> of
 the times, but clearly <em>some</em> times they can happen. In production, with thousands of requests
@@ -227,31 +227,31 @@ to reproduce and debug. This is why using Coyote can really help.</p>
 the database returning an error response (through the <code>RowNotFound</code> exception) to deal with such
 race conditions. It effectively offloads the problem of preventing such races to the database
 itself. Trying to do this in the application logic would be really hard.</p>
-<p>So far we wrote two concurrency unit tests, one exercising two concurrent <code>CreateAccount</code> requests
+<p>So far you wrote two concurrency unit tests, one exercising two concurrent <code>CreateAccount</code> requests
 and the other one exercising two concurrent <code>DeleteAccount</code> requests. Can you think of other
 interesting test cases that would allow us to test the CRUD operations of <code>AccountManager</code> more
 thoroughly? Any set of methods that may read or write shared state (and thus potentially create
-interference) are a great candidate for writing concurrency unit tests and test them with Coyote.</p>
+interference) are a great candidate for writing concurrency unit tests.</p>
 <p>What about a race between a <code>CreateAccount</code> and <code>DeleteAccount</code> call?</p>
-<p>At first glance, this may seem like a weird test to write as we can&rsquo;t control the order in which the
+<p>At first glance, this may seem like a weird test to write as you can&rsquo;t control the order in which the
 two methods will concurrently execute in respect with each other. This makes it difficult to write
 meaningful assertions at the end of the test. But if you think about this more deeply, you will
-realize that there are only a few distinct outcomes of these races and we can assert for each of
+realize that there are only a few distinct outcomes of these races and you can assert for each of
 these outcomes. Tests like these are very useful for ensuring that when CRUD operations execute
 concurrently (which is the norm in production!), a resource (an account in this case) is either
 fully created or fully deleted, and is not left in a half-broken state. This particular example is
 simple but you can easily imagine more complex examples where such race conditions can in fact lead
 to your state being corrupted (e.g. partially created and partially deleted) in the presence of
 concurrency bugs.</p>
-<p>Coyote allows you to easily test exactly these kinds of scenarios and making sure that your customer
+<p>Coyote allows you to easily test exactly these kinds of scenarios, making sure that your customer
 data will not get corrupted. The awesome part is that Coyote will find and help you debug these bugs
 on your local machine before you deploy your service, saving you ton of headache! Of course this
 does not only apply to CRUD operations and resource providers, you can imagine many other systems
 can benefit of this kind of testing!</p>
-<p>Going back to our <code>AccountManager</code> example, let&rsquo;s write this test that exercises <code>CreateAccount</code> and
-<code>DeleteAccount</code> requests that happen at the same time. The test is a bit more involved this time.</p>
+<p>Going back to our <code>AccountManager</code> example, let&rsquo;s write the test that exercises <code>CreateAccount</code> and
+<code>DeleteAccount</code> requests happening at the same time. The test is a bit more involved this time.</p>
 <pre><code class="language-c#">[Test]
-public static async Task TestConcurrentAccountCreationAndDeletion()
+public static async Task TestConcurrentAccountMixedCreationAndDeletion()
 {
   // Initialize the mock in-memory DB and account manager.
   var dbCollection = new InMemoryDbCollection();
@@ -291,12 +291,12 @@ public static async Task TestConcurrentAccountCreationAndDeletion()
   }
 }
 </code></pre>
-<p>Let&rsquo;s run our <code>TestConcurrentAccountCreationAndDeletion</code> test with Coyote (remember to rewrite
+<p>Now run your <code>TestConcurrentAccountMixedCreationAndDeletion</code> test with Coyote (remember to rewrite
 the assembly first!) and see if it passes.</p>
 <pre><code class="language-plain">coyote rewrite .\AccountManager.dll
-coyote test .\AccountManager.dll -m TestConcurrentAccountCreationAndDeletion -i 100
+coyote test .\AccountManager.dll -m TestConcurrentAccountMixedCreationAndDeletion -i 100
 </code></pre>
-<p>The test passed without reporting any bugs which gives us confidence in the correctness of our code.</p>
+<p>The test passed without reporting any bugs which gives you confidence in the correctness of your code.</p>
 <pre><code class="language-plain">. Testing .\AccountManager.dll
 ... Method TestConcurrentAccountCreationAndDeletion
 ... Started the testing task scheduler (process:25840).
@@ -315,10 +315,10 @@ coyote test .\AccountManager.dll -m TestConcurrentAccountCreationAndDeletion -i 
 </code></pre>
 <p>Often times, even if your code is correct and Coyote doesn&rsquo;t find any bugs, it makes you deeply
 think about possible scenarios and outcomes in the presence of race conditions in your logic, and
-helps you reason about the correct behavior. We believe that this clarity in thinking alone is
-extremely valuable. Developers often reason about edge cases when writing sequential tests, but
-sometimes miss bugs in the presence of concurrency as they don&rsquo;t write focused concurrency unit
-tests, as they are impractical to write without a tool like Coyote.</p>
+helps you reason about the correct behavior. This clarity in thinking alone is extremely valuable.
+Developers often reason about edge cases when writing sequential tests, but sometimes miss bugs in
+the presence of concurrency as they don&rsquo;t write focused concurrency unit tests, because they are
+impractical to write without a tool like Coyote.</p>
 <p>Now this was a simple example but you can imagine how it would be possible for the <code>AccountManager</code>
 to get into an inconsistent state if the <code>CreateAccount</code> and <code>DeleteAccount</code> methods involved
 multiple steps, such as modifying a couple of collections instead of just one, emitting events and
@@ -334,7 +334,8 @@ for the account).</p>
 <pre><code class="language-plain">coyote rewrite .\AccountManager.dll
 coyote test .\AccountManager.dll -m TestConcurrentAccountDeletion -i 100
 </code></pre>
-<p>If you find a bug you can replay with the following command:</p>
+<p>If you find a bug you can replay with the following command (providing the correct .schedule file
+reported from the previous coyote test that failed):</p>
 <pre><code class="language-plain">coyote replay .\AccountManager.dll -schedule AccountManager_0_0.schedule -m TestConcurrentAccountDeletion
 </code></pre>
 <p>Feel free to play around with the code and write more concurrency unit tests with Coyote!</p>
