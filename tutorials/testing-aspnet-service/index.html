@@ -171,14 +171,16 @@ Create a new test account and upload some of your favorite photos (you can do mo
 time) and you will see them appear. The &ldquo;dotnet run&rdquo; consoles will also show logging output that
 shows you what is happening behind the scenes.</p>
 <h2 id="sample-structure">Sample structure</h2>
-<p>The <code>ImageGallery.sln</code> solution consists of five projects (all will be discussed below):
-- <code>ImageGallery</code> - this is the web front end that uses the API service.
-- <code>ImageGalleryService</code> - this is the ASP.NET API service.
-- <code>ImageGalleryClient</code> - a helper API for talking to the service.
-- <code>Tests</code> - this contains two regular unit tests that use <code>MSTest</code>.
-- <code>Tests.Coyote</code> - this invokes the two tests in <code>Tests</code> wrapping them with the Coyote systematic
-  testing engine.
-- <code>TraceReplayer</code> - makes it easy to reproduce the bugs found by <code>coyote test</code>.</p>
+<p>The <code>ImageGallery.sln</code> solution consists of five projects (all will be discussed below):</p>
+<ul>
+<li><code>ImageGallery</code> - this is the web front end that uses the API service.</li>
+<li><code>ImageGalleryService</code> - this is the ASP.NET API service.</li>
+<li><code>ImageGalleryClient</code> - a helper API for talking to the service.</li>
+<li><code>Tests</code> - this contains two regular unit tests that use <code>MSTest</code>.</li>
+<li><code>Tests.Coyote</code> - this invokes the two tests in <code>Tests</code> wrapping them with the Coyote systematic
+  testing engine.</li>
+<li><code>TraceReplayer</code> - makes it easy to reproduce the bugs found by <code>coyote test</code>.</li>
+</ul>
 <h2 id="the-image-gallery-sample-service">The Image Gallery sample service</h2>
 <p>This service is based on a 3-tier architecture: (1) a client (implemented by the unit tests and by
 the ImageGallery web front end), (2) two ASP.NET API services, one for managing accounts
