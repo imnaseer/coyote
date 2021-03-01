@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/unit-testing/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/how-to/unit-testing/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Unit testing - Coyote</title>
+    <title>Integrate with a unit testing framework - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,7 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Unit testing with the Coyote systematic tester", url: "#_top", children: [
+          {title: "Integrate Coyote with a unit testing framework", url: "#_top", children: [
           ]},
           {title: "Replaying a trace", url: "#replaying-a-trace", children: [
           ]},
@@ -77,20 +77,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../coverage/" class="btn btn-xs btn-default pull-right">
+      <a href="../../samples/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../coverage/" class="btn btn-xs btn-link">
-        Code and activity coverage
+      <a href="../../samples/overview/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../../concepts/liveness-checking/" class="btn btn-xs btn-default pull-left">
+      <a href="../testing/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../../concepts/liveness-checking/" class="btn btn-xs btn-link">
-        Effective liveness checking
+        Previous</a><a href="../testing/" class="btn btn-xs btn-link">
+        Find and reproduce bugs
       </a>
     </div>
     
@@ -98,7 +98,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="unit-testing-with-the-coyote-systematic-tester">Unit testing with the Coyote systematic tester</h2>
+      <h2 id="integrate-coyote-with-a-unit-testing-framework">Integrate Coyote with a unit testing framework</h2>
 <p>Common unit testing frameworks like
 <a href="https://docs.microsoft.com/en-us/dotnet/concepts/testing/unit-testing-with-mstest">MSTest</a>,
 <a href="https://xunit.net/">xUnit.net</a> and <a href="https://nunit.org/">nunit</a> cannot easily call the <code>coyote</code>
@@ -290,7 +290,7 @@ class MyActor : Actor
 }
 </code></pre>
 <p>If you run this test setting <code>WithXmlLogEnabled(true)</code> on the <code>Configuration</code> you will get the
-following <a href="../dgml/">DGML diagram</a> showing you what happened during this test:</p>
+following <a href="dgml.md">DGML diagram</a> showing you what happened during this test:</p>
 <p><img alt="unittest" src="../../assets/images/unittest.svg" /></p>
 <p>See the following API documentation for more information:</p>
 <ul>
@@ -310,20 +310,20 @@ following <a href="../dgml/">DGML diagram</a> showing you what happened during t
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../coverage/" class="btn btn-xs btn-default pull-right">
+      <a href="../../samples/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../coverage/" class="btn btn-xs btn-link">
-        Code and activity coverage
+      <a href="../../samples/overview/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../../concepts/liveness-checking/" class="btn btn-xs btn-default pull-left">
+      <a href="../testing/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../../concepts/liveness-checking/" class="btn btn-xs btn-link">
-        Effective liveness checking
+        Previous</a><a href="../testing/" class="btn btn-xs btn-link">
+        Find and reproduce bugs
       </a>
     </div>
     

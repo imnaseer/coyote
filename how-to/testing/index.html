@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/get-started/testing/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/how-to/testing/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Testing - Coyote</title>
+    <title>Find and reproduce bugs - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,7 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Testing Coyote programs end-to-end and reproducing bugs", url: "#_top", children: [
+          {title: "Find and reproduce bugs using Coyote", url: "#_top", children: [
           ]},
           {title: "Controlled, serialized and reproducible testing", url: "#controlled-serialized-and-reproducible-testing", children: [
           ]},
@@ -89,12 +89,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../build-source/" class="btn btn-xs btn-default pull-right">
+      <a href="../unit-testing/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../build-source/" class="btn btn-xs btn-link">
-        Building from source
+      <a href="../unit-testing/" class="btn btn-xs btn-link">
+        Integrate with a unit testing framework
       </a>
     </div>
     
@@ -102,7 +102,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <a href="../rewriting/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         Previous</a><a href="../rewriting/" class="btn btn-xs btn-link">
-        Rewriting
+        Rewrite binaries for testing
       </a>
     </div>
     
@@ -110,14 +110,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="testing-coyote-programs-end-to-end-and-reproducing-bugs">Testing Coyote programs end-to-end and reproducing bugs</h2>
+      <h2 id="find-and-reproduce-bugs-using-coyote">Find and reproduce bugs using Coyote</h2>
 <p>The <code>coyote</code> command line tool can be used to automatically test a Coyote program to find and
 deterministically reproduce bugs in your code while also enforcing your safety and liveness
 <a href="../../concepts/specifications/">specifications</a>.</p>
 <p>To invoke the tester use the following command:</p>
 <pre><code class="language-plain">coyote test ${YOUR_PROGRAM}
 </code></pre>
-<p>See <a href="../using-coyote/">Using coyote</a> for information on where to find the <code>coyote</code> tool.</p>
+<p>See <a href="../../get-started/using-coyote/">Using coyote</a> for information on where to find the <code>coyote</code> tool.</p>
 <p><code>${YOUR_PROGRAM}</code> is the path to your application or library that contains a method annotated
 with the <code>[Microsoft.Coyote.SystematicTesting.Test]</code> attribute. This method is the entry point to the
 test.</p>
@@ -218,7 +218,7 @@ allowed.</p>
 Here the Server state machines are colored in green, and the Leader states in red to
 highlight the bug found.</p>
 <h2 id="unit-testing">Unit Testing</h2>
-<p>To use Coyote tester in a unit test environment see <a href="unit-testing.md">Unit Testing</a>.</p>
+<p>To use Coyote tester in a unit test environment see <a href="../unit-testing/">Unit Testing</a>.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p><strong>&ndash;break does not seem to work on MacOS or Linux</strong></p>
 <p><code>--break</code> depends on <code>System.Diagnostics.Debugger.Launch</code> and it seems that this is not supported
@@ -250,12 +250,12 @@ on MacOS or Linux. So another way to debug a replay is to follow these steps:</p
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../build-source/" class="btn btn-xs btn-default pull-right">
+      <a href="../unit-testing/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../build-source/" class="btn btn-xs btn-link">
-        Building from source
+      <a href="../unit-testing/" class="btn btn-xs btn-link">
+        Integrate with a unit testing framework
       </a>
     </div>
     
@@ -263,7 +263,7 @@ on MacOS or Linux. So another way to debug a replay is to follow these steps:</p
       <a href="../rewriting/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         Previous</a><a href="../rewriting/" class="btn btn-xs btn-link">
-        Rewriting
+        Rewrite binaries for testing
       </a>
     </div>
     

@@ -32,14 +32,6 @@
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://microsoft.github.io/coyote/get-started/rewriting/</loc>
-     <lastmod>2021-03-01</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/get-started/testing/</loc>
-     <lastmod>2021-03-01</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
      <loc>https://microsoft.github.io/coyote/get-started/build-source/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
@@ -65,10 +57,6 @@
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://microsoft.github.io/coyote/concepts/liveness-checking/</loc>
-     <lastmod>2021-03-01</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/unit-testing/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
@@ -161,6 +149,18 @@
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://microsoft.github.io/coyote/tutorials/actors/test-failover/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/how-to/rewriting/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/how-to/testing/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/how-to/unit-testing/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>

@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/get-started/rewriting/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/how-to/rewriting/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Rewriting - Coyote</title>
+    <title>Rewrite binaries for testing - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,7 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Rewriting binaries for testing with Coyote", url: "#_top", children: [
+          {title: "Rewrite binaries for testing with Coyote", url: "#_top", children: [
               {title: "Example usage", url: "#example-usage" },
               {title: "Configuration", url: "#configuration" },
               {title: "Strong name signing", url: "#strong-name-signing" },
@@ -82,15 +82,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../testing/" class="btn btn-xs btn-link">
-        Testing
+        Find and reproduce bugs
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../using-coyote/" class="btn btn-xs btn-default pull-left">
+      <a href="../../tutorials/actors/test-failover/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../using-coyote/" class="btn btn-xs btn-link">
-        Using Coyote
+        Previous</a><a href="../../tutorials/actors/test-failover/" class="btn btn-xs btn-link">
+        Test failover and liveness
       </a>
     </div>
     
@@ -98,14 +98,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="rewriting-binaries-for-testing-with-coyote">Rewriting binaries for testing with Coyote</h2>
+      <h2 id="rewrite-binaries-for-testing-with-coyote">Rewrite binaries for testing with Coyote</h2>
 <p>The <code>coyote</code> command line tool can be used to automatically rewrite any .NET binary to take over
 concurrency that is built using <code>System.Threading.Tasks.Task</code>. For details on what kinds of
 rewriting is supported see <a href="../../concepts/binary-rewriting/">Rewriting binaries</a>.</p>
 <p>To invoke the rewriter use the following command:</p>
 <pre><code class="language-plain">coyote rewrite ${YOUR_PROGRAM}
 </code></pre>
-<p>See <a href="../using-coyote/">Using coyote</a> for information on where to find the
+<p>See <a href="../../get-started/using-coyote/">Using coyote</a> for information on where to find the
 <code>coyote</code> tool.</p>
 <p><code>${YOUR_PROGRAM}</code> is the path to your application or library to be rewritten or a folder containing
 all the libraries you want rewritten.</p>
@@ -189,15 +189,15 @@ rewritable assemblies. You must instead rewrite and test the associated library,
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../testing/" class="btn btn-xs btn-link">
-        Testing
+        Find and reproduce bugs
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../using-coyote/" class="btn btn-xs btn-default pull-left">
+      <a href="../../tutorials/actors/test-failover/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../using-coyote/" class="btn btn-xs btn-link">
-        Using Coyote
+        Previous</a><a href="../../tutorials/actors/test-failover/" class="btn btn-xs btn-link">
+        Test failover and liveness
       </a>
     </div>
     

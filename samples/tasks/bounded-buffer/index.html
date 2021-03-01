@@ -112,7 +112,7 @@ article</a>.</p>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
 <li>Install the <a href="../get-started/install.md">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../get-started/testing.md">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../how-to/testing.md">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -135,7 +135,7 @@ Language it is now extremely easy to write concurrent code.</p>
 <p>But how do we test concurrency in our code? Testing tools and frameworks have not kept up with the
 pace of language innovation and so this is where <code>Coyote</code> comes to the rescue. When you use Coyote
 to test your programs you will find concurrency bugs that are very hard to find any other way.</p>
-<p>Coyote rewrites your <code>async tasks</code> in a way that allows the <a href="../get-started/testing.md">coyote test</a>
+<p>Coyote rewrites your <code>async tasks</code> in a way that allows the <a href="../how-to/testing.md">coyote test</a>
 tool to control all the concurrency and locking in your program and this allows it to find bugs
 using intelligent <a href="../concepts/concurrency-unit-testing.md">systematic testing</a>.</p>
 <p>For example, if you take the <code>BoundedBuffer.dll</code> from the above sample you can do the following:</p>

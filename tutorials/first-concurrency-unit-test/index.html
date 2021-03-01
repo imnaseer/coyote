@@ -118,8 +118,8 @@ you in writing correct concurrent code.</p>
 <ul>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
 <li>Install the <a href="../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
-<li>Be familiar with the <code>coyote rewrite</code> tool. See <a href="../../get-started/rewriting/">Rewriting</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../get-started/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote rewrite</code> tool. See <a href="../../how-to/rewriting/">Rewriting</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../how-to/testing/">Testing</a>.</li>
 </ul>
 <h2 id="watch-this-tutorial">Watch this tutorial</h2>
 <p>Optionally, you can watch this tutorial on YouTube:</p>
@@ -359,7 +359,7 @@ logs) that understanding the bug and fixing it becomes a very time consuming and
 systematically explore the various task interleavings in test mode as opposed to leaving that to
 luck (i.e. the operating system scheduler). Coyote gives you <em>exactly</em> this.</p>
 <p>To use Coyote on your task-based program is very easy in most cases. All you need to do is to invoke
-the <code>coyote rewrite</code> tool which <a href="../../get-started/rewriting/">rewrites</a> your assembly (for testing only)
+the <code>coyote rewrite</code> tool which <a href="../../how-to/rewriting/">rewrites</a> your assembly (for testing only)
 so that Coyote can inject logic that allows it to take control of the schedule of C# tasks. Then,
 you can invoke the <code>coyote test</code> tool which <a href="../../concepts/concurrency-unit-testing/">systematically
 explores</a> task interleavings to uncover bug. What is even
@@ -381,7 +381,7 @@ is what you will see if you have already downloaded the <a href="http://github.c
 repo</a>.</p>
 <p>The above command tells Coyote to execute the test method <code>TestConcurrentAccountCreation</code> for 100
 iterations. Each iteration will try explore different interleavings to try unearth the bug. You can
-read more about other Coyote tool options <a href="../../get-started/testing/">here</a>.</p>
+read more about other Coyote tool options <a href="../../how-to/testing/">here</a>.</p>
 <p>Indeed after 20 iterations and 0.15 seconds Coyote finds a bug:</p>
 <pre><code class="language-plain">. Testing .\AccountManager.dll
 ... Method TestConcurrentAccountCreation

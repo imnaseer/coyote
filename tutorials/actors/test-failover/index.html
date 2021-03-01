@@ -87,12 +87,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../../samples/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../../../how-to/rewriting/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../../samples/overview/" class="btn btn-xs btn-link">
-        Overview
+      <a href="../../../how-to/rewriting/" class="btn btn-xs btn-link">
+        Rewrite binaries for testing
       </a>
     </div>
     
@@ -152,7 +152,7 @@ instances of the <code>CoffeeMachine</code>.</p>
 espresso shots are made and there is a <code>LivenessMonitor</code> that monitors the <code>CoffeeMachine</code> to make
 sure it never gets stuck, i.e., it always finishes the job it was given or it goes to an error state
 if the machine needs to be fixed. See <a href="../../../concepts/liveness-checking/">Liveness Checking</a>.</p>
-<p>A number of excellent bugs were found by <a href="../../../get-started/testing/">coyote test</a> during the development of
+<p>A number of excellent bugs were found by <a href="../../../how-to/testing/">coyote test</a> during the development of
 this sample, and this illustrates the fact that Coyote can be applied to any type of asynchronous
 software, not just cloud services. There is still one bug remaining in the code which you can find
 using <code>coyote test</code>, and it happens after failover just to prove the usefulness of this testing
@@ -163,7 +163,7 @@ methodology.</p>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
 <li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../get-started/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../how-to/testing/">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -263,7 +263,7 @@ must figure out what is happening with the sensors and make the next coffee with
 Eventually a <code>CoffeeMachine</code> will report there is no more water or coffee beans and then it will
 stop with an error message saying the machine needs to be manually refilled.</p>
 <h3 id="coyote-testing">Coyote testing</h3>
-<p>You can now use <a href="../../../get-started/testing/">coyote test</a> to exercise the code and see if any bugs
+<p>You can now use <a href="../../../how-to/testing/">coyote test</a> to exercise the code and see if any bugs
 can be found. From the <code>coyote-samples</code> folder:</p>
 <pre><code class="language-plain">coyote test ./bin/net5.0/CoffeeMachineActors.dll -i 100 -ms 2000 --sch-pct 10 --graph-bug
 </code></pre>
@@ -487,12 +487,12 @@ in one place that is invoked no matter what state the machine is in.</li>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../../samples/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../../../how-to/rewriting/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../../samples/overview/" class="btn btn-xs btn-link">
-        Overview
+      <a href="../../../how-to/rewriting/" class="btn btn-xs btn-link">
+        Rewrite binaries for testing
       </a>
     </div>
     
