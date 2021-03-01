@@ -112,11 +112,10 @@ all the libraries you want rewritten.</p>
 <p>Type <code>coyote rewrite -?</code> to see the full command line options. If you are using the .NET Core
 version of <code>coyote</code> then you simply run <code>dotnet coyote.dll ...</code> instead.</p>
 <h3 id="example-usage">Example usage</h3>
-<p>The <a href="https://github.com/microsoft/coyote-samples/tree/main/BoundedBuffer">BoundedBuffer example</a>
-is written with <code>System.Threading.Tasks.Task</code>. It does not start with <code>using
-Microsoft.Coyote.Tasks</code>. So <code>BoundedBuffer.cs</code> is pure .NET C# code that knows nothing about Coyote
+<p>The <a href="https://github.com/microsoft/coyote-samples/tree/main/BoundedBuffer">BoundedBuffer example</a> is
+written with <code>System.Threading.Tasks.Task</code>.It is is pure C# code that knows nothing about Coyote
 types.</p>
-<p>However, using <code>coyote rewrite</code> we can make it testable under <code>coyote test</code> tool as follows:</p>
+<p>Using <code>coyote rewrite</code> we can make it testable under the <code>coyote test</code> tool as follows:</p>
 <ol>
 <li>Build BoundedBuffer.sln</li>
 <li>coyote rewrite bin\net5.0\BoundedBuffer.dll</li>
