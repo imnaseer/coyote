@@ -95,20 +95,22 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       
 
       <h2 id="using-coyote">Using Coyote</h2>
-<p>As shown in the <a href="../..">overview</a>, there are two main ways to use Coyote.
-The simplest is to use the <a href="../../advanced-topics/tasks/overview/">asynchronous tasks</a> and the
-more advanced way is using the <a href="../../advanced-topics/actors/overview/">asynchronous actors</a>.</p>
-<p><strong>Note:</strong> If you are upgrading to Coyote from P#, see <a href="../upgrade-from-psharp/">upgrading from
-P#</a>.</p>
+<p>There are two main ways to use Coyote. The simplest is to use Coyote for <a href="../../concepts/concurrency-unit-testing/">testing your unmodified
+task-based C# code</a>. Optionally, you can also use the more
+advanced <a href="../../advanced-topics/actors/overview/">actor</a> programming model of Coyote to build a
+highly-reliable system from scratch.</p>
 <p>Assuming you have <a href="../install/">installed Coyote</a> and built the samples, you
 are ready to use the <code>coyote</code> command line tool. In your <a href="http://github.com/microsoft/coyote-samples">Coyote
 samples</a> local repo you can find the compiled binaries
 in the <code>bin</code> folder.  Here we assume you are using the <a href="../install/#installing-the-net-core-31-coyote-tool">.NET 5.0 version of the <code>coyote</code> tool</a>.</p>
-<p>You can use the <code>coyote</code> tool to automatically test these samples and find bugs. There is a
-particularly hard bug to find in the <code>coyote-samples/Monitors</code> sample application. If you run this
-application from your command prompt it will write output forever. It seems perfectly happy,
-right?  But there is a bug that happens rarely, the kind of pesky bug that would keep you up late at
-night scratching your head.</p>
+<p>You can use the <code>coyote</code> tool to automatically test these samples and find bugs. The best place to
+get started is following <a href="../../tutorials/first-concurrency-unit-test/">this tutorial to learn how to write your first concurrency unit test with
+Coyote</a>, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on
+YouTube</a>.</p>
+<p>If you are ready to dive more into Coyote testing, there is a particularly hard bug to find in the
+<code>coyote-samples/Monitors</code> sample application. If you run this application from your command prompt
+it will write output forever. It seems perfectly happy, right?  But there is a bug that happens
+rarely, the kind of pesky bug that would keep you up late at night scratching your head.</p>
 <p>Ok then, let&rsquo;s see if Coyote can find the bug. Type <code>coyote -?</code> to see the help page to make sure
 you have installed it correctly.  Now you are ready to run a <code>coyote</code> test as follows:</p>
 <pre><code class="language-plain">cd coyote-samples
@@ -131,7 +133,8 @@ When you use the right scheduling strategy, you will see a bug report:</p>
 ..... Writing .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.txt
 ..... Writing .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.schedule
 </code></pre>
-<p>The <code>*.txt</code> file is the text log of the iteration that found the bug. The <code>*.schedule</code> contains the information needed to reproduce the bug.</p>
+<p>The <code>*.txt</code> file is the text log of the iteration that found the bug. The <code>*.schedule</code> contains the
+information needed to reproduce the bug.</p>
 <p>Finding a hard to find bug is one thing, but if you can&rsquo;t reproduce this bug while debugging there
 is no point. So the <code>*.schedule</code> can be used with the <code>coyote replay</code> command as follows:</p>
 <pre><code class="language-plain">coyote replay ./bin/net5.0/Monitors.dll .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.schedule
@@ -154,9 +157,9 @@ diagram</a> of the state machines that are being tested:</p>
 <p>Download the <a href="../../assets/images/Monitors.dgml">Monitors.dgml</a> file to view it
 interactively using Visual Studio. Make sure the downloaded file keeps the file extension <code>.dgml</code>.
 Use CTRL+A to select everything and this will show you all the detailed links as well.</p>
-<p>You are now ready to dive into the core concepts for using Coyote to test <a href="../../advanced-topics/tasks/overview/">async
-tasks</a> and the more advanced <a href="../../advanced-topics/actors/overview/">async
-actors</a>.</p>
+<p>You are now ready to dive into the core concepts for using Coyote to test <a href="../../concepts/non-determinism/">async
+tasks</a> and the more advanced optional <a href="../../advanced-topics/actors/overview/">actor programming
+model</a>.</p>
 
     <br>
       
