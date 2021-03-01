@@ -104,6 +104,10 @@
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
+     <loc>https://microsoft.github.io/coyote/tutorials/overview/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
      <loc>https://microsoft.github.io/coyote/tutorials/first-concurrency-unit-test/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
@@ -112,15 +116,11 @@
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://microsoft.github.io/coyote/tutorials/bounded-buffer/</loc>
-     <lastmod>2021-03-01</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/tutorials/failover-coffee-machine/</loc>
-     <lastmod>2021-03-01</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
      <loc>https://microsoft.github.io/coyote/tutorials/testing-aspnet-service/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/tutorials/test-failover/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
@@ -128,15 +128,7 @@
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://microsoft.github.io/coyote/tutorials/actors/failover-coffee-machine/</loc>
-     <lastmod>2021-03-01</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/tutorials/actors/failover-robot-navigator/</loc>
-     <lastmod>2021-03-01</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/tutorials/actors/failure-detector/</loc>
+     <loc>https://microsoft.github.io/coyote/tutorials/actors/test-failover/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
@@ -173,6 +165,22 @@
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://microsoft.github.io/coyote/tools/telemetry/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/samples/overview/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/samples/tasks/bounded-buffer/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/samples/actors/failure-detector/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/samples/actors/failover-robot-navigator/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>

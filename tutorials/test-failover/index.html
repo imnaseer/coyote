@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/failover-coffee-machine/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/test-failover/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Coffee machine failover - Coyote</title>
+    <title>Test failover and liveness - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -88,20 +88,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../testing-aspnet-service/" class="btn btn-xs btn-default pull-right">
+      <a href="../actors/hello-world/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../testing-aspnet-service/" class="btn btn-xs btn-link">
-        Testing an ASP.NET service
+      <a href="../actors/hello-world/" class="btn btn-xs btn-link">
+        Hello world
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../bounded-buffer/" class="btn btn-xs btn-default pull-left">
+      <a href="../testing-aspnet-service/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../bounded-buffer/" class="btn btn-xs btn-link">
-        Deadlock in bounded-buffer
+        Previous</a><a href="../testing-aspnet-service/" class="btn btn-xs btn-link">
+        Testing an ASP.NET service
       </a>
     </div>
     
@@ -120,7 +120,7 @@ Coyote <a href="../../advanced-topics/tasks/overview/">asynchronous tasks</a> pr
 would happen if the tiny CPU running the machine rebooted in the middle of making a coffee. What
 bad things might happen? Can we design a code that can handle this scenario and provide a more fault
 tolerant coffee machine?</p>
-<p>An identical version of this tutorial is also available that uses the coyote <a href="./">asynchronous
+<p>An identical version of this tutorial is also available that uses the coyote <a href="actors/failover-coffee-machine.md">asynchronous
 actors</a> programming model.</p>
 <p>The following diagram shows how Coyote can be used to test this scenario and help you design more
 reliable software.</p>
@@ -418,20 +418,20 @@ of production code using Coyote.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../testing-aspnet-service/" class="btn btn-xs btn-default pull-right">
+      <a href="../actors/hello-world/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../testing-aspnet-service/" class="btn btn-xs btn-link">
-        Testing an ASP.NET service
+      <a href="../actors/hello-world/" class="btn btn-xs btn-link">
+        Hello world
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../bounded-buffer/" class="btn btn-xs btn-default pull-left">
+      <a href="../testing-aspnet-service/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../bounded-buffer/" class="btn btn-xs btn-link">
-        Deadlock in bounded-buffer
+        Previous</a><a href="../testing-aspnet-service/" class="btn btn-xs btn-link">
+        Testing an ASP.NET service
       </a>
     </div>
     

@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/bounded-buffer/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/samples/actors/failure-detector/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Deadlock in bounded-buffer - Coyote</title>
+    <title>Bug in failure detector - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../css/main.css" rel="stylesheet">
-    <link href="../../css/player-controls.css" rel="stylesheet">
-    <link href="../../css/syntax.css" rel="stylesheet">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,14 +35,13 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Deadlock in bounded-buffer", url: "#_top", children: [
+          {title: "Bug in failure detector", url: "#_top", children: [
           ]},
           {title: "What you will need", url: "#what-you-will-need", children: [
           ]},
           {title: "Build the samples", url: "#build-the-samples", children: [
           ]},
-          {title: "Run the failover coffee machine application", url: "#run-the-failover-coffee-machine-application", children: [
-              {title: "Can you find the deadlock bug in BoundedBuffer class?", url: "#can-you-find-the-deadlock-bug-in-boundedbuffer-class" },
+          {title: "Run the sample", url: "#run-the-sample", children: [
           ]},
         ];
 
@@ -50,13 +49,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../assets/js/analytics.js"></script>
-      <script src="../../assets/js/plugins.js"></script>
-      <script src="../../assets/js/animate_trace.js"></script>
-      <script src="../../assets/js/animation.js"></script>
-      <script src="../../assets/js/progress_bar.js"></script>
-      <script src="../../assets/js/trace_model.js"></script>
-      <script src="../../assets/js/main.js"></script> 
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -80,20 +79,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../failover-coffee-machine/" class="btn btn-xs btn-default pull-right">
+      <a href="../failover-robot-navigator/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../failover-coffee-machine/" class="btn btn-xs btn-link">
-        Coffee machine failover
+      <a href="../failover-robot-navigator/" class="btn btn-xs btn-link">
+        Robot navigator failover
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../test-concurrent-operations/" class="btn btn-xs btn-default pull-left">
+      <a href="../../tasks/bounded-buffer/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../test-concurrent-operations/" class="btn btn-xs btn-link">
-        Test concurrent CRUD operations
+        Previous</a><a href="../../tasks/bounded-buffer/" class="btn btn-xs btn-link">
+        Deadlock in bounded-buffer
       </a>
     </div>
     
@@ -101,55 +100,70 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="deadlock-in-bounded-buffer">Deadlock in bounded-buffer</h2>
-<p>Concurrent programming can be tricky. This tutorial shows a classic example of a deadlock and how
-Coyote can help you find and understand that deadlock. More details about this program and how
-Coyote can find this deadlock is found in this <a href="https://cloudblogs.microsoft.com/opensource/2020/07/14/extreme-programming-meets-systematic-testing-using-coyote/">blog
-article</a>.</p>
+      <h2 id="bug-in-failure-detector">Bug in failure detector</h2>
+<p>There is a particularly hard bug to find in the <code>coyote-samples/Monitors</code> sample application. If you
+run this application from your command prompt it will write output forever. It seems perfectly
+happy, right?  But there is a bug that happens rarely, the kind of pesky bug that would keep you up
+late at night scratching your head. Read further to learn how to find this bug using Coyote!</p>
 <h2 id="what-you-will-need">What you will need</h2>
-<p>To run the <code>BoundedBuffer</code> example, you will need to:</p>
+<p>You will also need to:</p>
 <ul>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
-<li>Install the <a href="../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
+<li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../tools/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../tools/testing/">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
 <pre><code class="language-plain">powershell -f build.ps1
 </code></pre>
-<h2 id="run-the-failover-coffee-machine-application">Run the failover coffee machine application</h2>
-<p>Now you can run the <code>BoundedBuffer</code> application in a mode that should trigger the deadlock most of
-the time:</p>
-<pre><code class="language-plain">./bin/net5.0/BoundedBuffer.exe -m
+<h2 id="run-the-sample">Run the sample</h2>
+<p>Let&rsquo;s see if Coyote can find the bug in this sample. Type <code>coyote -?</code> to see the help page to make
+sure you have installed it correctly. Now you are ready to run a <code>coyote</code> test as follows:</p>
+<pre><code class="language-plain">cd coyote-samples
+coyote test ./bin/net5.0/Monitors.dll --iterations 1000 --max-steps 200
 </code></pre>
-<p>And you can run it with a fix for the deadlock as follows:</p>
-<pre><code class="language-plain">./bin/net5.0/BoundedBuffer.exe -f
+<p>This also runs perfectly up to 1000 iterations. So this is indeed a hard bug to find. It can be
+found using the <code>PCT</code> exploration strategy with a given maximum number of priority switch points
+<code>--sch-pct</code> (or with the default <code>Random</code> exploration strategy, but with a much larger number of
+iterations, typically more than 100,000 of them).</p>
+<pre><code class="language-plain">coyote test ./bin/net5.0/Monitors.dll --iterations 1000 --max-steps 200 --sch-pct 10
 </code></pre>
-<h3 id="can-you-find-the-deadlock-bug-in-boundedbuffer-class">Can you find the deadlock bug in BoundedBuffer class?</h3>
-<p>The BoundedBuffer is a producer consumer queue where the <code>Take</code> method blocks if the buffer is empty
-and the <code>Put</code> method blocks if the buffer has reached it&rsquo;s maximum allowed capacity and while the
-code looks correct it contains a nasty deadlock bug.</p>
-<p>Writing concurrent code is tricky and with the popular <code>async/await</code> feature in the C# Programming
-Language it is now extremely easy to write concurrent code.</p>
-<p>But how do we test concurrency in our code? Testing tools and frameworks have not kept up with the
-pace of language innovation and so this is where <code>Coyote</code> comes to the rescue. When you use Coyote
-to test your programs you will find concurrency bugs that are very hard to find any other way.</p>
-<p>Coyote rewrites your <code>async tasks</code> in a way that allows the <a href="../../tools/testing/">coyote test</a> tool
-to control all the concurrency and locking in your program and this allows it to find bugs using
-intelligent <a href="../../concepts/concurrency-unit-testing/">systematic testing</a>.</p>
-<p>For example, if you take the <code>BoundedBuffer.dll</code> from the above sample you can do the following:</p>
-<pre><code>coyote rewrite BoundedBuffer.dll
-coyote test BoundedBuffer.dll -m TestBoundedBufferMinimalDeadlock --iterations 100
+<p>Even then you might need to run it a few times to catch the bug. Set <code>--iterations</code> to a bigger
+number if necessary. You can also let <code>coyote</code> decide which exploration strategy to use. Just use
+<code>--sch-portfolio</code> and size <code>--parallel N</code> and Coyote will run <code>N</code> different exploration strategies
+for you, in parallel. <code>coyote</code> manages the portfolio to give you the best chance of revealing bugs.
+These strategies were developed from real-world experience on large products in Microsoft Azure.
+When you use the right scheduling strategy, you will see a bug report:</p>
+<pre><code class="language-plain">... Task 0 found a bug.
+... Emitting task 0 traces:
+..... Writing .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.txt
+..... Writing .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.schedule
 </code></pre>
-<p>This will report a deadlock error because Coyote has deadlock detection during testing. You will get
-a log file explaining all this, and more importantly you will also get a trace file that can be used
-to replay the bug in your debugger in a way that is 100% reproducible.</p>
-<p>Concurrency bugs tend to be the kind of bugs that keep people up late at night pulling their hair
-out because they are often not easily reproduced in any sort of predictable manner.</p>
-<p>Coyote solves this problem giving you an environment where concurrency bugs can be systematically
-found and reliably reproduced in a debugger &ndash; allowing developers to fully understand them and fix
-the core problem.</p>
+<p>The <code>*.txt</code> file is the text log of the iteration that found the bug. The <code>*.schedule</code> contains the
+information needed to reproduce the bug.</p>
+<p>Finding a hard to find bug is one thing, but if you can&rsquo;t reproduce this bug while debugging there
+is no point. So the <code>*.schedule</code> can be used with the <code>coyote replay</code> command as follows:</p>
+<pre><code class="language-plain">coyote replay ./bin/net5.0/Monitors.dll .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.schedule
+. Reproducing trace in coyote-samples\./bin/net48/Monitors.exe
+... Reproduced 1 bug.
+... Elapsed 0.1724228 sec.
+</code></pre>
+<p>Attach a debugger during replay and you can see what exactly is going wrong.</p>
+<p>You might be wondering what the <code>Monitors</code> sample app is really doing. The <code>coyote</code> command line
+tool can help you with that also. If you run the following command line it will produce a <a href="../../../tools/dgml/">DGML
+diagram</a> of the state machines that are being tested:</p>
+<pre><code class="language-plain">coyote test ./bin/net5.0/Monitors.dll --iterations 10 --max-steps 20 --graph
+</code></pre>
+<p>You will see the following output:</p>
+<pre><code class="language-plain">... Emitting graph:
+..... Writing .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_1.dgml
+</code></pre>
+<p>Open the DGML diagram using Visual Studio 2019 and you will see the following:</p>
+<p><img alt="monitors" src="../../../assets/images/Monitors.svg" /></p>
+<p>Download the <a href="../../../assets/images/Monitors.dgml">Monitors.dgml</a> file to view it interactively using
+Visual Studio. Make sure the downloaded file keeps the file extension <code>.dgml</code>. Use CTRL+A to select
+everything and this will show you all the detailed links as well.</p>
 
     <br>
       
@@ -162,20 +176,20 @@ the core problem.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../failover-coffee-machine/" class="btn btn-xs btn-default pull-right">
+      <a href="../failover-robot-navigator/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../failover-coffee-machine/" class="btn btn-xs btn-link">
-        Coffee machine failover
+      <a href="../failover-robot-navigator/" class="btn btn-xs btn-link">
+        Robot navigator failover
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../test-concurrent-operations/" class="btn btn-xs btn-default pull-left">
+      <a href="../../tasks/bounded-buffer/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../test-concurrent-operations/" class="btn btn-xs btn-link">
-        Test concurrent CRUD operations
+        Previous</a><a href="../../tasks/bounded-buffer/" class="btn btn-xs btn-link">
+        Deadlock in bounded-buffer
       </a>
     </div>
     

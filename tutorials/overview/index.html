@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tools/telemetry/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/tutorials/overview/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Telemetry - Coyote</title>
+    <title>Overview - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,7 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Telemetry in Coyote", url: "#_top", children: [
+          {title: "Overview of Coyote tutorials", url: "#_top", children: [
           ]},
         ];
 
@@ -73,20 +73,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../samples/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../first-concurrency-unit-test/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../samples/overview/" class="btn btn-xs btn-link">
-        Overview
+      <a href="../first-concurrency-unit-test/" class="btn btn-xs btn-link">
+        Write your first concurrency unit test
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../dgml/" class="btn btn-xs btn-default pull-left">
+      <a href="../../advanced-topics/actors/why-actors/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../dgml/" class="btn btn-xs btn-link">
-        DGML diagrams
+        Previous</a><a href="../../advanced-topics/actors/why-actors/" class="btn btn-xs btn-link">
+        Why Coyote actors?
       </a>
     </div>
     
@@ -94,32 +94,27 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="telemetry-in-coyote">Telemetry in Coyote</h2>
-<p>The <a href="../testing">coyote test tool</a> collects usage data in order to help improve your experience. The
-data is anonymous. It is collected by Microsoft and shared with the community. You can opt-out of
-telemetry by setting the following environment variable to &lsquo;1&rsquo; or &lsquo;true&rsquo;:</p>
-<pre><code class="language-plain">set COYOTE_CLI_TELEMETRY_OPTOUT=1
-</code></pre>
-<p>First time usage of <code>coyote</code> is detected by the presence of the following file:</p>
-<pre><code class="language-plain">[Windows] %USERPROFILE%\AppData\Local\Microsoft\Coyote\CoyoteMachineId.txt
-[Linux] $(HOME)/.microsoft/coyote/CoyoteMachineId.txt
-</code></pre>
-<p>This file contains a generated GUID representing the local machine which helps telemetry get some
-vague idea of the number of folks that are using the <code>coyote</code> tool.</p>
-<p>The following metrics are collected:
-- the number of times <code>coyote test</code> is invoked and the time taken to complete each test.
-- the number of times <code>coyote replay</code> is invoked and the time taken to complete the replay.
-- the number of bugs reported by <code>coyote test</code>.
-- whether or not <code>coyote</code> is running in the debugger, which is an indication the user is trying to
-  debug an interesting bug found by coyote.
-- the version of the .NET framework.</p>
-<p>The telemetry also collects which operating system is being used (windows, linux, macOS).</p>
-<p>This data is collected using <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview">Azure Application
-Insights</a> and is
-stored in an Azure account belonging to Microsoft and accessible only by the Microsoft Coyote team
-members.</p>
-<p>See also information about <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-retention-privacy">data retention and
-privacy</a>.</p>
+      <h2 id="overview-of-coyote-tutorials">Overview of Coyote tutorials</h2>
+<p>Assuming you have <a href="install.md">installed Coyote</a>, the best place to get started is by following
+<a href="../first-concurrency-unit-test/">this tutorial</a> to learn how to write your first concurrency unit
+test, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on YouTube</a>.</p>
+<p>Then you can read the following tutorials:</p>
+<ul>
+<li><a href="../test-concurrent-operations/">Test concurrent CRUD operations</a></li>
+<li><a href="../testing-aspnet-service/">Test an ASP.NET service</a></li>
+<li><a href="../test-failover/">Test failover and liveness</a></li>
+</ul>
+<p>There are also tutorials for the optional, more advanced <a href="../../advanced-topics/actors/overview/">actor programming
+model</a> of Coyote:</p>
+<ul>
+<li><a href="../actors/hello-world/">Hello world in Coyote actors</a></li>
+<li><a href="../actors/test-failover/">Test failover and liveness</a></li>
+<li><a href="../actors/raft-azure/">Raft consensus protocol on Azure</a></li>
+<li><a href="../actors/raft-mocking/">Raft consensus protocol with mocks for testing</a></li>
+</ul>
+<p>Most of the code from the above tutorials is available in the <a href="http://github.com/microsoft/coyote-samples">Coyote samples repo on
+GitHub</a>. You can find all available Coyote samples
+<a href="../../samples/overview/">here</a>.</p>
 
     <br>
       
@@ -132,20 +127,20 @@ privacy</a>.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../samples/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../first-concurrency-unit-test/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../samples/overview/" class="btn btn-xs btn-link">
-        Overview
+      <a href="../first-concurrency-unit-test/" class="btn btn-xs btn-link">
+        Write your first concurrency unit test
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../dgml/" class="btn btn-xs btn-default pull-left">
+      <a href="../../advanced-topics/actors/why-actors/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../dgml/" class="btn btn-xs btn-link">
-        DGML diagrams
+        Previous</a><a href="../../advanced-topics/actors/why-actors/" class="btn btn-xs btn-link">
+        Why Coyote actors?
       </a>
     </div>
     
