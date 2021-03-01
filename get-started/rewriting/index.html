@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tools/dgml/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/get-started/rewriting/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>DGML diagrams - Coyote</title>
+    <title>Rewriting - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,7 +35,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "DGML diagrams", url: "#_top", children: [
+          {title: "Rewriting binaries for testing with Coyote", url: "#_top", children: [
+              {title: "Example usage", url: "#example-usage" },
+              {title: "Configuration", url: "#configuration" },
+              {title: "Strong name signing", url: "#strong-name-signing" },
+              {title: "Troubleshooting", url: "#troubleshooting" },
           ]},
         ];
 
@@ -73,20 +77,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../telemetry/" class="btn btn-xs btn-default pull-right">
+      <a href="../testing/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../telemetry/" class="btn btn-xs btn-link">
-        Telemetry
+      <a href="../testing/" class="btn btn-xs btn-link">
+        Testing
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../coverage/" class="btn btn-xs btn-default pull-left">
+      <a href="../using-coyote/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../coverage/" class="btn btn-xs btn-link">
-        Code and activity coverage
+        Previous</a><a href="../using-coyote/" class="btn btn-xs btn-link">
+        Using Coyote
       </a>
     </div>
     
@@ -94,16 +98,80 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="dgml-diagrams">DGML diagrams</h2>
-<p>Coyote generates Directed Graph Markup Language (<a href="https://en.wikipedia.org/wiki/DGML">DGML</a>)
-diagrams showing the states and events discovered during testing of a state machine. DGML diagrams
-can be viewed using Visual Studio if you have the <code>DGML Editor</code> feature installed.</p>
-<p>The <code>DGML Editor</code> feature of Visual Studio 2019 can be installed if you click Modify on the Visual
-Studio Installer, select &ldquo;Additional Components&rdquo; tab and scroll down to &ldquo;DGML Editor&rdquo; and make sure
-it is checked.</p>
-<p>The Enterprise version of Visual Studio can also produce <code>DGML</code> diagrams of your code, this is how
-the following diagrams were produced for the <a href="../../tutorials/actors/raft-mocking/">Raft Mocking Example</a>:</p>
-<p><img alt="RaftMocking" src="../../assets/images/RaftMocking.svg" /></p>
+      <h2 id="rewriting-binaries-for-testing-with-coyote">Rewriting binaries for testing with Coyote</h2>
+<p>The <code>coyote</code> command line tool can be used to automatically rewrite any .NET binary to take over
+concurrency that is built using <code>System.Threading.Tasks.Task</code>. For details on what kinds of
+rewriting is supported see <a href="../../concepts/binary-rewriting/">Rewriting binaries</a>.</p>
+<p>To invoke the rewriter use the following command:</p>
+<pre><code class="language-plain">coyote rewrite ${YOUR_PROGRAM}
+</code></pre>
+<p>See <a href="../using-coyote/">Using coyote</a> for information on where to find the
+<code>coyote</code> tool.</p>
+<p><code>${YOUR_PROGRAM}</code> is the path to your application or library to be rewritten or a folder containing
+all the libraries you want rewritten.</p>
+<p>Type <code>coyote rewrite -?</code> to see the full command line options. If you are using the .NET Core
+version of <code>coyote</code> then you simply run <code>dotnet coyote.dll ...</code> instead.</p>
+<h3 id="example-usage">Example usage</h3>
+<p>The <a href="https://github.com/microsoft/coyote-samples/tree/main/BoundedBuffer">BoundedBuffer example</a> is
+written with <code>System.Threading.Tasks.Task</code>.It is is pure C# code that knows nothing about Coyote
+types.</p>
+<p>Using <code>coyote rewrite</code> we can make it testable under the <code>coyote test</code> tool as follows:</p>
+<ol>
+<li>Build BoundedBuffer.sln</li>
+<li>coyote rewrite bin\net5.0\BoundedBuffer.dll</li>
+<li>coyote test bin\net5.0\BoundedBuffer.dll -m TestBoundedBufferMinimalDeadlock -i 100</li>
+</ol>
+<p>Notice that the test runs, it finds a bug and the produced log file contains the error:</p>
+<pre><code class="language-plain">Deadlock detected. Task(0) is waiting for a task to complete,
+but no other controlled tasks are enabled.
+</code></pre>
+<p>If this code was running in production mode it would have deadlocked and the test would not
+complete. Deadlock detection and reporting in the log file is only made possible when the <code>coyote
+test</code> tool can take over all concurrency, and this was made possible by the <code>coyote rewrite</code> step.</p>
+<h3 id="configuration">Configuration</h3>
+<p>You can provide more rewriting options in a JSON file like this:</p>
+<pre><code class="language-json">{
+  &quot;AssembliesPath&quot;: &quot;bin/net5.0&quot;,
+  &quot;OutputPath&quot;: &quot;bin/net5.0/rewritten&quot;,
+  &quot;Assemblies&quot;: [
+    &quot;BoundedBuffer.dll&quot;,
+    &quot;MyOtherLibrary.dll&quot;,
+    &quot;FooBar123.dll&quot;
+  ]
+}
+</code></pre>
+<ul>
+<li>
+<p><code>AssembliesPath</code> is the folder containing the original binaries.  This property is required.</p>
+</li>
+<li>
+<p><code>OutputPath</code> allows you to specify a different location for the rewritten assemblies. The
+<code>OutputPath</code> can be omitted in which case it is assumed to be the same as <code>AssembliesPath</code> and in
+that case the original assemblies will be replaced.</p>
+</li>
+<li>
+<p><code>Assemblies</code> is an optional list of specific assemblies in <code>AssembliesPath</code> to be rewritten. You
+can also pull in another assembly by providing a full path to something outside the
+<code>AssembliesPath</code>. If this list is not provided then the tool will rewrite all assemblies found in
+the specified <code>AssembliesPath</code>.</p>
+</li>
+</ul>
+<p>Then pass this config file on the command line: <code>coyote rewrite config.json</code>.</p>
+<h3 id="strong-name-signing">Strong name signing</h3>
+<p>For .NET 4.7 and 4.8, you may need to resign your rewritten binaries in order for tests to run
+properly. This can be done by providing the same strong name key that you provided during the
+original build. This can be done using the <code>--strong-name-key-file</code> command line argument (or
+<code>-snk</code> for the abbreviated option name).</p>
+<p>For example, from your <code>coyote</code> repo:</p>
+<pre><code class="language-plain">bin\net48\coyote rewrite d:\git\foundry99\Coyote\Tests\Tests.SystematicTesting\bin\net48\rewrite.coyote.json --strong-name-key-file Common\Key.snk
+</code></pre>
+<p>You can also provide this key in the JSON file using the <code>StrongNameKeyFile</code> property.</p>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p><strong>Format of the executable (.exe) or library (.dll) is invalid.</strong></p>
+<p>If you are using a .NET Core target platform then on Windows you will get executable program with
+<code>.exe</code> file extension, like <code>coyote-samples\bin\net5.0\BoundedBuffer.exe</code> These are not
+rewritable assemblies. You must instead rewrite and test the associated library, in this case
+<code>BoundedBuffer.dll</code>.</p>
 
     <br>
       
@@ -116,20 +184,20 @@ the following diagrams were produced for the <a href="../../tutorials/actors/raf
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../telemetry/" class="btn btn-xs btn-default pull-right">
+      <a href="../testing/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../telemetry/" class="btn btn-xs btn-link">
-        Telemetry
+      <a href="../testing/" class="btn btn-xs btn-link">
+        Testing
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../coverage/" class="btn btn-xs btn-default pull-left">
+      <a href="../using-coyote/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../coverage/" class="btn btn-xs btn-link">
-        Code and activity coverage
+        Previous</a><a href="../using-coyote/" class="btn btn-xs btn-link">
+        Using Coyote
       </a>
     </div>
     

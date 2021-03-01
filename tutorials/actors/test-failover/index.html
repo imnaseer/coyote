@@ -87,12 +87,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../../tools/rewriting/" class="btn btn-xs btn-default pull-right">
+      <a href="../../../samples/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../../tools/rewriting/" class="btn btn-xs btn-link">
-        Rewriting
+      <a href="../../../samples/overview/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     
@@ -152,7 +152,7 @@ instances of the <code>CoffeeMachine</code>.</p>
 espresso shots are made and there is a <code>LivenessMonitor</code> that monitors the <code>CoffeeMachine</code> to make
 sure it never gets stuck, i.e., it always finishes the job it was given or it goes to an error state
 if the machine needs to be fixed. See <a href="../../../concepts/liveness-checking/">Liveness Checking</a>.</p>
-<p>A number of excellent bugs were found by <a href="../../../tools/testing/">coyote test</a> during the development of
+<p>A number of excellent bugs were found by <a href="../../../get-started/testing/">coyote test</a> during the development of
 this sample, and this illustrates the fact that Coyote can be applied to any type of asynchronous
 software, not just cloud services. There is still one bug remaining in the code which you can find
 using <code>coyote test</code>, and it happens after failover just to prove the usefulness of this testing
@@ -163,7 +163,7 @@ methodology.</p>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
 <li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../tools/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../get-started/testing/">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -263,12 +263,12 @@ must figure out what is happening with the sensors and make the next coffee with
 Eventually a <code>CoffeeMachine</code> will report there is no more water or coffee beans and then it will
 stop with an error message saying the machine needs to be manually refilled.</p>
 <h3 id="coyote-testing">Coyote testing</h3>
-<p>You can now use <a href="../../../tools/testing/">coyote test</a> to exercise the code and see if any bugs
+<p>You can now use <a href="../../../get-started/testing/">coyote test</a> to exercise the code and see if any bugs
 can be found. From the <code>coyote-samples</code> folder:</p>
 <pre><code class="language-plain">coyote test ./bin/net5.0/CoffeeMachineActors.dll -i 100 -ms 2000 --sch-pct 10 --graph-bug
 </code></pre>
 <p>Chances are this will find a bug quickly, one of the safety assertions will fire and you will see
-that a test output log and <a href="../../../tools/dgml/">DGML diagram</a> are produced, like this:</p>
+that a test output log and <a href="../../../advanced-topics/dgml/">DGML diagram</a> are produced, like this:</p>
 <pre><code class="language-plain">.\bin\net5.0\Output\CoffeeMachineActors.exe\CoyoteOutput\CoffeeMachine_0_0.txt
 .\bin\net5.0\Output\CoffeeMachineActors.exe\CoyoteOutput\CoffeeMachine_0_0.dgml
 </code></pre>
@@ -402,8 +402,8 @@ random scheduling strategy. Each process runs until the first bug is found by so
 they are all terminated and the bug is reported. This can be useful when you want to leverage the
 full power of your computer to find those bugs that are particularly hard to find more quickly.</p>
 <p>You can find out how much testing was actually done during this parallel test operation by adding
-<code>--coverage activity</code>. The <a href="../../../tools/coverage/">coverage report</a> summarizes how many of the possible
-events were covered.</p>
+<code>--coverage activity</code>. The <a href="../../../advanced-topics/coverage/">coverage report</a> summarizes how many
+of the possible events were covered.</p>
 <h3 id="liveness-monitor">Liveness monitor</h3>
 <p>As described in the documentation on <a href="../../../concepts/liveness-checking/">Liveness Checking</a> the
 <code>CoffeeMachine</code> must also eventually <code>finish</code> what it is doing. It must either make a coffee when
@@ -487,12 +487,12 @@ in one place that is invoked no matter what state the machine is in.</li>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../../tools/rewriting/" class="btn btn-xs btn-default pull-right">
+      <a href="../../../samples/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../../tools/rewriting/" class="btn btn-xs btn-link">
-        Rewriting
+      <a href="../../../samples/overview/" class="btn btn-xs btn-link">
+        Overview
       </a>
     </div>
     

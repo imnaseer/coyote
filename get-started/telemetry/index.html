@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tools/rewriting/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/get-started/telemetry/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Rewriting - Coyote</title>
+    <title>Telemetry - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,11 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Rewriting binaries for testing with Coyote", url: "#_top", children: [
-              {title: "Example usage", url: "#example-usage" },
-              {title: "Configuration", url: "#configuration" },
-              {title: "Strong name signing", url: "#strong-name-signing" },
-              {title: "Troubleshooting", url: "#troubleshooting" },
+          {title: "Telemetry in Coyote", url: "#_top", children: [
           ]},
         ];
 
@@ -77,20 +73,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../testing/" class="btn btn-xs btn-default pull-right">
+      <a href="../../concepts/non-determinism/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../testing/" class="btn btn-xs btn-link">
-        Testing
+      <a href="../../concepts/non-determinism/" class="btn btn-xs btn-link">
+        Program non-determinism
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../../tutorials/actors/test-failover/" class="btn btn-xs btn-default pull-left">
+      <a href="../build-source/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../../tutorials/actors/test-failover/" class="btn btn-xs btn-link">
-        Test failover and liveness
+        Previous</a><a href="../build-source/" class="btn btn-xs btn-link">
+        Building from source
       </a>
     </div>
     
@@ -98,80 +94,32 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="rewriting-binaries-for-testing-with-coyote">Rewriting binaries for testing with Coyote</h2>
-<p>The <code>coyote</code> command line tool can be used to automatically rewrite any .NET binary to take over
-concurrency that is built using <code>System.Threading.Tasks.Task</code>. For details on what kinds of
-rewriting is supported see <a href="../../concepts/binary-rewriting/">Rewriting binaries</a>.</p>
-<p>To invoke the rewriter use the following command:</p>
-<pre><code class="language-plain">coyote rewrite ${YOUR_PROGRAM}
+      <h2 id="telemetry-in-coyote">Telemetry in Coyote</h2>
+<p>The <a href="../testing">coyote test tool</a> collects usage data in order to help improve your experience. The
+data is anonymous. It is collected by Microsoft and shared with the community. You can opt-out of
+telemetry by setting the following environment variable to &lsquo;1&rsquo; or &lsquo;true&rsquo;:</p>
+<pre><code class="language-plain">set COYOTE_CLI_TELEMETRY_OPTOUT=1
 </code></pre>
-<p>See <a href="../../get-started/using-coyote/">Using coyote</a> for information on where to find the
-<code>coyote</code> tool.</p>
-<p><code>${YOUR_PROGRAM}</code> is the path to your application or library to be rewritten or a folder containing
-all the libraries you want rewritten.</p>
-<p>Type <code>coyote rewrite -?</code> to see the full command line options. If you are using the .NET Core
-version of <code>coyote</code> then you simply run <code>dotnet coyote.dll ...</code> instead.</p>
-<h3 id="example-usage">Example usage</h3>
-<p>The <a href="https://github.com/microsoft/coyote-samples/tree/main/BoundedBuffer">BoundedBuffer example</a> is
-written with <code>System.Threading.Tasks.Task</code>.It is is pure C# code that knows nothing about Coyote
-types.</p>
-<p>Using <code>coyote rewrite</code> we can make it testable under the <code>coyote test</code> tool as follows:</p>
-<ol>
-<li>Build BoundedBuffer.sln</li>
-<li>coyote rewrite bin\net5.0\BoundedBuffer.dll</li>
-<li>coyote test bin\net5.0\BoundedBuffer.dll -m TestBoundedBufferMinimalDeadlock -i 100</li>
-</ol>
-<p>Notice that the test runs, it finds a bug and the produced log file contains the error:</p>
-<pre><code class="language-plain">Deadlock detected. Task(0) is waiting for a task to complete,
-but no other controlled tasks are enabled.
+<p>First time usage of <code>coyote</code> is detected by the presence of the following file:</p>
+<pre><code class="language-plain">[Windows] %USERPROFILE%\AppData\Local\Microsoft\Coyote\CoyoteMachineId.txt
+[Linux] $(HOME)/.microsoft/coyote/CoyoteMachineId.txt
 </code></pre>
-<p>If this code was running in production mode it would have deadlocked and the test would not
-complete. Deadlock detection and reporting in the log file is only made possible when the <code>coyote
-test</code> tool can take over all concurrency, and this was made possible by the <code>coyote rewrite</code> step.</p>
-<h3 id="configuration">Configuration</h3>
-<p>You can provide more rewriting options in a JSON file like this:</p>
-<pre><code class="language-json">{
-  &quot;AssembliesPath&quot;: &quot;bin/net5.0&quot;,
-  &quot;OutputPath&quot;: &quot;bin/net5.0/rewritten&quot;,
-  &quot;Assemblies&quot;: [
-    &quot;BoundedBuffer.dll&quot;,
-    &quot;MyOtherLibrary.dll&quot;,
-    &quot;FooBar123.dll&quot;
-  ]
-}
-</code></pre>
-<ul>
-<li>
-<p><code>AssembliesPath</code> is the folder containing the original binaries.  This property is required.</p>
-</li>
-<li>
-<p><code>OutputPath</code> allows you to specify a different location for the rewritten assemblies. The
-<code>OutputPath</code> can be omitted in which case it is assumed to be the same as <code>AssembliesPath</code> and in
-that case the original assemblies will be replaced.</p>
-</li>
-<li>
-<p><code>Assemblies</code> is an optional list of specific assemblies in <code>AssembliesPath</code> to be rewritten. You
-can also pull in another assembly by providing a full path to something outside the
-<code>AssembliesPath</code>. If this list is not provided then the tool will rewrite all assemblies found in
-the specified <code>AssembliesPath</code>.</p>
-</li>
-</ul>
-<p>Then pass this config file on the command line: <code>coyote rewrite config.json</code>.</p>
-<h3 id="strong-name-signing">Strong name signing</h3>
-<p>For .NET 4.7 and 4.8, you may need to resign your rewritten binaries in order for tests to run
-properly. This can be done by providing the same strong name key that you provided during the
-original build. This can be done using the <code>--strong-name-key-file</code> command line argument (or
-<code>-snk</code> for the abbreviated option name).</p>
-<p>For example, from your <code>coyote</code> repo:</p>
-<pre><code class="language-plain">bin\net48\coyote rewrite d:\git\foundry99\Coyote\Tests\Tests.SystematicTesting\bin\net48\rewrite.coyote.json --strong-name-key-file Common\Key.snk
-</code></pre>
-<p>You can also provide this key in the JSON file using the <code>StrongNameKeyFile</code> property.</p>
-<h3 id="troubleshooting">Troubleshooting</h3>
-<p><strong>Format of the executable (.exe) or library (.dll) is invalid.</strong></p>
-<p>If you are using a .NET Core target platform then on Windows you will get executable program with
-<code>.exe</code> file extension, like <code>coyote-samples\bin\net5.0\BoundedBuffer.exe</code> These are not
-rewritable assemblies. You must instead rewrite and test the associated library, in this case
-<code>BoundedBuffer.dll</code>.</p>
+<p>This file contains a generated GUID representing the local machine which helps telemetry get some
+vague idea of the number of folks that are using the <code>coyote</code> tool.</p>
+<p>The following metrics are collected:
+- the number of times <code>coyote test</code> is invoked and the time taken to complete each test.
+- the number of times <code>coyote replay</code> is invoked and the time taken to complete the replay.
+- the number of bugs reported by <code>coyote test</code>.
+- whether or not <code>coyote</code> is running in the debugger, which is an indication the user is trying to
+  debug an interesting bug found by coyote.
+- the version of the .NET framework.</p>
+<p>The telemetry also collects which operating system is being used (windows, linux, macOS).</p>
+<p>This data is collected using <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview">Azure Application
+Insights</a> and is
+stored in an Azure account belonging to Microsoft and accessible only by the Microsoft Coyote team
+members.</p>
+<p>See also information about <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-retention-privacy">data retention and
+privacy</a>.</p>
 
     <br>
       
@@ -184,20 +132,20 @@ rewritable assemblies. You must instead rewrite and test the associated library,
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../testing/" class="btn btn-xs btn-default pull-right">
+      <a href="../../concepts/non-determinism/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../testing/" class="btn btn-xs btn-link">
-        Testing
+      <a href="../../concepts/non-determinism/" class="btn btn-xs btn-link">
+        Program non-determinism
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../../tutorials/actors/test-failover/" class="btn btn-xs btn-default pull-left">
+      <a href="../build-source/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../../tutorials/actors/test-failover/" class="btn btn-xs btn-link">
-        Test failover and liveness
+        Previous</a><a href="../build-source/" class="btn btn-xs btn-link">
+        Building from source
       </a>
     </div>
     

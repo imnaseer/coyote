@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/tools/telemetry/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/dgml/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Telemetry - Coyote</title>
+    <title>Generate DGML diagrams - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,7 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Telemetry in Coyote", url: "#_top", children: [
+          {title: "Generate DGML diagrams", url: "#_top", children: [
           ]},
         ];
 
@@ -73,20 +73,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../samples/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../actors/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../samples/overview/" class="btn btn-xs btn-link">
+      <a href="../actors/overview/" class="btn btn-xs btn-link">
         Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../dgml/" class="btn btn-xs btn-default pull-left">
+      <a href="../interleavings/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../dgml/" class="btn btn-xs btn-link">
-        DGML diagrams
+        Previous</a><a href="../interleavings/" class="btn btn-xs btn-link">
+        Improving coverage of interleavings
       </a>
     </div>
     
@@ -94,32 +94,16 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="telemetry-in-coyote">Telemetry in Coyote</h2>
-<p>The <a href="../testing">coyote test tool</a> collects usage data in order to help improve your experience. The
-data is anonymous. It is collected by Microsoft and shared with the community. You can opt-out of
-telemetry by setting the following environment variable to &lsquo;1&rsquo; or &lsquo;true&rsquo;:</p>
-<pre><code class="language-plain">set COYOTE_CLI_TELEMETRY_OPTOUT=1
-</code></pre>
-<p>First time usage of <code>coyote</code> is detected by the presence of the following file:</p>
-<pre><code class="language-plain">[Windows] %USERPROFILE%\AppData\Local\Microsoft\Coyote\CoyoteMachineId.txt
-[Linux] $(HOME)/.microsoft/coyote/CoyoteMachineId.txt
-</code></pre>
-<p>This file contains a generated GUID representing the local machine which helps telemetry get some
-vague idea of the number of folks that are using the <code>coyote</code> tool.</p>
-<p>The following metrics are collected:
-- the number of times <code>coyote test</code> is invoked and the time taken to complete each test.
-- the number of times <code>coyote replay</code> is invoked and the time taken to complete the replay.
-- the number of bugs reported by <code>coyote test</code>.
-- whether or not <code>coyote</code> is running in the debugger, which is an indication the user is trying to
-  debug an interesting bug found by coyote.
-- the version of the .NET framework.</p>
-<p>The telemetry also collects which operating system is being used (windows, linux, macOS).</p>
-<p>This data is collected using <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview">Azure Application
-Insights</a> and is
-stored in an Azure account belonging to Microsoft and accessible only by the Microsoft Coyote team
-members.</p>
-<p>See also information about <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/data-retention-privacy">data retention and
-privacy</a>.</p>
+      <h2 id="generate-dgml-diagrams">Generate DGML diagrams</h2>
+<p>Coyote generates Directed Graph Markup Language (<a href="https://en.wikipedia.org/wiki/DGML">DGML</a>)
+diagrams showing the states and events discovered during testing of a state machine. DGML diagrams
+can be viewed using Visual Studio if you have the <code>DGML Editor</code> feature installed.</p>
+<p>The <code>DGML Editor</code> feature of Visual Studio 2019 can be installed if you click Modify on the Visual
+Studio Installer, select &ldquo;Additional Components&rdquo; tab and scroll down to &ldquo;DGML Editor&rdquo; and make sure
+it is checked.</p>
+<p>The Enterprise version of Visual Studio can also produce <code>DGML</code> diagrams of your code, this is how
+the following diagrams were produced for the <a href="../../tutorials/actors/raft-mocking/">Raft Mocking Example</a>:</p>
+<p><img alt="RaftMocking" src="../../assets/images/RaftMocking.svg" /></p>
 
     <br>
       
@@ -132,20 +116,20 @@ privacy</a>.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../../samples/overview/" class="btn btn-xs btn-default pull-right">
+      <a href="../actors/overview/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../../samples/overview/" class="btn btn-xs btn-link">
+      <a href="../actors/overview/" class="btn btn-xs btn-link">
         Overview
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../dgml/" class="btn btn-xs btn-default pull-left">
+      <a href="../interleavings/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../dgml/" class="btn btn-xs btn-link">
-        DGML diagrams
+        Previous</a><a href="../interleavings/" class="btn btn-xs btn-link">
+        Improving coverage of interleavings
       </a>
     </div>
     

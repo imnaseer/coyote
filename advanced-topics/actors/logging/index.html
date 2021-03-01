@@ -230,9 +230,9 @@ using the installed <code>Logger</code>.</p>
 the <code>RegisterLog</code> method on <code>IActorRuntime</code>.  This is additive so you can have the default
 <code>ActorRuntimeLogTextFormatter</code> and another logger running at the same time.  For example, see the
 <code>ActorRuntimeLogGraphBuilder</code> class which implements <code>IActorRuntimeLog</code> and generates a directed
-graph representing all activities that happened during the execution of your actors. See <a href="../../../tools/coverage/">activity
-coverage</a> for an example graph output. The <code>coyote</code> test tool sets this up for
-you when you specify <code>--graph</code> or <code>--coverage activity</code> command line options.</p>
+graph representing all activities that happened during the execution of your actors. See <a href="../../coverage/">activity
+coverage</a> for an example graph output. The <code>coyote</code> test tool
+sets this up for you when you specify <code>--graph</code> or <code>--coverage activity</code> command line options.</p>
 <p>The <code>--verbosity</code> command line option can also affect the default logging behavior. When
 <code>--verbosity</code> is specified all log output is written to the <code>System.Console</code> by default, but you
 can specify different levels of output using <code>--verbosity quiet</code> to get no output, <code>--verbosity

@@ -110,7 +110,7 @@ messaging using <a href="https://azure.microsoft.com/en-us/services/service-bus/
 is a great way to build a reliable application or service. But there is overhead in using an
 enterprise scale service bus, which limits our ability to fully test the state machine.</p>
 <p>Clearly a fault-tolerant server consensus protocol needs to be thoroughly tested, which is what you
-will do in this tutorial. First you will <code>mock</code> the Azure Service Bus which allows the <a href="../../../tools/testing/">Coyote
+will do in this tutorial. First you will <code>mock</code> the Azure Service Bus which allows the <a href="../../../get-started/testing/">Coyote
 tester</a> to perform thousands of tests per second and thereby find bugs
 in the application code more efficiently.</p>
 <p>Then you will use the <code>coyote test</code> tool to explore the code using different test strategies until
@@ -121,7 +121,7 @@ you achieve a high level of confidence that the code is rock solid.</p>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
 <li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../tools/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../get-started/testing/">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -185,7 +185,7 @@ of events to find all the bugs. Not only is it faster but it is also systematic 
 every possible interleaving of asynchronous operations. This systematic approach ensures the test
 doesn&rsquo;t just test the same happy paths over and over (like a stress test does) but instead it is
 more likely to find one bad path where a bug is hiding.</p>
-<p>The <code>--coverage</code> report also generates a <a href="../../../tools/dgml/">DGML diagram</a> of all the
+<p>The <code>--coverage</code> report also generates a <a href="../../../advanced-topics/dgml/">DGML diagram</a> of all the
 messages sent during the test. You can browse these graphs using Visual Studio. The file name in
 this case is <code>Raft.Mocking.dgml</code> and it will look something like this:</p>
 <p><img alt="RaftMockCoverage" src="../../../assets/images/RaftMockCoverage.svg" /></p>
