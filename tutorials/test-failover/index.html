@@ -150,7 +150,7 @@ across all instances of the <code>CoffeeMachine</code>.</p>
 espresso shots are made and there is a <code>LivenessMonitor</code> that monitors the <code>CoffeeMachine</code> to make
 sure it never gets stuck, i.e., it always finishes the job it was given or it goes to an error state
 if the machine needs to be fixed. See <a href="../../concepts/liveness-checking/">Liveness Checking</a>.</p>
-<p>A number of excellent bugs were found by <a href="../../how-to/testing/">coyote test</a> during the
+<p>A number of excellent bugs were found by <a href="../../get-started/testing/">coyote test</a> during the
 development of this sample, and this illustrates the fact that Coyote can be applied to any type of
 asynchronous software, not just cloud services. There is still one bug remaining in the code which
 you can find using <code>coyote test</code>, and it happens after failover just to prove the usefulness of this
@@ -161,7 +161,7 @@ testing methodology.</p>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
 <li>Install the <a href="../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../how-to/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../get-started/testing/">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -257,7 +257,7 @@ next coffee without incident. Eventually a <code>CoffeeMachine</code> will repor
 coffee beans and then it will stop with an error message saying the machine needs to be manually
 refilled.</p>
 <h2 id="coyote-testing">Coyote testing</h2>
-<p>You can now use <a href="../../how-to/testing/">coyote test</a> to exercise the code and see if any bugs
+<p>You can now use <a href="../../get-started/testing/">coyote test</a> to exercise the code and see if any bugs
 can be found. From the <code>coyote-samples</code> folder:</p>
 <pre><code class="language-plain">coyote test ./bin/net5.0/CoffeeMachineTasks.dll -i 1000 -ms 500 --sch-pct 10
 </code></pre>
@@ -468,7 +468,7 @@ of production code using Coyote.</p>
           <h4>Coyote</h4>
           <ul class="list-unstyled">
             <li><a href="/coyote/">Home</a></li>
-            <li><a href="/coyote/overview/about">About</a></li>
+            <li><a href="/coyote/get-started/install">Install</a></li>
           </ul>
         </nav>
       </div>
@@ -477,8 +477,9 @@ of production code using Coyote.</p>
         <nav>
           <h4>Resources</h4>
           <ul class="list-unstyled">
-            <li><a href="/coyote/get-started/install">Install</a></li>
-            <li><a href="/coyote/get-started/using-coyote">Getting started</a></li>
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
           </ul>
         </nav>
       </div>

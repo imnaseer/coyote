@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/advanced-topics/coverage/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/how-to/coverage/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Code and activity coverage - Coyote</title>
+    <title>Track code and actor activity coverage - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,33 +35,18 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Code and Actor activity coverage", url: "#_top", children: [
-          ]},
-          {title: "Coyote coverage options", url: "#coyote-coverage-options", children: [
-          ]},
-          {title: "Output file locations", url: "#output-file-locations", children: [
-          ]},
-          {title: "Actor activity coverage", url: "#actor-activity-coverage", children: [
-          ]},
-          {title: "Definition of event coverage", url: "#definition-of-event-coverage", children: [
-          ]},
-          {title: "Activity coverage output files", url: "#activity-coverage-output-files", children: [
-          ]},
-          {title: "Activity coverage visualization example", url: "#activity-coverage-visualization-example", children: [
-          ]},
-          {title: "Code coverage", url: "#code-coverage", children: [
-          ]},
-          {title: "Code coverage binary instrumentation", url: "#code-coverage-binary-instrumentation", children: [
-          ]},
-          {title: "Code coverage output files", url: "#code-coverage-output-files", children: [
-          ]},
-          {title: "Coyote test examples", url: "#coyote-test-examples", children: [
-          ]},
-          {title: "Troubleshooting", url: "#troubleshooting", children: [
-              {title: "Error VSP1394: Could not start profile monitor", url: "#error-vsp1394-could-not-start-profile-monitor" },
-              {title: "Exception thrown: 'System.BadImageFormatException' in System.Private.CoreLib.dll", url: "#exception-thrown-systembadimageformatexception-in-systemprivatecorelibdll" },
-              {title: "Error: Could not find dependent assembly ...", url: "#error-could-not-find-dependent-assembly" },
-              {title: "Code coverage is empty", url: "#code-coverage-is-empty" },
+          {title: "Track code and actor activity coverage", url: "#_top", children: [
+              {title: "Coyote coverage options", url: "#coyote-coverage-options" },
+              {title: "Output file locations", url: "#output-file-locations" },
+              {title: "Actor activity coverage", url: "#actor-activity-coverage" },
+              {title: "Definition of event coverage", url: "#definition-of-event-coverage" },
+              {title: "Activity coverage output files", url: "#activity-coverage-output-files" },
+              {title: "Activity coverage visualization example", url: "#activity-coverage-visualization-example" },
+              {title: "Code coverage", url: "#code-coverage" },
+              {title: "Code coverage binary instrumentation", url: "#code-coverage-binary-instrumentation" },
+              {title: "Code coverage output files", url: "#code-coverage-output-files" },
+              {title: "Coyote test examples", url: "#coyote-test-examples" },
+              {title: "Troubleshooting", url: "#troubleshooting" },
           ]},
         ];
 
@@ -99,20 +84,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../interleavings/" class="btn btn-xs btn-default pull-right">
+      <a href="../generate-dgml/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../interleavings/" class="btn btn-xs btn-link">
-        Improving coverage of interleavings
+      <a href="../generate-dgml/" class="btn btn-xs btn-link">
+        Generate DGML diagrams
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../../concepts/liveness-checking/" class="btn btn-xs btn-default pull-left">
+      <a href="../unit-testing/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../../concepts/liveness-checking/" class="btn btn-xs btn-link">
-        Effective liveness checking
+        Previous</a><a href="../unit-testing/" class="btn btn-xs btn-link">
+        Integrate with a unit testing framework
       </a>
     </div>
     
@@ -120,12 +105,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="code-and-actor-activity-coverage">Code and Actor activity coverage</h2>
+      <h2 id="track-code-and-actor-activity-coverage">Track code and actor activity coverage</h2>
 <p>Standard code coverage tools record the percentage of code lines that are actually executed by test
 cases. Coyote additionally defines the higher-level metric <em>Actor Activity Coverage</em> that reports
 state transitions and the percentage of possible events that are actually executed during a run of
 <code>coyote</code> tester.</p>
-<h2 id="coyote-coverage-options">Coyote coverage options</h2>
+<h3 id="coyote-coverage-options">Coyote coverage options</h3>
 <p>Running <code>coyote /?</code> displays a summary of command-line options. Here is the section describing
 options to report code and activity coverage:</p>
 <pre><code class="language-plain">Code and activity coverage options:
@@ -157,17 +142,17 @@ options to report code and activity coverage:</p>
   Coyote maintains the history of events and state transitions for reporting the coverage of the
   actors and state machines being tested.</li>
 </ul>
-<h2 id="output-file-locations">Output file locations</h2>
+<h3 id="output-file-locations">Output file locations</h3>
 <p>By default, at the end of testing the report files are written to a directory named
 <code>Output/[assemblyToTest]/CoyoteOutput</code> in the directory specified by the <code>path</code> argument. If
 <code>--outdir outputDirectory</code> is specified, then the files are written to the directory
 <code>[outputDirectory]/CoyoteOutput</code>.</p>
 <p>Details of the report files that are created for the separate coverage types are provided in
 subsequent sections.</p>
-<h2 id="actor-activity-coverage">Actor activity coverage</h2>
+<h3 id="actor-activity-coverage">Actor activity coverage</h3>
 <p>Actor activity coverage includes event coverage, which is defined in the following section, as well
 as a summary of states that were entered and exited and which state transitions occurred.</p>
-<h2 id="definition-of-event-coverage">Definition of event coverage</h2>
+<h3 id="definition-of-event-coverage">Definition of event coverage</h3>
 <p>A tuple <code>(M, S, E)</code> is said to be <em>defined</em> if state S of machine M is prepared to receive an event
 of type E, i.e., it has an action defined for the event.</p>
 <p>A tuple <code>(M, S, E)</code> is said to be <em>covered</em> by a test run if state S of machine M actually dequeues
@@ -176,7 +161,7 @@ an event of type E during an execution.</p>
 program. The higher this metric, the better testing exercised all these combinations in the
 program. As with other coverage metrics, obtaining 100% coverage may be unrealistic as it depends
 on the particular test harness being used.</p>
-<h2 id="activity-coverage-output-files">Activity coverage output files</h2>
+<h3 id="activity-coverage-output-files">Activity coverage output files</h3>
 <p>If the option <code>--coverage</code>, <code>--coverage activity</code>, or <code>--coverage activity-debug</code> is passed to
 <code>coyote</code>, the following files will be written to the <a href="#output-file-locations">output directory</a> (for
 example, given <code>path</code> equal to <code>PingPong.exe</code>):
@@ -190,15 +175,15 @@ example, given <code>path</code> equal to <code>PingPong.exe</code>):
   e.g: <code>PingPong.coverage_0.txt</code></p>
 <p>Note that while <code>--coverage</code> is a shortcut for specifying both <code>--coverage code</code> and <code>--coverage
 activity</code>, you must specify <code>--coverage activity-debug</code> explicitly.</p>
-<h2 id="activity-coverage-visualization-example">Activity coverage visualization example</h2>
-<p>The activity coverage can additionally be displayed in <a href="../dgml/">DGML diagram</a> format. Run <code>coyote</code> as
+<h3 id="activity-coverage-visualization-example">Activity coverage visualization example</h3>
+<p>The activity coverage can additionally be displayed in <a href="dgml.md">DGML diagram</a> format. Run <code>coyote</code> as
 described in the <a href="#coyote-test-examples"><code>coyote</code> examples</a> section below. This produces a file in
 the DGML format as described in the <a href="#activity-coverage-output-files">activity coverage output
 files</a> section. Open the file using Visual Studio. It captures
 machines, states and transitions witnessed during the testing of the program. The file also contains
 inter-machine transitions. These transitions are usually auto-hidden when opened in Visual Studio,
 but visible when you click on a state.</p>
-<h2 id="code-coverage">Code coverage</h2>
+<h3 id="code-coverage">Code coverage</h3>
 <p>For code coverage, <code>coyote</code> instruments the <code>path</code> assembly and the binaries it depends upon via
 <code>VSInstr.exe</code>. <code>VSPerfCmd.exe</code> is launched while the test runs, and is terminated when the test is
 complete.</p>
@@ -211,7 +196,7 @@ do by specifying the following build properties:</p>
 </code></pre>
 <p><code>VSPerfCmd.exe</code> collects data from all running processes, so do not run multiple coverage tests at
 the same time.</p>
-<h2 id="code-coverage-binary-instrumentation">Code coverage binary instrumentation</h2>
+<h3 id="code-coverage-binary-instrumentation">Code coverage binary instrumentation</h3>
 <p><code>coyote</code> instruments the following binaries (via <code>VSInstr.exe</code>):
 * <code>path</code>: this is the path to the assembly that is being tested.
 * Each DLL in the dependency graph of the assembly specified by the <code>path</code> argument - not including
@@ -225,7 +210,7 @@ names as the app settings:</p>
 <li><code>VSInstrToolPath</code></li>
 <li><code>VSPerfCmdToolPath</code></li>
 </ul>
-<h2 id="code-coverage-output-files">Code coverage output files</h2>
+<h3 id="code-coverage-output-files">Code coverage output files</h3>
 <p>If the option <code>--coverage</code> or <code>--coverage code</code> is passed to <code>coyote</code>, the following files will be
 written to the <a href="#output-file-locations">output directory</a> (for example, if <code>path</code> is
 <code>PingPong.exe</code>):</p>
@@ -239,7 +224,7 @@ The original binaries are left unchanged.</li>
 able to load the <code>.coverage</code> file. If you want keep track of code-coverage improvements over time
 you can use the <code>coyote test --outdir</code> option to collect multiple coverage files in different
 locations.</p>
-<h2 id="coyote-test-examples">Coyote test examples</h2>
+<h3 id="coyote-test-examples">Coyote test examples</h3>
 <p>First build the <a href="https://github.com/microsoft/coyote-samples">coyote-samples</a> repo by running the
 following command:</p>
 <pre><code class="language-plain">powershell -f build.ps1
@@ -257,7 +242,7 @@ activity coverage.</p>
 <pre><code class="language-plain">coyote test ./bin/net5.0/Monitors.exe -i 10 --coverage code activity-debug
 </code></pre>
 <p>This generates code and activity coverage, including debug activity output.</p>
-<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="troubleshooting">Troubleshooting</h3>
 <h4 id="error-vsp1394-could-not-start-profile-monitor">Error VSP1394: Could not start profile monitor</h4>
 <p>This could happen if you are trying to run <code>coyote test</code> from a current directory that contains
 conflicting binaries from the ones you are testing. Try <code>cd</code> to some other location and run <code>coyote
@@ -283,20 +268,20 @@ running <code>VSInst</code> manually and check for any errors.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../interleavings/" class="btn btn-xs btn-default pull-right">
+      <a href="../generate-dgml/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../interleavings/" class="btn btn-xs btn-link">
-        Improving coverage of interleavings
+      <a href="../generate-dgml/" class="btn btn-xs btn-link">
+        Generate DGML diagrams
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../../concepts/liveness-checking/" class="btn btn-xs btn-default pull-left">
+      <a href="../unit-testing/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../../concepts/liveness-checking/" class="btn btn-xs btn-link">
-        Effective liveness checking
+        Previous</a><a href="../unit-testing/" class="btn btn-xs btn-link">
+        Integrate with a unit testing framework
       </a>
     </div>
     
@@ -333,7 +318,7 @@ running <code>VSInst</code> manually and check for any errors.</p>
           <h4>Coyote</h4>
           <ul class="list-unstyled">
             <li><a href="/coyote/">Home</a></li>
-            <li><a href="/coyote/overview/about">About</a></li>
+            <li><a href="/coyote/get-started/install">Install</a></li>
           </ul>
         </nav>
       </div>
@@ -342,8 +327,9 @@ running <code>VSInst</code> manually and check for any errors.</p>
         <nav>
           <h4>Resources</h4>
           <ul class="list-unstyled">
-            <li><a href="/coyote/get-started/install">Install</a></li>
-            <li><a href="/coyote/get-started/using-coyote">Getting started</a></li>
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
           </ul>
         </nav>
       </div>

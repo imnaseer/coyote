@@ -144,6 +144,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/using-coyote/" class="wm-article-link wm-toc-text">Using Coyote</a>
 </li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/rewriting/" class="wm-article-link wm-toc-text">Rewrite your binaries for testing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/testing/" class="wm-article-link wm-toc-text">Find and reproduce bugs</a>
+</li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/build-source/" class="wm-article-link wm-toc-text">Building from source</a>
 </li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/telemetry/" class="wm-article-link wm-toc-text">Telemetry</a>
@@ -172,12 +176,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="advanced-topics/coverage/" class="wm-article-link wm-toc-text">Code and activity coverage</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="advanced-topics/interleavings/" class="wm-article-link wm-toc-text">Improving coverage of interleavings</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="advanced-topics/dgml/" class="wm-article-link wm-toc-text">Generate DGML diagrams</a>
-</li>
       <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Actors and state machines</span>
 </li>
 <li class="wm-toc-li-nested collapse">
@@ -246,11 +244,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/rewriting/" class="wm-article-link wm-toc-text">Rewrite binaries for testing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/testing/" class="wm-article-link wm-toc-text">Find and reproduce bugs</a>
-</li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/unit-testing/" class="wm-article-link wm-toc-text">Integrate with a unit testing framework</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/coverage/" class="wm-article-link wm-toc-text">Track code and actor activity coverage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/generate-dgml/" class="wm-article-link wm-toc-text">Generate DGML diagrams</a>
 </li>
   </ul>
 </li>
@@ -2257,7 +2255,7 @@ also push the limits on high concurrency, maximizing throughput and minimizing o
           <h4>Coyote</h4>
           <ul class="list-unstyled">
             <li><a href="/coyote/">Home</a></li>
-            <li><a href="/coyote/overview/about">About</a></li>
+            <li><a href="/coyote/get-started/install">Install</a></li>
           </ul>
         </nav>
       </div>
@@ -2266,8 +2264,9 @@ also push the limits on high concurrency, maximizing throughput and minimizing o
         <nav>
           <h4>Resources</h4>
           <ul class="list-unstyled">
-            <li><a href="/coyote/get-started/install">Install</a></li>
-            <li><a href="/coyote/get-started/using-coyote">Getting started</a></li>
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
           </ul>
         </nav>
       </div>
@@ -2325,5 +2324,5 @@ GitHub</a></li>
 </html>
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-03-01 21:51:56.460494+00:00
+Build Date UTC : 2021-03-01 22:36:32.021570+00:00
 -->

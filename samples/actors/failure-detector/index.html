@@ -111,7 +111,7 @@ late at night scratching your head. Read further to learn how to find this bug u
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
 <li>Install the <a href="../../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
 <li>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git repo</a>.</li>
-<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../how-to/testing/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote test</code> tool. See <a href="../../../get-started/testing/">Testing</a>.</li>
 </ul>
 <h2 id="build-the-samples">Build the samples</h2>
 <p>Build the <code>coyote-samples</code> repo by running the following command:</p>
@@ -151,7 +151,7 @@ is no point. So the <code>*.schedule</code> can be used with the <code>coyote re
 </code></pre>
 <p>Attach a debugger during replay and you can see what exactly is going wrong.</p>
 <p>You might be wondering what the <code>Monitors</code> sample app is really doing. The <code>coyote</code> command line
-tool can help you with that also. If you run the following command line it will produce a <a href="../../../advanced-topics/dgml/">DGML
+tool can help you with that also. If you run the following command line it will produce a <a href="../../../how-to/generate-dgml/">DGML
 diagram</a> of the state machines that are being tested:</p>
 <pre><code class="language-plain">coyote test ./bin/net5.0/Monitors.dll --iterations 10 --max-steps 20 --graph
 </code></pre>
@@ -226,7 +226,7 @@ everything and this will show you all the detailed links as well.</p>
           <h4>Coyote</h4>
           <ul class="list-unstyled">
             <li><a href="/coyote/">Home</a></li>
-            <li><a href="/coyote/overview/about">About</a></li>
+            <li><a href="/coyote/get-started/install">Install</a></li>
           </ul>
         </nav>
       </div>
@@ -235,8 +235,9 @@ everything and this will show you all the detailed links as well.</p>
         <nav>
           <h4>Resources</h4>
           <ul class="list-unstyled">
-            <li><a href="/coyote/get-started/install">Install</a></li>
-            <li><a href="/coyote/get-started/using-coyote">Getting started</a></li>
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
           </ul>
         </nav>
       </div>

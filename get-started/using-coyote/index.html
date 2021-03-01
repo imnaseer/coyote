@@ -37,6 +37,23 @@
         var pageToc = [
           {title: "Using Coyote", url: "#_top", children: [
           ]},
+          {title: "Rewrite your binaries for testing", url: "#rewrite-your-binaries-for-testing", children: [
+              {title: "Example usage", url: "#example-usage" },
+              {title: "Configuration", url: "#configuration" },
+              {title: "Strong name signing", url: "#strong-name-signing" },
+          ]},
+          {title: "Find and reproduce bugs using the Coyote tool", url: "#find-and-reproduce-bugs-using-the-coyote-tool", children: [
+              {title: "Controlled, serialized and reproducible testing", url: "#controlled-serialized-and-reproducible-testing" },
+              {title: "Test entry point", url: "#test-entry-point" },
+              {title: "Testing options", url: "#testing-options" },
+              {title: "Parallel and portfolio testing", url: "#parallel-and-portfolio-testing" },
+              {title: "Reproducing and debugging traces", url: "#reproducing-and-debugging-traces" },
+              {title: "Graphing the results", url: "#graphing-the-results" },
+          ]},
+          {title: "Unit Testing", url: "#unit-testing", children: [
+          ]},
+          {title: "Troubleshooting", url: "#troubleshooting", children: [
+          ]},
         ];
 
     </script>
@@ -73,12 +90,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../build-source/" class="btn btn-xs btn-default pull-right">
+      <a href="../rewriting/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../build-source/" class="btn btn-xs btn-link">
-        Building from source
+      <a href="../rewriting/" class="btn btn-xs btn-link">
+        Rewrite your binaries for testing
       </a>
     </div>
     
@@ -95,18 +112,207 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       
 
       <h2 id="using-coyote">Using Coyote</h2>
-<p>Assuming you have <a href="../install/">installed Coyote</a>, the best place to get started is by following
-<a href="../../tutorials/first-concurrency-unit-test/">this tutorial</a> to learn how to write your first
-concurrency unit test, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on
-YouTube</a>.</p>
-<p>Once you are ready to dive in, you can read the <a href="../../concepts/non-determinism/">core concepts</a>
-behind Coyote. There are many <a href="../../tutorials/overview/">tutorials</a> and
-<a href="../../samples/overview/">samples</a> available for you to explore Coyote further!</p>
-<p>Optionally, you can also try out the advanced <a href="../../advanced-topics/actors/overview/">actor and state
-machine</a> programming model of Coyote, which allows you to
-build a highly-reliable system from scratch using lightweight concurrency primitives that are
-battle-tested inside Azure.</p>
-<p><strong>Note:</strong> If you are upgrading to Coyote from P#, see <a href="../upgrade-from-psharp/">upgrading from P#</a>.</p>
+<p>Assuming you have <a href="../install/">installed Coyote</a>, to run the <code>coyote</code> tool use the following
+command:</p>
+<pre><code class="language-plain">coyote -?
+</code></pre>
+<p>This will list the full command line options. If you are using the .NET Core version of the tool
+then you can simply run <code>dotnet coyote.dll</code> instead.</p>
+<h2 id="rewrite-your-binaries-for-testing">Rewrite your binaries for testing</h2>
+<p>The <code>coyote</code> command line tool can be used to automatically rewrite any .NET binary to take over
+concurrency that is built using <code>System.Threading.Tasks.Task</code>. For details on what kinds of
+rewriting is supported see <a href="../../concepts/binary-rewriting/">Rewriting binaries</a>.</p>
+<p>To invoke the rewriter use the following command:</p>
+<pre><code class="language-plain">coyote rewrite ${YOUR_PROGRAM}
+</code></pre>
+<p><code>${YOUR_PROGRAM}</code> is the path to your application or library to be rewritten or a folder containing
+all the libraries you want rewritten.</p>
+<p>Type <code>coyote rewrite -?</code> to see the full command line options.</p>
+<h3 id="example-usage">Example usage</h3>
+<p>The <a href="https://github.com/microsoft/coyote-samples/tree/main/BoundedBuffer">BoundedBuffer example</a> is
+written with <code>System.Threading.Tasks.Task</code>.It is is pure C# code that knows nothing about Coyote
+types.</p>
+<p>Using <code>coyote rewrite</code> we can make it testable under the <code>coyote test</code> tool as follows:</p>
+<ol>
+<li>Build BoundedBuffer.sln</li>
+<li>coyote rewrite bin\net5.0\BoundedBuffer.dll</li>
+<li>coyote test bin\net5.0\BoundedBuffer.dll -m TestBoundedBufferMinimalDeadlock -i 100</li>
+</ol>
+<p>Notice that the test runs, it finds a bug and the produced log file contains the error:</p>
+<pre><code class="language-plain">Deadlock detected. Task(0) is waiting for a task to complete,
+but no other controlled tasks are enabled.
+</code></pre>
+<p>If this code was running in production mode it would have deadlocked and the test would not
+complete. Deadlock detection and reporting in the log file is only made possible when the <code>coyote
+test</code> tool can take over all concurrency, and this was made possible by the <code>coyote rewrite</code> step.</p>
+<h3 id="configuration">Configuration</h3>
+<p>You can provide more rewriting options in a JSON file like this:</p>
+<pre><code class="language-json">{
+  &quot;AssembliesPath&quot;: &quot;bin/net5.0&quot;,
+  &quot;OutputPath&quot;: &quot;bin/net5.0/rewritten&quot;,
+  &quot;Assemblies&quot;: [
+    &quot;BoundedBuffer.dll&quot;,
+    &quot;MyOtherLibrary.dll&quot;,
+    &quot;FooBar123.dll&quot;
+  ]
+}
+</code></pre>
+<ul>
+<li>
+<p><code>AssembliesPath</code> is the folder containing the original binaries.  This property is required.</p>
+</li>
+<li>
+<p><code>OutputPath</code> allows you to specify a different location for the rewritten assemblies. The
+<code>OutputPath</code> can be omitted in which case it is assumed to be the same as <code>AssembliesPath</code> and in
+that case the original assemblies will be replaced.</p>
+</li>
+<li>
+<p><code>Assemblies</code> is an optional list of specific assemblies in <code>AssembliesPath</code> to be rewritten. You
+can also pull in another assembly by providing a full path to something outside the
+<code>AssembliesPath</code>. If this list is not provided then the tool will rewrite all assemblies found in
+the specified <code>AssembliesPath</code>.</p>
+</li>
+</ul>
+<p>Then pass this config file on the command line: <code>coyote rewrite config.json</code>.</p>
+<h3 id="strong-name-signing">Strong name signing</h3>
+<p>For .NET 4.7 and 4.8, you may need to resign your rewritten binaries in order for tests to run
+properly. This can be done by providing the same strong name key that you provided during the
+original build. This can be done using the <code>--strong-name-key-file</code> command line argument (or
+<code>-snk</code> for the abbreviated option name).</p>
+<p>For example, from your <code>coyote</code> repo:</p>
+<pre><code class="language-plain">bin\net48\coyote rewrite d:\git\foundry99\Coyote\Tests\Tests.SystematicTesting\bin\net48\rewrite.coyote.json --strong-name-key-file Common\Key.snk
+</code></pre>
+<p>You can also provide this key in the JSON file using the <code>StrongNameKeyFile</code> property.</p>
+<h2 id="find-and-reproduce-bugs-using-the-coyote-tool">Find and reproduce bugs using the Coyote tool</h2>
+<p>The <code>coyote</code> command line tool can be used to automatically test a Coyote program to find and
+deterministically reproduce bugs in your code while also enforcing your safety and liveness
+<a href="../../concepts/specifications/">specifications</a>.</p>
+<p>To invoke the tester use the following command:</p>
+<pre><code class="language-plain">coyote test ${YOUR_PROGRAM}
+</code></pre>
+<p><code>${YOUR_PROGRAM}</code> is the path to your application or library that contains a method annotated
+with the <code>[Microsoft.Coyote.SystematicTesting.Test]</code> attribute. This method is the entry point to the
+test.</p>
+<p>Type <code>coyote test -?</code> to see the full command line options.</p>
+<h3 id="controlled-serialized-and-reproducible-testing">Controlled, serialized and reproducible testing</h3>
+<p>In its essence, the Coyote tester:
+ 1. <strong>serializes</strong> the execution of an asynchronous program,
+ 2. <strong>takes control</strong> of the underlying task scheduler and any declared sources of
+    non-determinism in the program,
+ 3. <strong>explores</strong> scheduling decisions and non-deterministic choices to trigger bugs.</p>
+<p>Because of the above capabilities, the <code>coyote</code> tester is capable of quickly discovering bugs that
+would be very hard to discover using traditional testing techniques.</p>
+<p>During testing, the <code>coyote</code> tester executes a program from start to finish for a given number of
+testing iterations. During each iteration, the tester is exploring a potentially different
+serialized execution path. If a bug is discovered, the tester will terminate and dump a reproducible
+trace (including a human readable version of it). If you get unexpected errors, please check that
+your test code is adhering to the <a href="tester-requirements.md">Tester requirements</a>.</p>
+<p>See <a href="#reproducing-and-debugging-traces">below</a> to learn how to reproduce traces and debug them using
+a supported version of Visual Studio.</p>
+<h3 id="test-entry-point">Test entry point</h3>
+<p>A Coyote test method can be declared as follows:</p>
+<pre><code class="language-c#">[Microsoft.Coyote.SystematicTesting.Test]
+public static void Execute()
+{
+  ...
+}
+</code></pre>
+<p>The above method acts as the entry point to each testing iteration.</p>
+<p>The <code>coyote</code> test tool supports calling the following test method signatures:</p>
+<pre><code class="language-c#">[Microsoft.Coyote.SystematicTesting.Test]
+public static void Execute();
+
+[Microsoft.Coyote.SystematicTesting.Test]
+public static async Task Execute();
+
+[Microsoft.Coyote.SystematicTesting.Test]
+public static void Execute(IActorRuntime runtime);
+
+[Microsoft.Coyote.SystematicTesting.Test]
+public static async Task Execute(IActorRuntime runtime);
+</code></pre>
+<p>Note that similar to unit-testing, static state should be appropriately reset before each test
+iteration because the iterations run in shared memory. However, <a href="#parallel-and-portfolio-testing">parallel instances of the
+tester</a> run in separate processes, which provides isolation.</p>
+<h3 id="testing-options">Testing options</h3>
+<p>To see the list of available command line options use the flag <code>-?</code>. You can optionally give the
+number of testing iterations to perform using <code>--iterations N</code> (where N is an integer &gt; 1). If
+this option is not provided, the tester will perform 1 iteration by default.</p>
+<p>You can also provide a timeout, by providing the flag <code>--timeout N</code> (where N &gt; 0), specifying how
+many seconds before the timeout. If no iterations are specified (thus the default number of
+iterations is used), then the tester will perform testing iterations until the timeout is reached.</p>
+<p>Another important flag is <code>--max-steps N</code>. This limits each test iteration to be <code>N</code> steps, after
+which the iteration is killed and a new one is started. Here, steps are counted as the number of
+times a synchronization point is reached in the program. The tester provides output at the end of a
+test run on the iteration lengths that it saw. Use this output for calibrating the best value of <code>N</code>
+for your case. This flag is usually only needed when your test has the potential of generating
+non-terminating executions (like an infinite series of ping pong events, for example). In such
+cases, if you do not provide <code>max-steps</code> then the tester can appear to can get stuck running one
+iteration forever. This is related to <a href="../../concepts/liveness-checking/">liveness checking</a>.</p>
+<h3 id="parallel-and-portfolio-testing">Parallel and portfolio testing</h3>
+<p>The Coyote tester supports parallel testing, often used with a portfolio of different schedulers.</p>
+<p>To enable parallel testing, you must run <code>coyote</code>, and provide the flag <code>--parallel N</code> (where N &gt; 0),
+with N specifying the number of parallel testing processes to be spawned. By default, the tester
+spawns the same testing process multiple times (using different random seeds).</p>
+<p>When doing parallel testing it is often useful to provide the <code>--sch-portfolio</code> flag. This option
+allocates different exploration strategies to each spawned test process which increases the chance
+that one of the test processes will find a particularly difficult bug.</p>
+<h3 id="reproducing-and-debugging-traces">Reproducing and debugging traces</h3>
+<p>The <code>coyote</code> replayer can be used to deterministically reproduce and debug buggy executions (found
+by <code>coyote test</code>). To run the replayer use the following command:</p>
+<pre><code class="language-plain">coyote replay ${YOUR_PROGRAM} ${SCHEDULE_TRACE}.schedule
+</code></pre>
+<p>Where <code>${SCHEDULE_TRACE}}.schedule</code> is the trace file dumped by <code>coyote test</code>.</p>
+<p>You can attach the Visual Studio debugger on this trace by using <code>--break</code>. When using this flag,
+Coyote will automatically instrument a breakpoint when the bug is found. You can also insert your
+own breakpoints in the source code as usual.</p>
+<p><code>--break</code> uses <code>System.Diagnostics.Debugger.Launch</code> which does not seem to work on MacOS or Linux,
+see troubleshooting below for an alternate way of debugging replay schedules.</p>
+<p>See the replay options section of the help output from invoking <code>coyote -?</code>.</p>
+<h3 id="graphing-the-results">Graphing the results</h3>
+<p>The <code>--graph</code> command line option produces a <a href="../../how-to/generate-dgml/">DGML diagram</a> containing a
+graphical trace of all the state transitions that happened in all test iterations. The <code>--graph-bug</code>
+command line option is similar but produces a graph only of the last test iteration leading up to a
+bug. These graphs are different from the graph generated by <code>--coverage activity</code> because the
+coverage graph collapses all machine instances into one group, so you can more easily see the whole
+coverage of that machine type. The <code>--graph</code> options are handy when you need to see the difference
+in state that happened in different machine instances.</p>
+<p>See <a href="../../advanced-topics/actors/state-machine-demo/">animating state machine demo</a> for a
+visual explanation of what <code>coyote test</code> does when it is looking for bugs. In the animation you will
+see why the test failed, two of the server nodes have taken on the <code>Leader</code> role, which is not
+allowed.</p>
+<p>See also the <a href="../../assets/images/raft.dgml">DGML diagram</a> which you can open in Visual Studio.
+Here the Server state machines are colored in green, and the Leader states in red to
+highlight the bug found.</p>
+<p><strong>Note:</strong> this feature is currently only available for programs written using the advanced
+<a href="../../advanced-topics/actors/overview/">actor</a> programming model of Coyote.</p>
+<h2 id="unit-testing">Unit Testing</h2>
+<p>To use Coyote tester in a unit test environment (e.g. with MSTest or xUnit) see <a href="../../how-to/unit-testing/">Unit
+Testing</a>.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p><strong>Format of the executable (.exe) or library (.dll) is invalid.</strong></p>
+<p>If you are using a .NET Core target platform then on Windows you will get executable program with
+<code>.exe</code> file extension, like <code>coyote-samples\bin\net5.0\BoundedBuffer.exe</code> These are not
+rewritable assemblies. You must instead rewrite and test the associated library, in this case
+<code>BoundedBuffer.dll</code>.</p>
+<p><strong>&ndash;break does not seem to work on MacOS or Linux</strong></p>
+<p><code>--break</code> depends on <code>System.Diagnostics.Debugger.Launch</code> and it seems that this is not supported
+on MacOS or Linux. So another way to debug a replay is to follow these steps:</p>
+<ol>
+<li>
+<p>Create a new Run Configuration</p>
+</li>
+<li>
+<p>Execute the coyote binary, which you can find in ~/.dotnet/tools/coyote if you installed the
+<code>dotnet tool</code> called <code>Microsoft.Coyote.CLI</code>.</p>
+</li>
+<li>
+<p>Add the arguments ${YOUR_PROGRAM} ${SCHEDULE_TRACE}.schedule</p>
+</li>
+<li>
+<p>Insert the breakpoints where needed and start debugging.</p>
+</li>
+</ol>
 
     <br>
       
@@ -119,12 +325,12 @@ battle-tested inside Azure.</p>
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../build-source/" class="btn btn-xs btn-default pull-right">
+      <a href="../rewriting/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../build-source/" class="btn btn-xs btn-link">
-        Building from source
+      <a href="../rewriting/" class="btn btn-xs btn-link">
+        Rewrite your binaries for testing
       </a>
     </div>
     
@@ -169,7 +375,7 @@ battle-tested inside Azure.</p>
           <h4>Coyote</h4>
           <ul class="list-unstyled">
             <li><a href="/coyote/">Home</a></li>
-            <li><a href="/coyote/overview/about">About</a></li>
+            <li><a href="/coyote/get-started/install">Install</a></li>
           </ul>
         </nav>
       </div>
@@ -178,8 +384,9 @@ battle-tested inside Azure.</p>
         <nav>
           <h4>Resources</h4>
           <ul class="list-unstyled">
-            <li><a href="/coyote/get-started/install">Install</a></li>
-            <li><a href="/coyote/get-started/using-coyote">Getting started</a></li>
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
           </ul>
         </nav>
       </div>
