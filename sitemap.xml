@@ -128,15 +128,15 @@
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://microsoft.github.io/coyote/tutorials/actors/test-failover/</loc>
-     <lastmod>2021-03-01</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
      <loc>https://microsoft.github.io/coyote/tutorials/actors/raft-azure/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://microsoft.github.io/coyote/tutorials/actors/raft-mocking/</loc>
+     <lastmod>2021-03-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/tutorials/actors/test-failover/</loc>
      <lastmod>2021-03-01</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
