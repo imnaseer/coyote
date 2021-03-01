@@ -39,7 +39,6 @@
               {title: "Prerequisites", url: "#prerequisites" },
               {title: "Installing the NuGet package", url: "#installing-the-nuget-package" },
               {title: "Installing the .NET 5.0 coyote tool", url: "#installing-the-net-50-coyote-tool" },
-              {title: "Building the samples", url: "#building-the-samples" },
               {title: "Troubleshooting", url: "#troubleshooting" },
           ]},
         ];
@@ -152,11 +151,6 @@ folder if you prefer that.</p>
 <p><strong>Note:</strong> this command line tool is only for .NET Core. If you need a version of <code>coyote.exe</code> that
 runs on .NET Framework, this is installed from the <code>Microsoft.Coyote.Test</code> package, and you can run
 it from the bin folder of your Coyote application.</p>
-<h3 id="building-the-samples">Building the samples</h3>
-<p>Clone the <a href="http://github.com/microsoft/coyote-samples">Coyote samples repo</a>, then use the following
-<code>PowerShell</code> command line from a Visual Studio 2019 Developer Command Prompt:</p>
-<pre><code class="language-plain">powershell -f build.ps1
-</code></pre>
 <h3 id="troubleshooting">Troubleshooting</h3>
 <h4 id="the-element-metadata-in-namespace-nuspecxsd-has-invalid-child-element-repository">The element &lsquo;metadata&rsquo; in namespace nuspec.xsd has invalid child element &lsquo;repository&rsquo;&hellip;</h4>
 <p>If you get an error building the nuget package, you may need to download

@@ -78,7 +78,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../build-source/" class="btn btn-xs btn-link">
-        Building the source code
+        Building from source
       </a>
     </div>
     
@@ -95,71 +95,24 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       
 
       <h2 id="using-coyote">Using Coyote</h2>
-<p>There are two main ways to use Coyote. The simplest is to use Coyote for <a href="../../concepts/concurrency-unit-testing/">testing your unmodified
-task-based C# code</a>. Optionally, you can also use the
-advanced <a href="../../advanced-topics/actors/overview/">actor</a> programming model of Coyote to build a
-highly-reliable system from scratch.</p>
-<p>Assuming you have <a href="../install/">installed Coyote</a> and built the samples, you
-are ready to use the <code>coyote</code> command line tool. In your <a href="http://github.com/microsoft/coyote-samples">Coyote
-samples</a> local repo you can find the compiled binaries
-in the <code>bin</code> folder.  Here we assume you are using the <a href="../install/#installing-the-net-core-31-coyote-tool">.NET 5.0 version of the <code>coyote</code> tool</a>.</p>
-<p>You can use the <code>coyote</code> tool to automatically test these samples and find bugs. The best place to
-get started is following <a href="../../tutorials/first-concurrency-unit-test/">this tutorial to learn how to write your first concurrency unit test with
-Coyote</a>, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on
+<p>Assuming you have <a href="../install/">installed Coyote</a>, the best place to get started with Coyote is
+following <a href="../../tutorials/first-concurrency-unit-test/">this tutorial to learn how to write your first concurrency unit
+test</a>, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on
 YouTube</a>.</p>
-<p>If you are ready to dive more into Coyote testing, there is a particularly hard bug to find in the
-<code>coyote-samples/Monitors</code> sample application. If you run this application from your command prompt
-it will write output forever. It seems perfectly happy, right?  But there is a bug that happens
-rarely, the kind of pesky bug that would keep you up late at night scratching your head.</p>
-<p>Ok then, let&rsquo;s see if Coyote can find the bug. Type <code>coyote -?</code> to see the help page to make sure
-you have installed it correctly.  Now you are ready to run a <code>coyote</code> test as follows:</p>
-<pre><code class="language-plain">cd coyote-samples
-coyote test ./bin/net5.0/Monitors.dll --iterations 1000 --max-steps 200
+<p>You can then read the <a href="../../concepts/non-determinism/">core concepts</a> behind Coyote and how it can
+be used to <a href="../../concepts/concurrency-unit-testing/">test the concurrency in your code</a>.</p>
+<p>There are many tutorials and samples available for you to dive in further! To build the samples,
+clone the <a href="http://github.com/microsoft/coyote-samples">Coyote samples repo</a>, then use the following
+<code>PowerShell</code> command line from a Visual Studio 2019 Developer Command Prompt:</p>
+<pre><code class="language-plain">powershell -f build.ps1
 </code></pre>
-<p>This also runs perfectly up to 1000 iterations. So this is indeed a hard bug to find. It can be
-found using the <code>PCT</code> exploration strategy with a given maximum number of priority switch points
-<code>--sch-pct</code> (or with the default <code>Random</code> exploration strategy, but with a much larger number of
-iterations, typically more than 100,000 of them).</p>
-<pre><code class="language-plain">coyote test ./bin/net5.0/Monitors.dll --iterations 1000 --max-steps 200 --sch-pct 10
-</code></pre>
-<p>Even then you might need to run it a few times to catch the bug. Set <code>--iterations</code> to a bigger
-number if necessary. You can also let <code>coyote</code> decide which exploration strategy to use. Just use
-<code>--sch-portfolio</code> and size <code>--parallel N</code> and Coyote will run <code>N</code> different exploration strategies
-for you, in parallel. <code>coyote</code> manages the portfolio to give you the best chance of revealing bugs.
-These strategies were developed from real-world experience on large products in Microsoft Azure.
-When you use the right scheduling strategy, you will see a bug report:</p>
-<pre><code class="language-plain">... Task 0 found a bug.
-... Emitting task 0 traces:
-..... Writing .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.txt
-..... Writing .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.schedule
-</code></pre>
-<p>The <code>*.txt</code> file is the text log of the iteration that found the bug. The <code>*.schedule</code> contains the
-information needed to reproduce the bug.</p>
-<p>Finding a hard to find bug is one thing, but if you can&rsquo;t reproduce this bug while debugging there
-is no point. So the <code>*.schedule</code> can be used with the <code>coyote replay</code> command as follows:</p>
-<pre><code class="language-plain">coyote replay ./bin/net5.0/Monitors.dll .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_0.schedule
-. Reproducing trace in coyote-samples\./bin/net48/Monitors.exe
-... Reproduced 1 bug.
-... Elapsed 0.1724228 sec.
-</code></pre>
-<p>Attach a debugger during replay and you can see what exactly is going wrong.</p>
-<p>You might be wondering what the <code>Monitors</code> sample app is really doing. The <code>coyote</code> command line
-tool can help you with that also. If you run the following command line it will produce a <a href="../../tools/dgml/">DGML
-diagram</a> of the state machines that are being tested:</p>
-<pre><code class="language-plain">coyote test ./bin/net5.0/Monitors.dll --iterations 10 --max-steps 20 --graph
-</code></pre>
-<p>You will see the following output:</p>
-<pre><code class="language-plain">... Emitting graph:
-..... Writing .\bin\net48\Output\Monitors.exe\CoyoteOutput\Monitors_0_1.dgml
-</code></pre>
-<p>Open the DGML diagram using Visual Studio 2019 and you will see the following:</p>
-<p><img alt="monitors" src="../../assets/images/Monitors.svg" /></p>
-<p>Download the <a href="../../assets/images/Monitors.dgml">Monitors.dgml</a> file to view it
-interactively using Visual Studio. Make sure the downloaded file keeps the file extension <code>.dgml</code>.
-Use CTRL+A to select everything and this will show you all the detailed links as well.</p>
-<p>You are now ready to dive into the core concepts for using Coyote to test your <a href="../../concepts/concurrency-unit-testing/">unmodified
-task-based code</a> and the more advanced optional <a href="../../advanced-topics/actors/overview/">actor
-programming model</a>.</p>
+<p>In your local <a href="http://github.com/microsoft/coyote-samples">Coyote samples</a> repo you can find the
+compiled binaries in the <code>bin</code> folder. You can use the <code>coyote</code> tool to automatically test these
+samples and find bugs.</p>
+<p>Optionally, you can also learn about the advanced <a href="../../advanced-topics/actors/overview/">actor and state
+machine</a> programming model of Coyote, which allows you to
+build a highly-reliable system from scratch using lightweight concurrency primitives that are
+battle-tested inside Azure.</p>
 
     <br>
       
@@ -177,7 +130,7 @@ programming model</a>.</p>
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../build-source/" class="btn btn-xs btn-link">
-        Building the source code
+        Building from source
       </a>
     </div>
     
