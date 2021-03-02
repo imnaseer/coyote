@@ -11,7 +11,7 @@
     <link rel="canonical" href="https://microsoft.github.io/coyote/how-to/liveness-checking/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Effectively find liveness bugs - Coyote</title>
+    <title>Find liveness bugs effectively - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
@@ -35,7 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Effective liveness checking", url: "#_top", children: [
+          {title: "Find liveness bugs effectively", url: "#_top", children: [
           ]},
           {title: "Fair and unfair scheduling", url: "#fair-and-unfair-scheduling", children: [
           ]},
@@ -96,7 +96,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="effective-liveness-checking">Effective liveness checking</h2>
+      <h2 id="find-liveness-bugs-effectively">Find liveness bugs effectively</h2>
 <p>The presence of monitors that have <code>Hot</code> and <code>Cold</code> states implicitly specifies two assertions.
 Monitor states that are marked neither <code>Hot</code> nor <code>Cold</code> are called <em>warm</em> states. First, any
 terminated execution of the program must not have a monitor in a hot state. Second, the program
