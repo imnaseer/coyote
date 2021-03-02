@@ -36,32 +36,20 @@
         
         var pageToc = [
           {title: "Using Coyote", url: "#_top", children: [
-          ]},
-          {title: "Rewrite your binaries for testing", url: "#rewrite-your-binaries-for-testing", children: [
-          ]},
-          {title: "Example usage", url: "#example-usage", children: [
-          ]},
-          {title: "Configuration", url: "#configuration", children: [
-          ]},
-          {title: "Strong name signing", url: "#strong-name-signing", children: [
-          ]},
-          {title: "Find and reproduce bugs using the Coyote tool", url: "#find-and-reproduce-bugs-using-the-coyote-tool", children: [
-          ]},
-          {title: "Controlled, serialized and reproducible testing", url: "#controlled-serialized-and-reproducible-testing", children: [
-          ]},
-          {title: "Test entry point", url: "#test-entry-point", children: [
-          ]},
-          {title: "Testing options", url: "#testing-options", children: [
-          ]},
-          {title: "Parallel and portfolio testing", url: "#parallel-and-portfolio-testing", children: [
-          ]},
-          {title: "Reproducing and debugging traces", url: "#reproducing-and-debugging-traces", children: [
-          ]},
-          {title: "Graphing the results", url: "#graphing-the-results", children: [
-          ]},
-          {title: "Unit Testing", url: "#unit-testing", children: [
-          ]},
-          {title: "Troubleshooting", url: "#troubleshooting", children: [
+              {title: "Rewrite your binaries for testing", url: "#rewrite-your-binaries-for-testing" },
+              {title: "Example usage", url: "#example-usage" },
+              {title: "Configuration", url: "#configuration" },
+              {title: "Strong name signing", url: "#strong-name-signing" },
+              {title: "Find and reproduce bugs using the Coyote tool", url: "#find-and-reproduce-bugs-using-the-coyote-tool" },
+              {title: "Controlled, serialized and reproducible testing", url: "#controlled-serialized-and-reproducible-testing" },
+              {title: "Test entry point", url: "#test-entry-point" },
+              {title: "Testing options", url: "#testing-options" },
+              {title: "Parallel and portfolio testing", url: "#parallel-and-portfolio-testing" },
+              {title: "Reproducing and debugging traces", url: "#reproducing-and-debugging-traces" },
+              {title: "Graphing the results", url: "#graphing-the-results" },
+              {title: "Unit Testing", url: "#unit-testing" },
+              {title: "Next steps", url: "#next-steps" },
+              {title: "Troubleshooting", url: "#troubleshooting" },
           ]},
         ];
 
@@ -127,12 +115,7 @@ command:</p>
 </code></pre>
 <p>This will list the full command line options. If you are using the .NET Core version of the tool
 then you can simply run <code>dotnet coyote.dll</code> instead.</p>
-<p>You can read below to learn how to use the Coyote tool, or you can jump into action by checking out
-<a href="../../tutorials/first-concurrency-unit-test/">this tutorial</a> to learn how to write your first
-concurrency unit test, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on
-YouTube</a>. There are many more <a href="../../tutorials/overview/">tutorials</a>
-and <a href="../../samples/overview/">samples</a> available for you to explore Coyote further!</p>
-<h2 id="rewrite-your-binaries-for-testing">Rewrite your binaries for testing</h2>
+<h3 id="rewrite-your-binaries-for-testing">Rewrite your binaries for testing</h3>
 <p>The <code>coyote</code> command line tool can be used to automatically rewrite any .NET binary to take over
 concurrency that is built using <code>System.Threading.Tasks.Task</code>. For details on what kinds of
 rewriting is supported see <a href="../../concepts/binary-rewriting/">Rewriting binaries</a>.</p>
@@ -142,7 +125,7 @@ rewriting is supported see <a href="../../concepts/binary-rewriting/">Rewriting 
 <p><code>${YOUR_PROGRAM}</code> is the path to your application or library to be rewritten or a folder containing
 all the libraries you want rewritten.</p>
 <p>Type <code>coyote rewrite -?</code> to see the full command line options.</p>
-<h2 id="example-usage">Example usage</h2>
+<h3 id="example-usage">Example usage</h3>
 <p>The <a href="https://github.com/microsoft/coyote-samples/tree/main/BoundedBuffer">BoundedBuffer example</a> is
 written with <code>System.Threading.Tasks.Task</code>.It is is pure C# code that knows nothing about Coyote
 types.</p>
@@ -159,7 +142,7 @@ but no other controlled tasks are enabled.
 <p>If this code was running in production mode it would have deadlocked and the test would not
 complete. Deadlock detection and reporting in the log file is only made possible when the <code>coyote
 test</code> tool can take over all concurrency, and this was made possible by the <code>coyote rewrite</code> step.</p>
-<h2 id="configuration">Configuration</h2>
+<h3 id="configuration">Configuration</h3>
 <p>You can provide more rewriting options in a JSON file like this:</p>
 <pre><code class="language-json">{
   &quot;AssembliesPath&quot;: &quot;bin/net5.0&quot;,
@@ -188,7 +171,7 @@ the specified <code>AssembliesPath</code>.</p>
 </li>
 </ul>
 <p>Then pass this config file on the command line: <code>coyote rewrite config.json</code>.</p>
-<h2 id="strong-name-signing">Strong name signing</h2>
+<h3 id="strong-name-signing">Strong name signing</h3>
 <p>For .NET 4.7 and 4.8, you may need to resign your rewritten binaries in order for tests to run
 properly. This can be done by providing the same strong name key that you provided during the
 original build. This can be done using the <code>--strong-name-key-file</code> command line argument (or
@@ -197,7 +180,7 @@ original build. This can be done using the <code>--strong-name-key-file</code> c
 <pre><code class="language-plain">bin\net48\coyote rewrite d:\git\foundry99\Coyote\Tests\Tests.SystematicTesting\bin\net48\rewrite.coyote.json --strong-name-key-file Common\Key.snk
 </code></pre>
 <p>You can also provide this key in the JSON file using the <code>StrongNameKeyFile</code> property.</p>
-<h2 id="find-and-reproduce-bugs-using-the-coyote-tool">Find and reproduce bugs using the Coyote tool</h2>
+<h3 id="find-and-reproduce-bugs-using-the-coyote-tool">Find and reproduce bugs using the Coyote tool</h3>
 <p>The <code>coyote</code> command line tool can be used to automatically test a Coyote program to find and
 deterministically reproduce bugs in your code while also enforcing your safety and liveness
 <a href="../../concepts/specifications/">specifications</a>.</p>
@@ -208,7 +191,7 @@ deterministically reproduce bugs in your code while also enforcing your safety a
 with the <code>[Microsoft.Coyote.SystematicTesting.Test]</code> attribute. This method is the entry point to the
 test.</p>
 <p>Type <code>coyote test -?</code> to see the full command line options.</p>
-<h2 id="controlled-serialized-and-reproducible-testing">Controlled, serialized and reproducible testing</h2>
+<h3 id="controlled-serialized-and-reproducible-testing">Controlled, serialized and reproducible testing</h3>
 <p>In its essence, the Coyote tester:
  1. <strong>serializes</strong> the execution of an asynchronous program,
  2. <strong>takes control</strong> of the underlying task scheduler and any declared sources of
@@ -223,7 +206,7 @@ trace (including a human readable version of it). If you get unexpected errors, 
 your test code is adhering to the <a href="tester-requirements.md">Tester requirements</a>.</p>
 <p>See <a href="#reproducing-and-debugging-traces">below</a> to learn how to reproduce traces and debug them using
 a supported version of Visual Studio.</p>
-<h2 id="test-entry-point">Test entry point</h2>
+<h3 id="test-entry-point">Test entry point</h3>
 <p>A Coyote test method can be declared as follows:</p>
 <pre><code class="language-c#">[Microsoft.Coyote.SystematicTesting.Test]
 public static void Execute()
@@ -248,7 +231,7 @@ public static async Task Execute(IActorRuntime runtime);
 <p>Note that similar to unit-testing, static state should be appropriately reset before each test
 iteration because the iterations run in shared memory. However, <a href="#parallel-and-portfolio-testing">parallel instances of the
 tester</a> run in separate processes, which provides isolation.</p>
-<h2 id="testing-options">Testing options</h2>
+<h3 id="testing-options">Testing options</h3>
 <p>To see the list of available command line options use the flag <code>-?</code>. You can optionally give the
 number of testing iterations to perform using <code>--iterations N</code> (where N is an integer &gt; 1). If
 this option is not provided, the tester will perform 1 iteration by default.</p>
@@ -263,7 +246,7 @@ for your case. This flag is usually only needed when your test has the potential
 non-terminating executions (like an infinite series of ping pong events, for example). In such
 cases, if you do not provide <code>max-steps</code> then the tester can appear to can get stuck running one
 iteration forever. This is related to <a href="../../concepts/liveness-checking/">liveness checking</a>.</p>
-<h2 id="parallel-and-portfolio-testing">Parallel and portfolio testing</h2>
+<h3 id="parallel-and-portfolio-testing">Parallel and portfolio testing</h3>
 <p>The Coyote tester supports parallel testing, often used with a portfolio of different schedulers.</p>
 <p>To enable parallel testing, you must run <code>coyote</code>, and provide the flag <code>--parallel N</code> (where N &gt; 0),
 with N specifying the number of parallel testing processes to be spawned. By default, the tester
@@ -271,7 +254,7 @@ spawns the same testing process multiple times (using different random seeds).</
 <p>When doing parallel testing it is often useful to provide the <code>--sch-portfolio</code> flag. This option
 allocates different exploration strategies to each spawned test process which increases the chance
 that one of the test processes will find a particularly difficult bug.</p>
-<h2 id="reproducing-and-debugging-traces">Reproducing and debugging traces</h2>
+<h3 id="reproducing-and-debugging-traces">Reproducing and debugging traces</h3>
 <p>The <code>coyote</code> replayer can be used to deterministically reproduce and debug buggy executions (found
 by <code>coyote test</code>). To run the replayer use the following command:</p>
 <pre><code class="language-plain">coyote replay ${YOUR_PROGRAM} ${SCHEDULE_TRACE}.schedule
@@ -283,7 +266,7 @@ own breakpoints in the source code as usual.</p>
 <p><code>--break</code> uses <code>System.Diagnostics.Debugger.Launch</code> which does not seem to work on MacOS or Linux,
 see troubleshooting below for an alternate way of debugging replay schedules.</p>
 <p>See the replay options section of the help output from invoking <code>coyote -?</code>.</p>
-<h2 id="graphing-the-results">Graphing the results</h2>
+<h3 id="graphing-the-results">Graphing the results</h3>
 <p>The <code>--graph</code> command line option produces a <a href="../../how-to/generate-dgml/">DGML diagram</a> containing a
 graphical trace of all the state transitions that happened in all test iterations. The <code>--graph-bug</code>
 command line option is similar but produces a graph only of the last test iteration leading up to a
@@ -300,10 +283,18 @@ Here the Server state machines are colored in green, and the Leader states in re
 highlight the bug found.</p>
 <p><strong>Note:</strong> this feature is currently only available for programs written using the advanced
 <a href="../../advanced-topics/actors/overview/">actor</a> programming model of Coyote.</p>
-<h2 id="unit-testing">Unit Testing</h2>
+<h3 id="unit-testing">Unit Testing</h3>
 <p>To use Coyote tester in a unit test environment (e.g. with MSTest or xUnit) see <a href="../../how-to/unit-testing/">Unit
 Testing</a>.</p>
-<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="next-steps">Next steps</h3>
+<p>Now that you have <a href="../install/">installed Coyote</a> and learned how to use the tool, you can jump right
+into action by checking out <a href="../../tutorials/first-concurrency-unit-test/">this tutorial</a> to learn
+how to write your first concurrency unit test, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on
+YouTube</a>. You can also read about the core
+<a href="../../concepts/non-determinism/">concepts</a> behind Coyote. There are many more
+<a href="../../tutorials/overview/">tutorials</a> and <a href="../../samples/overview/">samples</a> available for you to
+explore Coyote further!</p>
+<h3 id="troubleshooting">Troubleshooting</h3>
 <p><strong>Format of the executable (.exe) or library (.dll) is invalid.</strong></p>
 <p>If you are using a .NET Core target platform then on Windows you will get executable program with
 <code>.exe</code> file extension, like <code>coyote-samples\bin\net5.0\BoundedBuffer.exe</code> These are not
