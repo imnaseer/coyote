@@ -126,22 +126,8 @@ rewriting is supported see <a href="../../concepts/binary-rewriting/">Rewriting 
 all the libraries you want rewritten.</p>
 <p>Type <code>coyote rewrite -?</code> to see the full command line options.</p>
 <h3 id="example-usage">Example usage</h3>
-<p>The <a href="https://github.com/microsoft/coyote-samples/tree/main/BoundedBuffer">BoundedBuffer example</a> is
-written with <code>System.Threading.Tasks.Task</code>.It is is pure C# code that knows nothing about Coyote
-types.</p>
-<p>Using <code>coyote rewrite</code> we can make it testable under the <code>coyote test</code> tool as follows:</p>
-<ol>
-<li>Build BoundedBuffer.sln</li>
-<li>coyote rewrite bin\net5.0\BoundedBuffer.dll</li>
-<li>coyote test bin\net5.0\BoundedBuffer.dll -m TestBoundedBufferMinimalDeadlock -i 100</li>
-</ol>
-<p>Notice that the test runs, it finds a bug and the produced log file contains the error:</p>
-<pre><code class="language-plain">Deadlock detected. Task(0) is waiting for a task to complete,
-but no other controlled tasks are enabled.
-</code></pre>
-<p>If this code was running in production mode it would have deadlocked and the test would not
-complete. Deadlock detection and reporting in the log file is only made possible when the <code>coyote
-test</code> tool can take over all concurrency, and this was made possible by the <code>coyote rewrite</code> step.</p>
+<p>Read this <a href="../../tutorials/first-concurrency-unit-test/">introductory tutorial</a> to see how Coyote can
+be used to rewrite the binary of a simple application for for testing.</p>
 <h3 id="configuration">Configuration</h3>
 <p>You can provide more rewriting options in a JSON file like this:</p>
 <pre><code class="language-json">{
