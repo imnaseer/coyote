@@ -98,7 +98,7 @@ condition means that using locks will not help you in writing correct concurrent
 </ul>
 <h2 id="walkthrough">Walkthrough</h2>
 <p>Consider a typical mock written for a regular unit test.</p>
-<pre><code class="language-csharp">var mockCollection = new Mock&lt;IDbCollection&gt;();
+<pre><code class="language-c#">var mockCollection = new Mock&lt;IDbCollection&gt;();
 mockCollection.Setup(c =&gt; c.DoesRowExist(&quot;joe&quot;)).Returns(true);
 mockCollection.Setup(c =&gt; c.CreateUser(&quot;joe&quot;, ...)).Returns(true);
 await foo;
