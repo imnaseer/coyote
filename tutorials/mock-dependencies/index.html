@@ -75,9 +75,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>Mocking dependencies is a common activity when writing unit tests. The code that you want to test
 often depends on other (complex) code, such as third-party libraries and external services (e.g.
 <a href="https://azure.microsoft.com/services/cosmos-db/">Cosmos DB</a>). These dependencies might be
-impractical to include in the test (e.g. use storage or network), so you want to replace them with
-(much) simpler implementations that simulate the real behavior. One popular way to replace real
-dependencies with mocks is via <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency
+impractical to include as part of the test the test (e.g. because they use storage or network), so
+you want to replace them with (much) simpler implementations that simulate the real behavior. One
+popular way to replace real dependencies with mocks is via <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency
 injection</a>.</p>
 <p>Mocks play an even more important role when <a href="../../concepts/concurrency-unit-testing/">writing concurrency unit
 tests</a>. Coyote explores different interleavings during each
@@ -101,7 +101,7 @@ condition means that using locks will not help you in writing correct concurrent
 <pre><code class="language-csharp">var mockCollection = new Mock&lt;IDbCollection&gt;();
 mockCollection.Setup(c =&gt; c.DoesRowExist(&quot;joe&quot;)).Returns(true);
 mockCollection.Setup(c =&gt; c.CreateUser(&quot;joe&quot;, ...)).Returns(true);
-
+await foo;
 var userAccountManager = new UserAccountManager(mockCollection);
 
 var result = await userAccountManager.CreateUser(&quot;joe&quot;, payload);
