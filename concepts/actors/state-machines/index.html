@@ -107,7 +107,7 @@ which lives in the <code>Microsoft.Coyote.Actors</code> namespace. A state machi
 explicit information about how <code>Events</code> can trigger <code>State</code> changes in a <code>StateMachine</code>. You can
 write a state machine version of the <code>Server</code> class shown in <a href="../overview/">Programming model: asynchronous
 actors</a> like this:</p>
-<pre><code class="language-c#">class ReadyEvent : Event { }
+<pre><code class="language-csharp">class ReadyEvent : Event { }
 
 class Server : StateMachine
 {
@@ -143,7 +143,7 @@ use the <code>Start</code> attribute to declare one of the states the <em>initia
 state that the machine will transition to upon initialization. In this example, the <code>Init</code> state has
 been declared as the initial state of <code>Server</code>. A state declaration can optionally be decorated with
 a number of state-specific attributes, as seen in the <code>[Init]</code> state:</p>
-<pre><code class="language-c#">[OnEntry(nameof(InitOnEntry))]
+<pre><code class="language-csharp">[OnEntry(nameof(InitOnEntry))]
 [OnEventGotoState(typeof(ReadyEvent), typeof(Active))]
 </code></pre>
 <p>The <code>OnEntry</code> attribute denotes an action that will be executed when the machine transitions to the
@@ -156,7 +156,7 @@ these should not be confused with the <code>System.EventHandler</code>, which ha
 method on the <code>Server</code> Actor. The <code>RaiseEvent</code> call is used to trigger the state transition defined
 in the <code>OnEventGotoState</code> custom attribute, in this case it is ready to transition to the <code>Active</code>
 state:</p>
-<pre><code class="language-c#">this.RaiseEvent(new ReadyEvent());
+<pre><code class="language-csharp">this.RaiseEvent(new ReadyEvent());
 </code></pre>
 <p>The <code>RaiseEvent</code> call is used to send an event to yourself. Similar to <code>SendEvent</code>, when a machine
 raises an event on itself, it is also queued so that the method can continue execution until the
@@ -202,7 +202,7 @@ keeping code you need to write, and keeps your code even cleaner.</p>
 <p>Besides <code>RaiseEvent</code>, state machine event handlers can request a state change in code rather than
 depending on <code>OnEventGotoState</code> attributes. This allows <em>conditional</em> goto operations as shown in
 the following example:</p>
-<pre><code class="language-c#">void InitOnEntry()
+<pre><code class="language-csharp">void InitOnEntry()
 {
     if (this.Random())
     {
@@ -216,12 +216,12 @@ the following example:</p>
 </code></pre>
 <p>State machines can also push and pop states, effectively creating a stack of active states. Use
 <code>[OnEventPushState(...)]</code> or <code>RaisePushStateEvent</code> in code to push a new state:</p>
-<pre><code class="language-c#">this.RaisePushStateEvent&lt;Active&gt;();
+<pre><code class="language-csharp">this.RaisePushStateEvent&lt;Active&gt;();
 </code></pre>
 <p>This will push the <code>Active</code> state on the stack, but it will also inherit some actions declared on
 the <code>Init</code> state. The <code>Active</code> state can pop itself off the stack, returning to the <code>Init</code> state
 using a <code>RaisePopStateEvent</code> call:</p>
-<pre><code class="language-c#">void HandlePing()
+<pre><code class="language-csharp">void HandlePing()
 {
     Console.WriteLine(&quot;Server received ping event while in the {0} state&quot;, this.CurrentState.Name);
     this.RaisePopStateEvent();  // pop the current state off the stack of active states.
@@ -238,7 +238,7 @@ once in the stack, the one closest to the top of the stack is used.</p>
 <h3 id="only-one-raise-operation-per-action">Only one Raise* operation per action</h3>
 <p>There is an important restriction on the use of the following. Only one of these operations can be
 queued up per event handling action:</p>
-<pre><code class="language-c#">RaiseEvent
+<pre><code class="language-csharp">RaiseEvent
 RaiseGotoStateEvent
 RaisePushStateEvent
 RaisePopStateEvent
@@ -247,7 +247,7 @@ RaiseHaltEvent
 <p>A runtime <code>Assert</code> will be raised if you accidentally try and do two of these operations in a single
 action. For example, this would be an error because you are trying to do two <code>Raise</code> operations in
 the <code>InitOnEntry</code> action:</p>
-<pre><code class="language-c#">void InitOnEntry()
+<pre><code class="language-csharp">void InitOnEntry()
 {
     this.RaiseGotoStateEvent&lt;Active&gt;();
     this.RaiseEvent(new TestEvent());
@@ -255,7 +255,7 @@ the <code>InitOnEntry</code> action:</p>
 </code></pre>
 <h3 id="deferring-and-ignoring-events">Deferring and ignoring events</h3>
 <p>Coyote also provides the capability to <em>defer</em> and <em>ignore</em> events while in a particular state:</p>
-<pre><code class="language-c#">[DeferEvents(typeof(PingEvent), typeof(PongEvent))]
+<pre><code class="language-csharp">[DeferEvents(typeof(PingEvent), typeof(PongEvent))]
 [IgnoreEvents(typeof(ReadyEvent))]
 class SomeState : State { }
 </code></pre>
@@ -273,7 +273,7 @@ the event will be ignored and dropped.</p>
 <h3 id="default-events">Default events</h3>
 <p>State machines support an interesting concept called <em>default events</em>. A state can request that
 something be done by default when there is <em>nothing else</em> to do.</p>
-<pre><code class="language-c#">[OnEventDoAction(typeof(DefaultEvent), nameof(OnIdle))]
+<pre><code class="language-csharp">[OnEventDoAction(typeof(DefaultEvent), nameof(OnIdle))]
 class Idle : State { }
 
 public void OnIdle()
@@ -288,7 +288,7 @@ will be called over and over until something else changes. It is more efficient 
 <code>CreatePeriodicTimer</code> for low priority work.</p>
 <p>Default events can also invoke goto, and push state transitions, which brings up an interesting case
 where you can actually implement an infinite ping pong using the following:</p>
-<pre><code class="language-c#">internal class PingPongMachine : StateMachine
+<pre><code class="language-csharp">internal class PingPongMachine : StateMachine
 {
     [Start]
     [OnEntry(nameof(OnPing))]
@@ -319,7 +319,7 @@ of CPU time.</p>
 that matches all event types. This means you can create generic actions, or state transitions as a
 result of receiving any event (except the <code>DefaultEvent</code>).</p>
 <p>The following example shows how the <code>WildcardEvent</code> can be used:</p>
-<pre><code class="language-c#">internal class WildMachine : StateMachine
+<pre><code class="language-csharp">internal class WildMachine : StateMachine
 {
     [Start]
     [OnEntry(nameof(OnInit))]
@@ -345,7 +345,7 @@ result of receiving any event (except the <code>DefaultEvent</code>).</p>
 </code></pre>
 <p>The client of this state machine can send any event it wants and it will cause a transition to the
 <code>CatchAll</code> state where it will be handled by the <code>OnCatchAll</code> method. For example:</p>
-<pre><code class="language-c#">class X : Event { };
+<pre><code class="language-csharp">class X : Event { };
 var actor = runtime.CreateActor(typeof(WildMachine));
 runtime.SendEvent(actor, new X());
 </code></pre>
@@ -360,7 +360,7 @@ Catch all state caught event of type X
 The following gives the precise semantics of these operations with regards to push and pop.</p>
 <p>First of all only one action per specific event type can be defined on a given <code>State</code>, so the
 following would be an error:</p>
-<pre><code class="language-c#">[DeferEvents(typeof(E1), typeof(E2))]
+<pre><code class="language-csharp">[DeferEvents(typeof(E1), typeof(E2))]
 [OnEventDoAction(typeof(E1), nameof(HandleE1))]
 class SomeState : State { }
 </code></pre>
@@ -370,7 +370,7 @@ previous states on the active state stack, but it <strong>does not</strong> inhe
 <code>OnEventPushState</code> actions.</p>
 <p>If multiple states on the stack of active states define an action for a specific event type then the
 action closest to the top of the stack takes precedence. For example:</p>
-<pre><code class="language-c#">[DeferEvents(typeof(E1))]
+<pre><code class="language-csharp">[DeferEvents(typeof(E1))]
 [OnEventPushState(typeof(E1), typeof(S2))]
 class A : State { }
 

@@ -110,7 +110,7 @@ runtime intercepts any unhandled exception in an actor. The exception is then de
 <code>OnFailure</code> delegate of the runtime. At this point, it is your responsibility to take the
 appropriate action. For instance, you can cause the program to crash and create a dump (for
 debugging later) as follows:</p>
-<pre><code class="language-c#">runtime.OnFailure += delegate (Exception exception)
+<pre><code class="language-csharp">runtime.OnFailure += delegate (Exception exception)
 {
    Environment.FailFast(exception.ToString(), exception);
 };
@@ -123,7 +123,7 @@ already-received messages will not be dequeued. If you wish to suppress an excep
 rest of the program continue normal operation, then it is best to catch the exception in the action
 itself using a usual <code>try { } catch { }</code> block, or override the actor&rsquo;s <code>OnException</code> method to
 handle exceptions in one place.  This override can return one of the following outcomes:</p>
-<pre><code class="language-c#">// The outcome when an Microsoft.Coyote.Actors.Actor throws an exception.
+<pre><code class="language-csharp">// The outcome when an Microsoft.Coyote.Actors.Actor throws an exception.
 public enum OnExceptionOutcome
 {
    // The actor throws the exception causing the runtime to fail.

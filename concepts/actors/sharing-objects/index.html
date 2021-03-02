@@ -115,7 +115,7 @@ structures. Currently three kinds of shared data structures are available: <code
 <code>SharedRegister&lt;T&gt;</code> and <code>SharedDictionary</code>.</p>
 <p>The following code snippet creates and initializes a <code>SharedRegister</code>. It then sends the register to
 a different actor <code>m</code> by stashing it as part of the payload of an event.</p>
-<pre><code class="language-c#">SharedRegister&lt;int&gt; register = SharedRegister.Create&lt;int&gt;(this.Id.Runtime);
+<pre><code class="language-csharp">SharedRegister&lt;int&gt; register = SharedRegister.Create&lt;int&gt;(this.Id.Runtime);
 register.SetValue(100);
 this.SendEvent(m, new MyEvent(register, ...));
 var v = register.GetValue();

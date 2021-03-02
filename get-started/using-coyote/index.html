@@ -193,7 +193,7 @@ trace (including a human readable version of it).</p>
 a supported version of Visual Studio.</p>
 <h3 id="test-entry-point">Test entry point</h3>
 <p>A Coyote test method can be declared as follows:</p>
-<pre><code class="language-c#">[Microsoft.Coyote.SystematicTesting.Test]
+<pre><code class="language-csharp">[Microsoft.Coyote.SystematicTesting.Test]
 public static void Execute()
 {
   ...
@@ -201,7 +201,7 @@ public static void Execute()
 </code></pre>
 <p>The above method acts as the entry point to each testing iteration.</p>
 <p>The <code>coyote</code> test tool supports calling the following test method signatures:</p>
-<pre><code class="language-c#">[Microsoft.Coyote.SystematicTesting.Test]
+<pre><code class="language-csharp">[Microsoft.Coyote.SystematicTesting.Test]
 public static void Execute();
 
 [Microsoft.Coyote.SystematicTesting.Test]

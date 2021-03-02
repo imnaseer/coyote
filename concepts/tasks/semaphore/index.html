@@ -128,7 +128,7 @@ Then it is a good practice to dispose of this <code>Semaphore</code> object, inv
 </ol>
 <h2 id="example-usage">Example usage</h2>
 <p>The code below demonstrates <code>Semaphore</code> in action:</p>
-<p>```c#
+<p>```csharp
 using Microsoft.Coyote.Tasks;</p>
 <p>public class SemaphoreExample
 {
@@ -180,7 +180,7 @@ private void WriteLine(string msg)
 <code>maxCount</code> tasks to perform simultaneously inside the semaphore. The code below implements
 2 test scenarios, and in the first of them invokes <code>RunTask()</code> to create 3 different tasks using
 the semaphore, specifying for the semaphore <code>initialCount</code> = 2, and <code>maxCount</code> = 2.</p>
-<pre><code class="language-c#">using Microsoft.Coyote.Tasks;
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
 public static class Program
 {
     public static int Scenario = 1;

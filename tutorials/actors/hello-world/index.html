@@ -185,7 +185,7 @@ actors</a> to gain a basic understanding of the
 Actors programming model.</p>
 <p>The core of an <code>Actor</code> based Coyote program, is, well, an <code>Actor</code> class! The following <code>Actor</code> named
 <code>Greeter</code> is able to receive a <code>RequestGreetingEvent</code> to which it responds with a <code>GreetingEvent</code>:</p>
-<pre><code class="language-c#">[OnEventDoAction(typeof(RequestGreetingEvent), nameof(HandleGreeting))]
+<pre><code class="language-csharp">[OnEventDoAction(typeof(RequestGreetingEvent), nameof(HandleGreeting))]
 public class Greeter : Actor
 {
     /// This method is called when this actor receives a RequestGreetingEvent.
@@ -211,7 +211,7 @@ tells the <code>Coyote</code> runtime to call the <code>HandleGreeting</code> me
 an error if a different type of event is sent to the <code>Greeter</code>.</p>
 <p>The <code>HandleGreeting</code> method is called with an <code>Event</code> parameter, and you know in this case the
 event will be of type <code>RequestGreetingEvent</code>.  This event is defined in <code>Events.cs</code> like this:</p>
-<pre><code class="language-c#">internal class RequestGreetingEvent : Event
+<pre><code class="language-csharp">internal class RequestGreetingEvent : Event
 {
     public readonly ActorId Caller;
 
@@ -237,7 +237,7 @@ scales but is also easy to write.  An <code>Actor</code> receives messages, and 
 objects, and can send events.</p>
 <p>Notice the <code>Greeter</code> gets an <code>ActorId</code> from the <code>RequestGreetingEvent</code> and uses that to send a
 greeting back to the caller using <code>SendEvent</code>:</p>
-<pre><code class="language-c#">this.SendEvent(ge.Caller, new GreetingEvent(greeting));
+<pre><code class="language-csharp">this.SendEvent(ge.Caller, new GreetingEvent(greeting));
 </code></pre>
 <p>You can also see the bug which has been injected deliberately, namely, it randomly returns more than
 one <code>GreetingEvent</code>.</p>
@@ -246,13 +246,13 @@ one <code>GreetingEvent</code>.</p>
 <code>TestActor</code> creates the <code>Greeter</code> and sends between 1 and 5 <code>RequestGreetingEvents</code>. The <code>TestActor</code>
 is declared in a way that tells the <code>Coyote</code> runtime it is expecting to receive <code>GreetingEvents</code> as
 follows:</p>
-<pre><code class="language-c#"> [OnEventDoAction(typeof(GreetingEvent), nameof(HandleGreeting))]
+<pre><code class="language-csharp"> [OnEventDoAction(typeof(GreetingEvent), nameof(HandleGreeting))]
  ```
 
  To make this a good test, the `TestActor` keeps track of how many greetings were sent and how many
  were received, and it writes an `Assert` to ensure it doesn't receive too many as follows:
 
- ```c#
+ ```csharp
 private void HandleGreeting(Event e)
 {
     // this is perfectly thread safe, because all message handling in actors is
@@ -265,7 +265,7 @@ private void HandleGreeting(Event e)
 </code></pre>
 <p>Lastly, to test the <code>TestActor</code> you need to fire up the Coyote runtime which is done in the <code>HostProgram</code>
 <code>Main</code> entry point as follows:</p>
-<pre><code class="language-c#">public static void Main()
+<pre><code class="language-csharp">public static void Main()
 {
     var config = Configuration.Create();
     IActorRuntime runtime = RuntimeFactory.Create(config);
@@ -280,7 +280,7 @@ private void HandleGreeting(Event e)
 <p>Notice that Coyote actors run in parallel, so you have to stop the program from terminating
 prematurely, which can be done with a <code>Console.ReadLine</code> call.  In order for this program to also be
 testable using the <code>coyote test</code> tool, you need to declare a test method as follows:</p>
-<pre><code class="language-c#">[Microsoft.Coyote.SystematicTesting.Test]
+<pre><code class="language-csharp">[Microsoft.Coyote.SystematicTesting.Test]
 public static void Execute(IActorRuntime runtime)
 {
     runtime.CreateActor(typeof(TestActor));

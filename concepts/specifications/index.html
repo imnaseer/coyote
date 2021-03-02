@@ -115,16 +115,16 @@ API</a>). It is a special kind of actor that
 can receive events but cannot send events to other actors. So it can only observe the execution of
 a program but not influence it: a desirable property when writing specifications in code. A
 <code>Monitor</code> is declared as follows:</p>
-<pre><code class="language-c#">class GlobalSpec : Monitor { ... }
+<pre><code class="language-csharp">class GlobalSpec : Monitor { ... }
 </code></pre>
 <p>The above code snippet declares a monitor named <code>GlobalSpec</code>. Unlike actors, monitors are not
 explicitly instantiated. Instead, they need to be registered with the Coyote runtime:</p>
-<pre><code class="language-c#">ICoyoteRuntime runtime;
+<pre><code class="language-csharp">ICoyoteRuntime runtime;
 runtime.RegisterMonitor&lt;GlobalSpec&gt;();
 </code></pre>
 <p>There can only be one instance of a given monitor type. Communication with this monitor happens via
 events:</p>
-<pre><code class="language-c#">ICoyoteRuntime runtime;
+<pre><code class="language-csharp">ICoyoteRuntime runtime;
 runtime.InvokeMonitor&lt;GlobalSpec&gt;(new CustomEvent(...));
 </code></pre>
 <p>Just like actors, monitors can have any number of fields, methods and states. The following is a
@@ -134,7 +134,7 @@ always within a difference of <code>5</code> between each other. There is no one
 is local to <code>A</code> or <code>B</code> because both <code>x</code> and <code>y</code> live in different places. So we define a global
 <code>Monitor</code> that accepts events as soon as a variable is updated. Then it keeps asserting their values
 are within the required bound.</p>
-<pre><code class="language-c#">public class UpdatedXEvent : Event
+<pre><code class="language-csharp">public class UpdatedXEvent : Event
 {
    public int value { get; private set; }
    public UpdatedXEvent(int value)
@@ -220,7 +220,7 @@ when it is notified that the system must make progress. A liveness monitor leave
 enters the cold state when it is notified that the system has progressed enough. An infinite
 execution is erroneous if the liveness monitor stays in the hot state for an infinitely long period
 of time. Consider the following example.</p>
-<pre><code class="language-c#">
+<pre><code class="language-csharp">
 class UpEvent : Event { }
 class DownEvent : Event { }
 

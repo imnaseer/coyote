@@ -131,7 +131,7 @@ You can provide your own implementation of <code>Microsoft.Coyote.IO.ILogger</co
 logging <code>Actor</code> and <code>StateMachine</code> activity.</p>
 <h2 id="example-of-custom-ilogger">Example of custom ILogger</h2>
 <p>It is possible to replace the default logger with a custom one. The following example captures all log output in a <code>StringBuilder</code>:</p>
-<pre><code class="language-c#">public class CustomLogger : ILogger
+<pre><code class="language-csharp">public class CustomLogger : ILogger
 {
     private StringBuilder StringBuilder;
 
@@ -209,13 +209,13 @@ logging <code>Actor</code> and <code>StateMachine</code> activity.</p>
 }
 </code></pre>
 <p>To replace the default logger, call the following <code>IActorRuntime</code> method:</p>
-<pre><code class="language-c#">runtime.Logger = new CustomLogger();
+<pre><code class="language-csharp">runtime.Logger = new CustomLogger();
 </code></pre>
 <p>The above method replaces the previously installed logger with the specified one and returns the
 previously installed logger.</p>
 <p>Note that the old <code>Logger</code> might be disposable, so if you care about disposing the old logger at
 the same time you may need to write this instead:</p>
-<pre><code class="language-c#">using (var oldLogger = runtime.Logger)
+<pre><code class="language-csharp">using (var oldLogger = runtime.Logger)
 {
    runtime.Logger = new CustomLogger();
 }
@@ -243,7 +243,7 @@ by the testing runtime when <code>--verbosity</code> is not specified.</p>
 <p>See <a href="../../../ref/Microsoft.Coyote.Actors/IActorRuntimeLog/">IActorRuntimeLog API documentation</a>.</p>
 <h2 id="example-of-a-custom-iactorruntimelog">Example of a custom IActorRuntimeLog</h2>
 <p>You can also implement your own <code>IActorRuntimeLog</code>. The following is an example of how to do this:</p>
-<pre><code class="language-c#">internal class CustomLogWriter : IActorRuntimeLog
+<pre><code class="language-csharp">internal class CustomLogWriter : IActorRuntimeLog
 {
   // Callbacks on runtime events
 
@@ -261,7 +261,7 @@ by the testing runtime when <code>--verbosity</code> is not specified.</p>
 }
 </code></pre>
 <p>You can then register your new implementation using the following <code>IActorRuntime</code> method:</p>
-<pre><code class="language-c#">runtime.RegisterLog(new CustomLogWriter());
+<pre><code class="language-csharp">runtime.RegisterLog(new CustomLogWriter());
 </code></pre>
 <p>You can register multiple <code>IActorRuntimeLog</code> objects in case you have loggers that are doing very
 different things. The runtime will invoke each callback for every registered <code>IActorRuntimeLog</code>.</p>
@@ -269,7 +269,7 @@ different things. The runtime will invoke each callback for every registered <co
 <p>You can modify the format of text log messages by providing your own <code>ActorRuntimeLogTextFormatter</code>.
 You can subclass the default <code>ActorRuntimeLogTextFormatter</code> implementation to override its default behavior.
 The following is an example of how to do this:</p>
-<pre><code class="language-c#">internal class CustomLogFormatter : ActorRuntimeLogTextFormatter
+<pre><code class="language-csharp">internal class CustomLogFormatter : ActorRuntimeLogTextFormatter
 {
   // Methods for formatting log messages
 
@@ -293,7 +293,7 @@ The following is an example of how to do this:</p>
 </code></pre>
 <p>You can then replace the default <code>ActorRuntimeLogTextFormatter</code> with your new implementation using
 the following <code>IActorRuntime</code> method:</p>
-<pre><code class="language-c#">runtime.RegisterLog(new CustomLogFormatter());
+<pre><code class="language-csharp">runtime.RegisterLog(new CustomLogFormatter());
 </code></pre>
 <p>The above method replaces the previously installed <code>ActorRuntimeLogTextFormatter</code> with the specified
 one.</p>

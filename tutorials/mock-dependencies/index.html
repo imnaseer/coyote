@@ -97,15 +97,25 @@ condition means that using locks will not help you in writing correct concurrent
 <li>Be familiar with the <code>coyote</code> tool. See <a href="../../get-started/using-coyote/">Testing</a>.</li>
 </ul>
 <h2 id="walkthrough">Walkthrough</h2>
-<p>Consider a typical mock written for a regular unit test.</p>
-<pre><code class="language-c#">var mockCollection = new Mock&lt;IDbCollection&gt;();
-mockCollection.Setup(c =&gt; c.DoesRowExist(&quot;joe&quot;)).Returns(true);
-mockCollection.Setup(c =&gt; c.CreateUser(&quot;joe&quot;, ...)).Returns(true);
-await foo;
-var userAccountManager = new UserAccountManager(mockCollection);
+<p>Consider a simple mock written for the following unit test.</p>
+<pre><code class="language-csharp">public static async Task TestAccountCreation()
+{
+    // Initialize the mock in-memory DB.
+    var mockCollection = new Mock&lt;IDbCollection&gt;();
+    mockCollection.Setup(m =&gt; m.DoesRowExist(&quot;MyAccount&quot;)).Returns(Task.FromResult(false));
+    mockCollection.Setup(m =&gt; m.CreateRow(&quot;MyAccount&quot;, &quot;...&quot;)).Returns(Task.FromResult(true));
 
-var result = await userAccountManager.CreateUser(&quot;joe&quot;, payload);
-Assert.IsTrue(result);
+    // Initialize the account manager with the mock in-memory DB.
+    var accountManager = new AccountManager(mockCollection.Object);
+
+    // Create some dummy data.
+    string accountName = &quot;MyAccount&quot;;
+    string accountPayload = &quot;...&quot;;
+
+    // Create the account, it should complete successfully and return true.
+    var result = await accountManager.CreateAccount(accountName, accountPayload);
+    Assert.True(result);
+}
 </code></pre>
 <p>While the above test works perfectly for sequential tests, it doesn&rsquo;t work when wr write concurrent tests. Consider the following concurrent test.</p>
 <pre><code class="language-csharp">var mockCollection = new Mock&lt;IDbCollection&gt;();

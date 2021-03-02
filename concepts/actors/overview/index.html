@@ -124,7 +124,7 @@ using information you provide declaring how various types of events causes those
 <p>An actor based program in Coyote is a normal .NET program that also uses the <code>Actor</code> or
 <code>StateMachine</code> base classes from the <code>Microsoft.Coyote.Actors</code> namespace, as well as the <code>Event</code>
 base class from the <code>Microsoft.Coyote</code> namespace. Actors can be declared in the following way:</p>
-<pre><code class="language-c#">using Microsoft.Coyote.Actors;
+<pre><code class="language-csharp">using Microsoft.Coyote.Actors;
 
 class Client : Actor { ... }
 
@@ -134,7 +134,7 @@ class Server : Actor { ... }
 declare fields, properties and methods.</p>
 <p>An actor can create an instance of another actor and send Events using the following <code>Actor</code>
 methods:</p>
-<pre><code class="language-c#">  ActorId clientId = this.CreateActor(typeof(Client));
+<pre><code class="language-csharp">  ActorId clientId = this.CreateActor(typeof(Client));
   this.SendEvent(this.ClientId, new PingEvent());
 </code></pre>
 <p>When an event is being sent, it is enqueued in the event queue of the target actor. The coyote
@@ -154,7 +154,7 @@ architectures.</p>
 <h3 id="starting-a-coyote-actor-based-program">Starting a Coyote actor-based program</h3>
 <p>To create the first instance of an <code>Actor</code> you need to initialize the Coyote actor runtime inside
 your C# process (typically in the <code>Main</code> method). An example of this is the following:</p>
-<pre><code class="language-c#">using Microsoft.Coyote;
+<pre><code class="language-csharp">using Microsoft.Coyote;
 using Microsoft.Coyote.Actors;
 using Microsoft.Coyote.SystematicTesting;
 using System;
@@ -192,7 +192,7 @@ prematurely.</p>
 actor. This method accepts as parameters an object of type <code>ActorId</code> and an event object. It also
 has a couple more advanced parameters which you don&rsquo;t need to worry about right now.</p>
 <p>An event can be created by sub-classing from <code>Microsoft.Coyote.Event</code>:</p>
-<pre><code class="language-c#">class PingEvent : Event
+<pre><code class="language-csharp">class PingEvent : Event
 {
     public readonly ActorId Caller;
 
@@ -209,7 +209,7 @@ an event is sent to a target actor there is no deep-copying of those members, fo
 reasons. The target actor will be able to see the Event object and cast it to a specific type to
 extract the information it needs.</p>
 <p>Now you can write a complete actor, declaring what type of events it can handle:</p>
-<pre><code class="language-c#">[OnEventDoAction(typeof(PingEvent), nameof(HandlePing))]
+<pre><code class="language-csharp">[OnEventDoAction(typeof(PingEvent), nameof(HandlePing))]
 class Server : Actor
 {
     public void HandlePing(Event e)
@@ -227,7 +227,7 @@ the caller and the <code>Server</code> uses that to send back a <code>PongEvent<
 you can do anything there, including creating one or more actor instances, sending one or more
 events, updating some private state or invoking some 3rd party library.</p>
 <p>To complete this Coyote program, you can provide the following implementation of the <code>Client</code> actor:</p>
-<pre><code class="language-c#">using System.Threading.Tasks;
+<pre><code class="language-csharp">using System.Threading.Tasks;
 
 class SetupEvent : Event
 {
@@ -276,7 +276,7 @@ some uncontrolled async behavior an error will be reported.</p>
 <p>One last remaining bit of code is needed in your <code>Program</code> to complete this example, namely, you
 need to create the <code>Client</code> actor in the <code>Execute</code> method, in fact, you can create as many <code>Client</code>
 actors as you want to make this an interesting test:</p>
-<pre><code class="language-c#">public static void Execute(IActorRuntime runtime)
+<pre><code class="language-csharp">public static void Execute(IActorRuntime runtime)
 {
     ActorId serverId = runtime.CreateActor(typeof(Server));
     runtime.CreateActor(typeof(Client), new SetupEvent(serverId));

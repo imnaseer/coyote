@@ -125,7 +125,7 @@ you in writing correct concurrent code.</p>
 <p><a href="https://youtu.be/wuKo-9iRm6o"><img alt="image" src="../../assets/images/coyote_tutorial_intro.png" /></a></p>
 <h2 id="walkthrough">Walkthrough</h2>
 <p>Without further ado, let&rsquo;s look at the signature of the <code>AccountManager</code> class:</p>
-<pre><code class="language-c#">public class AccountManager
+<pre><code class="language-csharp">public class AccountManager
 {
   private IDbCollection AccountCollection;
 
@@ -140,7 +140,7 @@ you in writing correct concurrent code.</p>
 }
 </code></pre>
 <p>Here are the methods available in the <code>IDbCollection</code> interface:</p>
-<pre><code class="language-c#">public interface IDbCollection
+<pre><code class="language-csharp">public interface IDbCollection
 {
   Task CreateRow(string key, string value);
 
@@ -208,7 +208,7 @@ convince yourself of the absence of any bugs in the above program?</p>
 <p>Let&rsquo;s write a unit test to test the <code>AccountManager</code> code. In production, <code>IDbCollection</code> is
 implemented using a distributed NoSQL database. To keep things simple during testing, you can just
 replace it with a mock. The following code shows such a mock implementation:</p>
-<pre><code class="language-c#">public class InMemoryDbCollection : IDbCollection
+<pre><code class="language-csharp">public class InMemoryDbCollection : IDbCollection
 {
   private readonly ConcurrentDictionary&lt;string, string&gt; Collection;
 
@@ -268,7 +268,7 @@ replace it with a mock. The following code shows such a mock implementation:</p>
 task (via <code>Task.Run</code>) to make the call execute asynchronously, modeling async I/O in a real database
 call.</p>
 <p>Now that you have written this mock, you can write a simple test:</p>
-<pre><code class="language-c#">[Test]
+<pre><code class="language-csharp">[Test]
 public static async Task TestAccountCreation()
 {
   // Initialize the mock in-memory DB and account manager.
@@ -295,7 +295,7 @@ will see that it always passes. But is the behavior still true if two requests h
 <p>What happens if you spawn two tasks that create the same account concurrently? What if you assert
 that only one creation succeeds, while the other always fails? That should work because the
 <code>InMemoryDbCollection</code> uses a <code>ConcurrentDictionary</code> right? </p>
-<pre><code class="language-c#">[Test]
+<pre><code class="language-csharp">[Test]
 public static async Task TestConcurrentAccountCreation()
 {
   // Initialize the mock in-memory DB and account manager.
@@ -340,7 +340,7 @@ fairly frequently due to the way .NET task scheduling works (on a reasonably fas
 CPU load).</p>
 <p>Let&rsquo;s tweak the test very slightly by adding a delay of a millisecond between the two <code>CreateAccount</code>
 calls:</p>
-<pre><code class="language-c#">var task1 = accountManager.CreateAccount(accountName, accountPayload);
+<pre><code class="language-csharp">var task1 = accountManager.CreateAccount(accountName, accountPayload);
 await Task.Delay(1); // Artificial delay.
 var task2 = accountManager.CreateAccount(accountName, accountPayload);
 </code></pre>

@@ -270,7 +270,7 @@ mocks and didn&rsquo;t have to change one line of <code>Server</code> code.</p>
 <p><img alt="RaftMocking" src="../../../assets/images/RaftMocking.svg" /></p>
 <p>For this test we also inject a <code>SafetyMonitor</code> into the process by simply registering it on the
 runtime like this:</p>
-<pre><code class="language-c#">runtime.RegisterMonitor&lt;SafetyMonitor&gt;();
+<pre><code class="language-csharp">runtime.RegisterMonitor&lt;SafetyMonitor&gt;();
 </code></pre>
 <p>This enables the monitor so that when the <code>MockServerHost</code> sends the <code>NotifyLeaderElected</code>
 it can keep track and make sure there is only one leader per term.</p>

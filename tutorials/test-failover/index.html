@@ -283,7 +283,7 @@ advance to the <code>HeatingWater</code> state until this reading is returned. S
 <p>The first <code>CoffeeMachine</code> instance left the grinder running a bit too long, and the sensor got
 confused thinking the coffee level is negative. The new <code>CoffeeMachine</code> instance never thought
 about this situation and checked only:</p>
-<pre><code class="language-c#">if ((int)this.HopperLevel.Value == 0)
+<pre><code class="language-csharp">if ((int)this.HopperLevel.Value == 0)
 ...
 </code></pre>
 <p>And so it missed the fact it might be negative. The fix is easy, just change this condition to <code>&lt;=</code>
@@ -352,7 +352,7 @@ computer to find those bugs that are particularly hard to find more quickly.</p>
 requested and return to the <code>Ready</code> state, or it must find a problem and go to the <code>Error</code> state or
 the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can be enforced using a very simple
 <code>LivenessMonitor</code> as shown below:</p>
-<pre><code class="language-c#">internal class LivenessMonitor : Monitor
+<pre><code class="language-csharp">internal class LivenessMonitor : Monitor
 {
     public class BusyEvent : Event { }
 
@@ -374,11 +374,11 @@ the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can 
 machine</a>. The <code>CoffeeMachine</code> can send
 events to this monitor to tell it when it has switched into <code>Busy</code> state or <code>Idle</code> state. When the
 <code>CoffeeMachine</code> starts heating water, or making coffee it sends this event:</p>
-<pre><code class="language-c#">Specification.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.BusyEvent());
+<pre><code class="language-csharp">Specification.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.BusyEvent());
 </code></pre>
 <p>and when the <code>CoffeeMachine</code> is done making coffee or it has moved to an error state it sends this
 event:</p>
-<pre><code class="language-c#">Specification.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.IdleEvent());
+<pre><code class="language-csharp">Specification.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.IdleEvent());
 </code></pre>
 <p>The <code>Busy</code> state is marked as a <code>[Hot]</code> state and the <code>Idle</code> state is marked as a <code>[Cold]</code> state.
 During testing if <code>coyote test</code> finds the <code>LivenessMonitor</code> to be stuck in the <code>[Hot]</code> state too

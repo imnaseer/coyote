@@ -102,7 +102,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>For some applications, it is useful to know which actor is processing an event derived from some
 user request. Coyote offers the notion of an <em>EventGroup</em> that can be tracked automatically. The
 following <code>IActorRuntime</code> APIs take an optional <code>EventGroup</code> parameter.</p>
-<pre><code class="language-c#">ActorId CreateActor(Type type, Event e = null, EventGroup group = null);
+<pre><code class="language-csharp">ActorId CreateActor(Type type, Event e = null, EventGroup group = null);
 void SendEvent(ActorId target, Event e, EventGroup group = null);
 </code></pre>
 <p>When you pass a non-null group the runtime takes care of propagating it to any subsequent actors
@@ -112,17 +112,17 @@ performed as a result of these actors and events can be grouped into a logical g
 <code>CurrentEventGroup</code> of the sender and pass it along to the target actor (if there is one).</p>
 <p>The <code>Actor</code> class has a field that returns the current <code>EventGroup</code>. The <code>EventGroup</code> is stored
 with the event and <code>CurrentEventGroup</code> is set when the event is dequeued.</p>
-<pre><code class="language-c#">EventGroup CurrentEventGroup { get; set; }
+<pre><code class="language-csharp">EventGroup CurrentEventGroup { get; set; }
 </code></pre>
 <p>Additionally you may use the following <code>IActorRuntime</code> API to get the current group of any actor.</p>
-<pre><code class="language-c#">EventGroup GetCurrentEventGroup(ActorId actorId);
+<pre><code class="language-csharp">EventGroup GetCurrentEventGroup(ActorId actorId);
 </code></pre>
 <p>The <code>CurrentEventGroup</code> is automatically passed along whenever you use <code>CreateActor</code> or <code>SendEvent</code>
 as shown below:</p>
 <p><img alt="EventGroups" src="../../../assets/images/EventGroups.svg" /></p>
 <h3 id="eventgroup">EventGroup</h3>
 <p>The base <code>EventGroup</code> class contains the following:</p>
-<pre><code class="language-c#">public Guid Id { get; internal set; }
+<pre><code class="language-csharp">public Guid Id { get; internal set; }
 public string Name { get; internal set; }
 </code></pre>
 <p>The <code>Guid</code> is automatically assigned to <code>Guid.Empty</code>. The <code>Name</code> defaults to null but you can
@@ -130,7 +130,7 @@ provide any friendly name you want there.</p>
 <h3 id="awaitableeventgroup">AwaitableEventGroup&lt;<T>&gt;</h3>
 <p>As a convenience the following typed EventGroup is also provided that can also be used to wait for
 some result to be returned from the actors that share this group:</p>
-<pre><code class="language-c#">public class AwaitableEventGroup&lt;T&gt; : EventGroup
+<pre><code class="language-csharp">public class AwaitableEventGroup&lt;T&gt; : EventGroup
 {
     public bool IsCompleted { get; }
     public Task&lt;T&gt; Task { get; }
@@ -145,12 +145,12 @@ return a result from a collection of actors that are performing some job. <code>
 <h3 id="clearing-the-currenteventgroup">Clearing the CurrentEventGroup</h3>
 <p>You might need to clear the current event group at some point in your <code>Actor</code>. To do this you can
 simply set the property to null:</p>
-<pre><code class="language-c#">this.CurrentEventGroup = null;
+<pre><code class="language-csharp">this.CurrentEventGroup = null;
 </code></pre>
 <p>However, this could be overridden by any subsequent event that is dequeued from the event queue. If
 you do not want the <code>CurrentEventGroup</code> to be passed along to the target actor you can pass a
 special <code>EventGroup.Null</code> event group like this:</p>
-<pre><code class="language-c#">this.SendEvent(target, e, EventGroup.Null);
+<pre><code class="language-csharp">this.SendEvent(target, e, EventGroup.Null);
 </code></pre>
 <p>This will put a <code>null</code> in the event queue of the target actor so that when this event is dequeued
 the <code>CurrentEventGroup</code> of the target actor will be set to <code>null</code>.  In this way then you can propagate
@@ -159,7 +159,7 @@ a null <code>EventGroup</code> to all your actors.</p>
 <p>The <code>EventGroup</code> class is unsealed so you can create any custom class that you need. The following
 is an example that counts a certain number of steps before completing the boolean
 <code>AwaitableEventGroup</code>:</p>
-<pre><code class="language-c#">public class EventGroupCounter : AwaitableEventGroup&lt;bool&gt;
+<pre><code class="language-csharp">public class EventGroupCounter : AwaitableEventGroup&lt;bool&gt;
 {
     public int ExpectedCount;
 
@@ -181,7 +181,7 @@ is an example that counts a certain number of steps before completing the boolea
 <p>This way you can have multiple actors calling <code>Complete</code> and the outer code that is waiting is not
 released until the expected count is reached.</p>
 <p>Similarly you can create an <code>EventGroup</code> that gathers multiple results from various actors like this:</p>
-<pre><code class="language-c#">public class EventGroupList : AwaitableEventGroup&lt;List&lt;string&gt;&gt;
+<pre><code class="language-csharp">public class EventGroupList : AwaitableEventGroup&lt;List&lt;string&gt;&gt;
 {
     public List&lt;string&gt; Items = new List&lt;string&gt;();
 

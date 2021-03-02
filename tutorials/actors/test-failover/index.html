@@ -409,7 +409,7 @@ of the possible events were covered.</p>
 requested and return to the <code>Ready</code> state, or it must find a problem and go to the <code>Error</code> state or
 the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can be enforced using a very simple
 <code>LivenessMonitor</code> as shown below:</p>
-<pre><code class="language-c#">internal class LivenessMonitor : Monitor
+<pre><code class="language-csharp">internal class LivenessMonitor : Monitor
 {
     public class BusyEvent : Event { }
 
@@ -430,11 +430,11 @@ the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can 
 <p>This type of <code>Monitor</code> is also a kind of state machine. The <code>CoffeeMachine</code> can send events to this
 monitor to tell it when it has switched into <code>Busy</code> state or <code>Idle</code> state. When the <code>CoffeeMachine</code>
 starts heating water, or making coffee it sends this event:</p>
-<pre><code class="language-c#">this.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.BusyEvent());
+<pre><code class="language-csharp">this.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.BusyEvent());
 </code></pre>
 <p>and when the CoffeeMachine is done making coffee or it has moved to an error state it sends this
 event:</p>
-<pre><code class="language-c#">this.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.IdleEvent());
+<pre><code class="language-csharp">this.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.IdleEvent());
 </code></pre>
 <p>The <code>Busy</code> state is marked as a <code>[Hot]</code> state and the <code>Idle</code> state is marked as a <code>[Cold]</code> state.
 During testing if <code>coyote test</code> finds the <code>LivenessMonitor</code> to be stuck in the <code>[Hot]</code> state too
@@ -452,7 +452,7 @@ and only one client <code>CoffeeMachine</code> at a time. The <code>TerminateEve
 <p>Since the <code>TerminateEvent</code> could be sent to the <code>CoffeeMachine</code> at any time we need an easy way to
 handle this event at any time in <code>CoffeeMachine</code>, hopefully without having to decorate every single
 state in the machine with the custom attribute:</p>
-<pre><code class="language-c#">[OnEventDoAction(typeof(TerminateEvent), nameof(OnTerminate))]
+<pre><code class="language-csharp">[OnEventDoAction(typeof(TerminateEvent), nameof(OnTerminate))]
 </code></pre>
 <p>The solution is to promote this <code>OnEventDoAction</code> to the class level.  Class level handlers are
 handled like a fall back mechanism so that no matter what state the <code>CoffeeMachine</code> is in the class

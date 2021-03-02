@@ -378,7 +378,7 @@ of this tutorial.</p>
 <p>You already know the main components of the Drinks Serving Robot sample. Now is the time to
 understand the details.   As with other tutorials the code that starts the program consists
 of a <code>[Test]</code> method that takes an <code>IActorRuntime</code>:</p>
-<pre><code class="language-c#">public static class Program
+<pre><code class="language-csharp">public static class Program
 {
     private static bool RunForever = false;
 
@@ -491,7 +491,7 @@ failover process.</p>
 <p>The <code>LivenessMonitor</code> (See <a href="../../../how-to/liveness-checking/">Liveness Checking</a>) monitors the <code>Robot</code> and
  the <code>Navigator</code> to make sure the <code>Robot</code> always finishes the job, by serving a <code>Drink</code>.</p>
 <p>This &ldquo;liveness&rdquo; property can be enforced using a very simple <code>LivenessMonitor</code> as shown below:</p>
-<pre><code class="language-c#">internal class LivenessMonitor : Monitor
+<pre><code class="language-csharp">internal class LivenessMonitor : Monitor
 {
     public class BusyEvent : Event { }
 
@@ -512,10 +512,10 @@ failover process.</p>
 <p>The <code>Robot</code> can send events to this monitor to tell it when to switch into <code>Busy</code> or <code>Idle</code> state.
  When the <code>Robot</code> requests a <code>DrinkOrder</code> or <code>DrivingInstructions</code> from the <code>Navigator</code>, it sends
  this event:</p>
-<pre><code class="language-c#">this.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.BusyEvent());
+<pre><code class="language-csharp">this.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.BusyEvent());
 </code></pre>
 <p>And when the <code>Robot</code> finishes an order it sends this event:</p>
-<pre><code class="language-c#">this.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.IdleEvent());
+<pre><code class="language-csharp">this.Monitor&lt;LivenessMonitor&gt;(new LivenessMonitor.IdleEvent());
 </code></pre>
 <p>The <code>Busy</code> state is marked as a <code>[Hot]</code> state and the <code>Idle</code> state is marked as a <code>[Cold]</code> state.
 During testing if <code>coyote test</code> finds the <code>LivenessMonitor</code> to be stuck in the <code>[Hot]</code> state for too
@@ -586,7 +586,7 @@ never sent any request and remained waiting. This is in fact the liveness bug!</
 from which the transition occurred.</p>
 <p>The state <code>MovingOnRoute</code> is very simple. It processes a single type of event
 (<code>MoveTimerElapsedEvent</code>) with the <code>NextMove()</code> action:</p>
-<pre><code class="language-c#">[OnEventDoAction(typeof(MoveTimerElapsedEvent), nameof(NextMove))]
+<pre><code class="language-csharp">[OnEventDoAction(typeof(MoveTimerElapsedEvent), nameof(NextMove))]
 [IgnoreEvents(typeof(Navigator.DrinkOrderProducedEvent))]
 internal class MovingOnRoute : State { }
 
@@ -638,7 +638,7 @@ was it possible to transition from <code>MovingOnRoute</code> to <code>Active</c
 <p>But what happened to the <code>Robot</code> in state <code>Active</code>? Why it didn&rsquo;t send any request to the
 <code>Navigator</code>?</p>
 <p>This code fragment explains what happened:</p>
-<pre><code class="language-c#">[OnEntry(nameof(OnInitActive))]
+<pre><code class="language-csharp">[OnEntry(nameof(OnInitActive))]
 [OnEventGotoState(typeof(Navigator.DrinkOrderProducedEvent), typeof(ExecutingOrder))]
 [OnEventDoAction(typeof(Navigator.DrinkOrderConfirmedEvent), nameof(OnDrinkOrderConfirmed))]
 internal class Active : State { }
@@ -663,7 +663,7 @@ order in the <code>Storage</code> service.</p>
 <code>MovingOnRoute</code> at the time of the registration event. Look at the code of <code>Robot.cs</code> where
 <code>this.DrinkOrderPending</code> is being modified. The only place where this is set to <code>false</code> is in the
 <code>NextMove()</code> method:</p>
-<pre><code class="language-c#">private void NextMove()
+<pre><code class="language-csharp">private void NextMove()
 {
     this.DrinkOrderPending = false;
     ...
@@ -676,7 +676,7 @@ takes control of all the timing and ordering of messages between the actors. The
 Navigator considers the drink request complete (and clears the Storage of that request) when it
 returns the DrivingInstructionsEvent. This event is handled by the robot in the method ReachClient.
 So this is where the Robot should be clearing its internal <code>DrinkOrderPending</code> state:</p>
-<pre><code class="language-c#">private void ReachClient(Event e)
+<pre><code class="language-csharp">private void ReachClient(Event e)
 {
     var route = (e as DrivingInstructionsEvent)?.Route;
     if (route != null)

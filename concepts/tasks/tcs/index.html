@@ -114,7 +114,7 @@ variants return <code>bool</code> indicating success rather than throwing an exc
 <p>The code below demonstrates a controlled <code>TaskCompletionSource&lt;TResult&gt;</code> in action. This represents
 the most typical scenario in which programmers need and use a task completion source, namely to know
 when a long-running operation, that itself is not awaitable, has finished.</p>
-<pre><code class="language-c#">using Microsoft.Coyote.Tasks;
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
 
 public void StartLongOperation(TaskCompletionSource&lt;bool&gt; tcs)
 {
@@ -131,7 +131,7 @@ method is not awaitable, as it returns <code>void</code>, it can signal its comp
 the controlled <code>TaskCompletionSource&lt;bool&gt;</code> to <code>true</code>.</p>
 <p>A consumer of the task produced by this task completion source can await on its completion using the
 following code:</p>
-<pre><code class="language-c#">using Microsoft.Coyote.Tasks;
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
 
 // The input task is the task produced by the task completion source.
 public async Task Consumer(Task&lt;bool&gt; task)
@@ -143,7 +143,7 @@ public async Task Consumer(Task&lt;bool&gt; task)
 </code></pre>
 <p>You can now use a <code>TaskCompletionSource</code> to coordinate this long running operation with another
 async <code>Task</code> that needs to wait on the completion of that operation like this:</p>
-<pre><code class="language-c#">private async Task RunTest()
+<pre><code class="language-csharp">private async Task RunTest()
 {
     var completion = TaskCompletionSource.Create&lt;bool&gt;();
     this.StartLongOperation(completion);
@@ -164,7 +164,7 @@ Producer: Completed the task completion source.
 controlled <code>TaskCompletionSource&lt;TResult&gt;</code>, otherwise you could get the native .NET
 <code>TaskCompletionSource&lt;TResult&gt;</code> instead!</p>
 <p>You might also be puzzled by a build error if you try and do this:</p>
-<pre><code class="language-c#">static async Task Main(string[] args)
+<pre><code class="language-csharp">static async Task Main(string[] args)
 {
     Program p = new Program();
     await p.RunTest();
@@ -174,7 +174,7 @@ controlled <code>TaskCompletionSource&lt;TResult&gt;</code>, otherwise you could
 <pre><code class="language-plain">error CS5001: Program does not contain a static 'Main' method suitable for an entry point
 </code></pre>
 <p>The reason is C# doesn&rsquo;t know about the coyote <code>Task</code>, so the fix is to fully qualify that Main entry point task like this:</p>
-<pre><code class="language-c#">static async System.Threading.Tasks.Task Main(string[] args)
+<pre><code class="language-csharp">static async System.Threading.Tasks.Task Main(string[] args)
 {
     Program p = new Program();
     await p.RunTest();

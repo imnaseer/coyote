@@ -177,7 +177,7 @@ message types that are sent between the Server instances and the Client.</p>
 messages to all <code>Servers</code> registered in a cluster. Sending an event to this cluster will result in
 all <code>Servers</code> getting that same event. So, as the raft protocol requires, broadcasting
 <code>VoteRequestEvents</code> can be done by a <code>Server</code> using this <code>SendEvent</code> instruction:</p>
-<pre><code class="language-c#">    this.SendEvent(this.ClusterManager, new VoteRequestEvent(this.CurrentTerm, this.Manager.ServerId, lastLogIndex, lastLogTerm));
+<pre><code class="language-csharp">    this.SendEvent(this.ClusterManager, new VoteRequestEvent(this.CurrentTerm, this.Manager.ServerId, lastLogIndex, lastLogTerm));
 </code></pre>
 <p>You will see similar calls sending <code>VoteResponseEvent</code>, <code>AppendLogEntriesRequestEvent</code>,
 <code>AppendLogEntriesResponseEvent</code>, and <code>ClientResponseEvent</code> via the <code>ClusterManager</code>.</p>
@@ -252,7 +252,7 @@ free, and therefore is an excellent candidate for thorough testing by the <code>
 <p>The <code>RunClient</code> method shows how you can use the <code>cluster</code>, namely, sending a <code>ClientRequestEvent</code>
 and waiting for the async response that comes back from the service bus in the
 <code>ClientResponseEvent</code>. Sending a message to the cluster is done like this:</p>
-<pre><code class="language-c#">runtime.SendEvent(clusterManager, new ClientRequestEvent(command));
+<pre><code class="language-csharp">runtime.SendEvent(clusterManager, new ClientRequestEvent(command));
 </code></pre>
 <p>Receiving a response is done using the <code>ResponseReceived</code> event on the <code>AzureMessageReceiver</code>. The
 client then uses a <code>TaskCompletionSource</code> to synchronize these two events so that it waits for a
@@ -274,11 +274,11 @@ sometimes affect how you do things in your production code.</p>
 This is handy when you need to give that <code>ActorId</code> to another <code>Actor</code> as part of an initialization
 process. Then at a later time when everything is ready we can create the actual actor using this
 predetermined <code>id</code> as follows:</p>
-<pre><code class="language-c#">this.Runtime.CreateActor(id, typeof(Server), new Server.SetupServerEvent(this, this.ClusterManager));
+<pre><code class="language-csharp">this.Runtime.CreateActor(id, typeof(Server), new Server.SetupServerEvent(this, this.ClusterManager));
 </code></pre>
 <p>Notice the <code>Server</code> when it is in the start state (<code>Init</code>), it defers all events using a special
 wild card:</p>
-<pre><code class="language-c#">[DeferEvents(typeof(WildCardEvent))]
+<pre><code class="language-csharp">[DeferEvents(typeof(WildCardEvent))]
 </code></pre>
 <p>Then only when <code>NotifyJoinedServiceEvent</code> arrives does it go to the <code>Follower</code> state where the raft
 protocol begins and any queued messages can be processed.</p>

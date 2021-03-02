@@ -112,7 +112,7 @@ introduce a scheduling decision during systematic testing (such as <code>Task.Ru
 lock, which allows it to explore interleavings and expose bugs (including deadlocks).</p>
 <h2 id="example-usage">Example usage</h2>
 <p>The code below demonstrates <code>AsyncLock</code> in action:</p>
-<pre><code class="language-c#">using Microsoft.Coyote.Tasks;
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
 
 public class LockExample
 {
@@ -154,7 +154,7 @@ public class LockExample
 <p>In the above example, the <code>FirstOperationAsync</code> and <code>SecondOperationAsync</code> methods use an
 <code>AsyncLock</code> to avoid a race condition while testing and updating <code>IsRunning</code> and <code>Value</code>.</p>
 <p>You can write a test for this code as follows:</p>
-<pre><code class="language-c#">using Microsoft.Coyote.Tasks;
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
 
 public static class Program
 {

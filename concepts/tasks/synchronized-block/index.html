@@ -116,7 +116,7 @@ blocks simply replace:</p>
 <pre><code class="language-csharp">lock (this.syncObject)
 </code></pre>
 <p>with:</p>
-<pre><code class="language-c#">using (var monitor = SynchronizedBlock.Lock(this.syncObject))
+<pre><code class="language-csharp">using (var monitor = SynchronizedBlock.Lock(this.syncObject))
 </code></pre>
 <p>and replace calls to <code>System.Threading.Monitor.Wait</code> and <code>System.Threading.Monitor.Pulse</code> with
 calls to the new variable <code>monitor.Wait</code> and <code>monitor.Pulse</code> instead. Then when you run your
