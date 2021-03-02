@@ -35,11 +35,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Program specifications", url: "#_top", children: [
-          ]},
-          {title: "Writing safety properties", url: "#writing-safety-properties", children: [
-          ]},
-          {title: "Writing liveness properties", url: "#writing-liveness-properties", children: [
+          {title: "Writing program specifications", url: "#_top", children: [
+              {title: "Specifying safety properties", url: "#specifying-safety-properties" },
+              {title: "Specifying liveness properties", url: "#specifying-liveness-properties" },
           ]},
         ];
 
@@ -98,13 +96,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="program-specifications">Program specifications</h2>
+      <h2 id="writing-program-specifications">Writing program specifications</h2>
 <p>Coyote makes it easy to design and express system-level specifications that can be asserted during
 testing. Specifications come in two forms. <em>Safety</em> specifications assert that the system never
 enters a <em>bad</em> state. <em>Liveness</em> specifications assert that the system eventually does something
 <em>good</em>, that is, it asserts that the system is always able to make progress. These can be written
 using a <code>Monitor</code>.</p>
-<h2 id="writing-safety-properties">Writing safety properties</h2>
+<h3 id="specifying-safety-properties">Specifying safety properties</h3>
 <p>Safety property specifications generalize the notion of source code assertions. A safety property
 violation is a finite execution that leads a system to an erroneous state. Coyote provides an API
 for writing assertions that specify safety properties that are local to a Coyote actor or task. In
@@ -202,7 +200,7 @@ state required for specification (inside the monitor) from the program state (ou
 <code>Specification.RegisterMonitor</code> and <code>Specification.InvokeMonitor</code> instead of the corresponding APIs
 in <code>ICoyoteRuntime</code>.  A <code>Task</code> program can still use an <code>ICoyoteRuntime</code> if it wants to, the static
 methods are just provided as a convenience way to find the current <code>ICoyoteRuntime</code>.</p>
-<h2 id="writing-liveness-properties">Writing liveness properties</h2>
+<h3 id="specifying-liveness-properties">Specifying liveness properties</h3>
 <p>Liveness property specifications generalize the notion of <em>non-termination</em>. A liveness property
 violation is an infinite trace that exhibits lack of progress. Let&rsquo;s explain this concept through an
 example. Suppose that you are designing a replication protocol. The job of the protocol is to ensure
@@ -283,8 +281,9 @@ exactly when the progress will happen. In practice, of course, you cannot wait f
 executions: there is only a finite amount of time available to testing. The tester resorts to
 heuristics: it considers a sufficiently long and hot execution as a proxy for a liveness violation.
 You can configure a bound beyond which executions are considered infinite using the
-<code>--liveness-temperature-threshold</code> argument on the <a href="../../get-started/using-coyote/">coyote tool</a>.
-<a href="liveness-checking.md">Keep reading</a> to learn more on how liveness checking all works.</p>
+<code>--liveness-temperature-threshold</code> argument on the <a href="../../get-started/using-coyote/">coyote tool</a>.</p>
+<p>Read this <a href="../../how-to/liveness-checking/">how-to guide</a> to learn how to effectively test for
+liveness bugs using Coyote.</p>
 
     <br>
       

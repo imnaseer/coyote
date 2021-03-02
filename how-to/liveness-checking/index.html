@@ -97,6 +97,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       
 
       <h2 id="find-liveness-bugs-effectively">Find liveness bugs effectively</h2>
+<p>Now that you learned <a href="../../concepts/specifications/">how to write liveness specifications</a> in
+Coyote, let&rsquo;s see how to effectively test for liveness bugs.</p>
 <p>The presence of monitors that have <code>Hot</code> and <code>Cold</code> states implicitly specifies two assertions.
 Monitor states that are marked neither <code>Hot</code> nor <code>Cold</code> are called <em>warm</em> states. First, any
 terminated execution of the program must not have a monitor in a hot state. Second, the program
