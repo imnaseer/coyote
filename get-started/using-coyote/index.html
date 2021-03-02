@@ -40,7 +40,7 @@
               {title: "Example usage", url: "#example-usage" },
               {title: "Configuration", url: "#configuration" },
               {title: "Strong name signing", url: "#strong-name-signing" },
-              {title: "Find and reproduce bugs using the Coyote tool", url: "#find-and-reproduce-bugs-using-the-coyote-tool" },
+              {title: "Test your binaries", url: "#test-your-binaries" },
               {title: "Controlled, serialized and reproducible testing", url: "#controlled-serialized-and-reproducible-testing" },
               {title: "Test entry point", url: "#test-entry-point" },
               {title: "Testing options", url: "#testing-options" },
@@ -180,7 +180,7 @@ original build. This can be done using the <code>--strong-name-key-file</code> c
 <pre><code class="language-plain">bin\net48\coyote rewrite d:\git\foundry99\Coyote\Tests\Tests.SystematicTesting\bin\net48\rewrite.coyote.json --strong-name-key-file Common\Key.snk
 </code></pre>
 <p>You can also provide this key in the JSON file using the <code>StrongNameKeyFile</code> property.</p>
-<h3 id="find-and-reproduce-bugs-using-the-coyote-tool">Find and reproduce bugs using the Coyote tool</h3>
+<h3 id="test-your-binaries">Test your binaries</h3>
 <p>The <code>coyote</code> command line tool can be used to automatically test a Coyote program to find and
 deterministically reproduce bugs in your code while also enforcing your safety and liveness
 <a href="../../concepts/specifications/">specifications</a>.</p>
