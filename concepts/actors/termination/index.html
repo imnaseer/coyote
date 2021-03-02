@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     
-    <link rel="canonical" href="https://microsoft.github.io/coyote/overview/videos/">
+    <link rel="canonical" href="https://microsoft.github.io/coyote/concepts/actors/termination/">
     <link rel="shortcut icon" href="/coyote/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Videos - Coyote</title>
+    <title>Actor termination - Coyote</title>
     <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/coyote/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/coyote/css/highlight.css">
-    <link href="../../css/main.css" rel="stylesheet">
-    <link href="../../css/player-controls.css" rel="stylesheet">
-    <link href="../../css/syntax.css" rel="stylesheet">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,11 +35,7 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Introductory tutorial on Coyote", url: "#_top", children: [
-          ]},
-          {title: "Webinar", url: "#webinar", children: [
-          ]},
-          {title: "The actor programming model", url: "#the-actor-programming-model", children: [
+          {title: "Explicit termination of an actor", url: "#_top", children: [
           ]},
         ];
 
@@ -47,13 +43,13 @@
     <script src="/coyote/js/base.js"></script>
       <script src="https://www.googletagmanager.com/gtag/js?id=UA-89203408-1"></script>
       <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
-      <script src="../../assets/js/analytics.js"></script>
-      <script src="../../assets/js/plugins.js"></script>
-      <script src="../../assets/js/animate_trace.js"></script>
-      <script src="../../assets/js/animation.js"></script>
-      <script src="../../assets/js/progress_bar.js"></script>
-      <script src="../../assets/js/trace_model.js"></script>
-      <script src="../../assets/js/main.js"></script> 
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
 </head>
 
 <body>
@@ -77,20 +73,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../publications/" class="btn btn-xs btn-default pull-right">
+      <a href="../timers/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../publications/" class="btn btn-xs btn-link">
-        Publications
+      <a href="../timers/" class="btn btn-xs btn-link">
+        Using timers in actors
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../how/" class="btn btn-xs btn-default pull-left">
+      <a href="../actor-semantics/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../how/" class="btn btn-xs btn-link">
-        How does it work
+        Previous</a><a href="../actor-semantics/" class="btn btn-xs btn-link">
+        Actor semantics
       </a>
     </div>
     
@@ -98,15 +94,41 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       
 
-      <h2 id="introductory-tutorial-on-coyote">Introductory tutorial on Coyote</h2>
-<p>This YouTube video will show you how to write your first concurrency unit test and use Coyote to test your unmodified task-based C# code:</p>
-<p><a href="https://youtu.be/wuKo-9iRm6o"><img alt="image" src="../../assets/images/coyote_tutorial_intro.png" /></a></p>
-<h2 id="webinar">Webinar</h2>
-<p>This is an 1 hour Microsoft Research Webinar on Coyote. Sign up to watch the video and you will receive a link to the video in email:</p>
-<p><a href="https://note.microsoft.com/MSR-Webinar-Coyote-Registration-On-Demand.html"><img alt="image" src="../../assets/images/webinar.png" /></a></p>
-<h2 id="the-actor-programming-model">The actor programming model</h2>
-<p>This Channel 9 On-NET show is a deeper dive into the <a href="../../concepts/actors/overview/">actor programming model</a>:</p>
-<p><a href="https://channel9.msdn.com/Shows/On-NET/Reliable-Async-Systems-with-Coyote-Part-2"><img alt="image" src="../../assets/images/channel9_actors.png" /></a></p>
+      <h2 id="explicit-termination-of-an-actor">Explicit termination of an actor</h2>
+<p>Coyote actors and state machines continue running unless they are explicitly terminated. The runtime
+will mark an actor as idle if it has no work to do, but it will not reclaim any resources held by the
+actor unless it is terminated. An actor is terminated when it performs the <code>Halt</code> operation, as seen
+in the following example:</p>
+<pre><code class="language-c#">private class Example : Actor
+{
+    private void SomeAction()
+    {
+        if (this.timeToStop)
+        {
+            this.Halt();
+        }
+    }
+
+    protected override Task OnHaltAsync(Event e)
+    {
+        // Do some cleanup on halt.
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
+<p>Additionally, an actor can be halted by another actor by sending a special built-in event called
+<code>HaltEvent</code>. On state machines this event can also be used for self termination using <code>RaiseEvent</code>.
+Termination of an actor due to an unhandled <code>HaltEvent</code> event is valid behavior (the Coyote runtime
+does not report an error). An event sent to a halted actor is simply dropped. A halted actor cannot
+be restarted; it remains halted forever.</p>
+<p>The Coyote runtime implements actor termination efficiently by cleaning up resources allocated to a
+halted actor and recording that the actor has halted.</p>
+<p>Actor termination via <code>Halt</code> is an asynchronous operation. So in failover scenarios where you need
+to be sure an actor is fully terminated before creating it&rsquo;s replacement actor, you will need to
+create a handshake callback event sent from <code>OnHaltAsync</code> telling the caller that the actor has
+officially halted, otherwise there will be a brief period of time where both actors are alive which
+may not be what you want when modeling a failover situation. This is shown in the <a href="../../../tutorials/actors/test-failover/">test
+failover</a> tutorial.</p>
 
     <br>
       
@@ -119,20 +141,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../publications/" class="btn btn-xs btn-default pull-right">
+      <a href="../timers/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../publications/" class="btn btn-xs btn-link">
-        Publications
+      <a href="../timers/" class="btn btn-xs btn-link">
+        Using timers in actors
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../how/" class="btn btn-xs btn-default pull-left">
+      <a href="../actor-semantics/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../how/" class="btn btn-xs btn-link">
-        How does it work
+        Previous</a><a href="../actor-semantics/" class="btn btn-xs btn-link">
+        Actor semantics
       </a>
     </div>
     

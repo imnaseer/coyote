@@ -96,6 +96,50 @@
      <lastmod>2021-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/overview/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/state-machines/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/actor-semantics/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/termination/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/timers/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/event-groups/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/uncaught-exceptions/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/sharing-objects/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/logging/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/state-machine-demo/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/actors/why-actors/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
      <loc>https://microsoft.github.io/coyote/how-to/unit-testing/</loc>
      <lastmod>2021-03-02</lastmod>
      <changefreq>daily</changefreq>
