@@ -231,7 +231,7 @@ test run on the iteration lengths that it saw. Use this output for calibrating t
 for your case. This flag is usually only needed when your test has the potential of generating
 non-terminating executions (like an infinite series of ping pong events, for example). In such
 cases, if you do not provide <code>max-steps</code> then the tester can appear to can get stuck running one
-iteration forever. This is related to <a href="../../concepts/liveness-checking/">liveness checking</a>.</p>
+iteration forever. This is related to <a href="../../how-to/liveness-checking/">liveness checking</a>.</p>
 <h3 id="parallel-and-portfolio-testing">Parallel and portfolio testing</h3>
 <p>The Coyote tester supports parallel testing, often used with a portfolio of different schedulers.</p>
 <p>To enable parallel testing, you must run <code>coyote</code>, and provide the flag <code>--parallel N</code> (where N &gt; 0),

@@ -151,7 +151,7 @@ instances of the <code>CoffeeMachine</code>.</p>
 <p>There is also a correctness assert in the <code>CoffeeMachine</code> to make sure the correct number of
 espresso shots are made and there is a <code>LivenessMonitor</code> that monitors the <code>CoffeeMachine</code> to make
 sure it never gets stuck, i.e., it always finishes the job it was given or it goes to an error state
-if the machine needs to be fixed. See <a href="../../../concepts/liveness-checking/">Liveness Checking</a>.</p>
+if the machine needs to be fixed. See <a href="../../../how-to/liveness-checking/">Liveness Checking</a>.</p>
 <p>A number of excellent bugs were found by Coyote during the development of this sample, and this
 illustrates the fact that Coyote can be applied to any type of asynchronous software, not just cloud
 services. There is still one bug remaining in the code which you can find using <code>coyote test</code>, and
@@ -404,7 +404,7 @@ full power of your computer to find those bugs that are particularly hard to fin
 <code>--coverage activity</code>. The <a href="../../../how-to/coverage/">coverage report</a> summarizes how many
 of the possible events were covered.</p>
 <h3 id="liveness-monitor">Liveness monitor</h3>
-<p>As described in the documentation on <a href="../../../concepts/liveness-checking/">Liveness Checking</a> the
+<p>As described in the documentation on <a href="../../../how-to/liveness-checking/">Liveness Checking</a> the
 <code>CoffeeMachine</code> must also eventually <code>finish</code> what it is doing. It must either make a coffee when
 requested and return to the <code>Ready</code> state, or it must find a problem and go to the <code>Error</code> state or
 the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can be enforced using a very simple
