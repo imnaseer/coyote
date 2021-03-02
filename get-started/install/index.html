@@ -38,8 +38,8 @@
           {title: "Installing Coyote", url: "#_top", children: [
               {title: "Prerequisites", url: "#prerequisites" },
               {title: "Installing the NuGet package", url: "#installing-the-nuget-package" },
-              {title: "Installing the .NET 5.0 coyote tool", url: "#installing-the-net-50-coyote-tool" },
-              {title: "Running the tool", url: "#running-the-tool" },
+              {title: "Installing the .NET 5.0 Coyote tool", url: "#installing-the-net-50-coyote-tool" },
+              {title: "Using the Coyote tool", url: "#using-the-coyote-tool" },
               {title: "Next steps", url: "#next-steps" },
               {title: "Troubleshooting", url: "#troubleshooting" },
           ]},
@@ -137,7 +137,7 @@ your C# project. You can then immediately start programming the Coyote API as sh
 <pre><code class="language-plain">dotnet add &lt;yourproject&gt;.csproj package Microsoft.Coyote
 dotnet add &lt;yourproject&gt;.csproj package Microsoft.Coyote.Test
 </code></pre>
-<h3 id="installing-the-net-50-coyote-tool">Installing the .NET 5.0 coyote tool</h3>
+<h3 id="installing-the-net-50-coyote-tool">Installing the .NET 5.0 Coyote tool</h3>
 <p>You can also install the <code>dotnet tool</code> named <code>coyote</code> for .NET 5.0 using the following command:</p>
 <pre><code class="language-plain">dotnet tool install --global Microsoft.Coyote.CLI
 </code></pre>
@@ -153,26 +153,14 @@ folder if you prefer that.</p>
 <p><strong>Note:</strong> this command line tool is only for .NET Core. If you need a version of <code>coyote.exe</code> that
 runs on .NET Framework, this is installed from the <code>Microsoft.Coyote.Test</code> package, and you can run
 it from the bin folder of your Coyote application.</p>
-<h3 id="running-the-tool">Running the tool</h3>
-<p>To run the <code>coyote</code> tool use the following command:</p>
-<pre><code class="language-plain">coyote -?
-</code></pre>
-<p>This will list the full command line options. If you are using the .NET Core version of coyote then
-you can simply run <code>dotnet coyote.dll</code> instead.</p>
+<h3 id="using-the-coyote-tool">Using the Coyote tool</h3>
+<p>To learn how to use the Coyote tool read <a href="../using-coyote/">here</a>.</p>
 <h3 id="next-steps">Next steps</h3>
-<p>Now that you have successfully installed Coyote, the best place to get started is by following <a href="../../tutorials/first-concurrency-unit-test/">this
+<p>Now that you have successfully installed Coyote and learned how to use it, the best place to get started is by following <a href="../../tutorials/first-concurrency-unit-test/">this
 tutorial</a> to learn how to write your first concurrency
-unit test, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on YouTube</a>.</p>
-<p>Next, you can check out how to use the <code>coyote</code> tool to <a href="../rewriting/">rewrite</a> and
-<a href="../testing/">test</a> your binaries. Once you are ready to dive in, you can read the <a href="../../concepts/non-determinism/">core
-concepts</a> behind Coyote. There are many
-<a href="../../tutorials/overview/">tutorials</a> and <a href="../../samples/overview/">samples</a> available for you to
+unit test, which is also available as a <a href="https://youtu.be/wuKo-9iRm6o">video on YouTube</a>. There are many
+more <a href="../../tutorials/overview/">tutorials</a> and <a href="../../samples/overview/">samples</a> available for you to
 explore Coyote further!</p>
-<p>Optionally, you can also try out the advanced <a href="../../advanced-topics/actors/overview/">actor and state
-machine</a> programming model of Coyote, which allows you to
-build a highly-reliable system from scratch using lightweight concurrency primitives that are
-battle-tested inside Azure.</p>
-<p><strong>Note:</strong> If you are upgrading to Coyote from P#, see <a href="../upgrade-from-psharp/">upgrading from P#</a>.</p>
 <h3 id="troubleshooting">Troubleshooting</h3>
 <h4 id="the-element-metadata-in-namespace-nuspecxsd-has-invalid-child-element-repository">The element &lsquo;metadata&rsquo; in namespace nuspec.xsd has invalid child element &lsquo;repository&rsquo;&hellip;</h4>
 <p>If you get an error building the nuget package, you may need to download
