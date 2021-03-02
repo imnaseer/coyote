@@ -120,7 +120,8 @@ concurrency unit test</a>.</p>
 adding support for more APIs over time, but if something you need is missing please reach out on
 <a href="https://github.com/microsoft/coyote/issues">GitHub</a>!</p>
 <h2 id="quality-of-life-improvements-through-rewriting">Quality of life improvements through rewriting</h2>
-<p>Coyote will automatically rewrite certain parts of your test code (without changing the application semantics) to improve the testing experience. For example:</p>
+<p>Coyote will automatically rewrite certain parts of your test code (without changing the application
+semantics) to improve the testing experience. For example:</p>
 <p>During testing coyote needs to be able to terminate a test iteration at any time in order to support
 the <code>--max-steps</code> command line argument. This termination is done using a special coyote
 <code>ExecutionCancelledException</code>. The problem is when your code contains one of the following:</p>
@@ -128,10 +129,9 @@ the <code>--max-steps</code> command line argument. This termination is done usi
 } catch (Exception) {
 } catch (RuntimeException) {
 </code></pre>
-<p>these will inadvertently catch the special Coyote exception, which then stops <code>--max-steps</code> from
-working. The recommended fix is to add a <code>when (!(e is Microsoft.Coyote.RuntimeException))</code>
-filter as shown in <a href="../tools/tester-requirements.md">tester requirements</a>.</p>
-<p>The good news is that <code>coyote rewrite</code> can take care of this for you automatically so you do not
+<p>These will inadvertently catch the special Coyote exception, which then stops <code>--max-steps</code> from
+working. The recommended fix is to add a <code>when (!(e is Microsoft.Coyote.RuntimeException))</code> filter.
+The good news is that <code>coyote rewrite</code> can take care of this for you automatically so you do not
 need to modify any of your exception handlers.</p>
 
     <br>

@@ -96,11 +96,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
       <h2 id="how-does-it-work">How does it work?</h2>
 <p>First, you need to write a <a href="../../concepts/concurrency-unit-testing/">concurrency unit test</a>. These
-tests allow (and encourage) the use of concurrency and <a href="non-determinism.md">non-determinism</a>, which
-you would normally avoid in traditional unit tests due to flakiness. By writing such a test, Coyote
-allows you to exercise what happens, for example, when <a href="../../tutorials/first-concurrency-unit-test/">two requests execute
-concurrently</a> in your service, as if it was deployed in
-production.</p>
+tests allow (and encourage) the use of concurrency and
+<a href="../../concepts/non-determinism/">non-determinism</a>, which you would normally avoid in traditional
+unit tests due to flakiness. By writing such a test, Coyote allows you to exercise what happens, for
+example, when <a href="../../tutorials/first-concurrency-unit-test/">two requests execute concurrently</a> in
+your service, as if it was deployed in production.</p>
 <p>To use Coyote, you do not need to change a single line in your production code! Using <a href="../../concepts/binary-rewriting/">binary
 rewriting</a>, the <code>coyote rewrite</code> tool will instrument your
 program-under-test with hooks and stubs that allow Coyote to take control of <code>Task</code> objects and
@@ -108,7 +108,7 @@ related concurrency types from the .NET Task Parallel Library. This is where the
 Coyote controls the execution of each <code>Task</code> so that it can explore various different interleavings
 to find and deterministically reproduce concurrency bugs.</p>
 <p>Although Coyote supports testing unmodified task-based programs, it also gives you the option to use
-the Coyote in-memory <a href="concepts/actors/overview.md">actor and state machine types</a> from the
+the Coyote in-memory <a href="../../concepts/actors/overview/">actor and state machine types</a> from the
 <code>Microsoft.Coyote.Actors</code> library. This is a more advanced asynchronous reactive programming model.
 This approach requires you to change the design of your application, but gives you powerful (and
 battle-tested inside Azure) constructs for building highly-reliable applications.</p>
