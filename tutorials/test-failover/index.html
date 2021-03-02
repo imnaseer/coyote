@@ -116,7 +116,7 @@ failure or abnormal termination of the previously active application, server, sy
 component, or network. Systems designers usually provide failover capability in servers, systems or
 networks requiring near-continuous availability and a high degree of reliability.&rdquo;</p>
 <p>This sample applies the failover concept to the firmware of an automated espresso machine using the
-Coyote <a href="../../advanced-topics/tasks/overview/">asynchronous tasks</a> programming model. Imagine what
+Coyote <a href="../concepts/tasks/overview.md">asynchronous tasks</a> programming model. Imagine what
 would happen if the tiny CPU running the machine rebooted in the middle of making a coffee. What
 bad things might happen? Can we design a code that can handle this scenario and provide a more fault
 tolerant coffee machine?</p>
@@ -126,7 +126,7 @@ actors</a> programming model.</p>
 reliable software.</p>
 <p><img alt="FailoverCoffeeMachine" src="../../assets/images/FailoverCoffeeMachine.svg" /></p>
 <p>The <code>CoffeeMachine</code> is modeled as an asynchronous interface using
-<a href="../../advanced-topics/tasks/overview/">controlled Tasks</a>. This example it not providing real
+<a href="../concepts/tasks/overview.md">controlled Tasks</a>. This example it not providing real
 firmware, instead it <code>mocks</code> the hardware sensor platform built into the machine. This is done in
 the asynchronous <code>MockSensors</code> class. This class provides async ways of reading sensor values like
 the water temperature and setting things like the power button, or turning on and off the coffee
@@ -370,7 +370,7 @@ the <code>RefillRequired</code> state. This &ldquo;liveness&rdquo; property can 
     private class Busy : State { }
 }
 </code></pre>
-<p>This type of <code>Monitor</code> is also a special kind of limited <a href="../../advanced-topics/actors/state-machines/">state
+<p>This type of <code>Monitor</code> is also a special kind of limited <a href="../concepts/actors/state-machines.md">state
 machine</a>. The <code>CoffeeMachine</code> can send
 events to this monitor to tell it when it has switched into <code>Busy</code> state or <code>Idle</code> state. When the
 <code>CoffeeMachine</code> starts heating water, or making coffee it sends this event:</p>

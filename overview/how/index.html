@@ -108,7 +108,7 @@ related concurrency types from the .NET Task Parallel Library. This is where the
 Coyote controls the execution of each <code>Task</code> so that it can explore various different interleavings
 to find and deterministically reproduce concurrency bugs.</p>
 <p>Although Coyote supports testing unmodified task-based programs, it also gives you the option to use
-the Coyote in-memory <a href="advanced-topics/actors/overview.md">actor and state machine types</a> from the
+the Coyote in-memory <a href="concepts/actors/overview.md">actor and state machine types</a> from the
 <code>Microsoft.Coyote.Actors</code> library. This is a more advanced asynchronous reactive programming model.
 This approach requires you to change the design of your application, but gives you powerful (and
 battle-tested inside Azure) constructs for building highly-reliable applications.</p>
@@ -136,7 +136,7 @@ test. The trace can be replayed reliably over and over again, until the bug is i
 makes a bug reported by the tool significantly easier to debug than regular unit-/integration-tests
 and logs from production or stress tests, which are typically nondeterministic. No more
 <a href="https://en.wikipedia.org/wiki/Heisenbug">Heisenbugs</a>!</p>
-<p>See <a href="../../advanced-topics/actors/state-machine-demo/">animating state machine demo</a> for a visual
+<p>See <a href="../concepts/actors/state-machine-demo.md">animating state machine demo</a> for a visual
 explanation of what Coyote does when it is looking for bugs.</p>
 <p>Follow this <a href="../../tutorials/first-concurrency-unit-test/">tutorial</a> to to write your first
 concurrency unit test with Coyote. For more information see dealing with

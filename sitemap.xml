@@ -40,70 +40,6 @@
      <lastmod>2021-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://microsoft.github.io/coyote/concepts/non-determinism/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/concepts/concurrency-unit-testing/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/concepts/binary-rewriting/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/concepts/specifications/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/concepts/liveness-checking/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/overview/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/state-machines/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/actor-semantics/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/termination/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/timers/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/event-groups/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/uncaught-exceptions/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/sharing-objects/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/logging/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/state-machine-demo/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://microsoft.github.io/coyote/advanced-topics/actors/why-actors/</loc>
-     <lastmod>2021-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
      <loc>https://microsoft.github.io/coyote/tutorials/overview/</loc>
      <lastmod>2021-03-02</lastmod>
      <changefreq>daily</changefreq>
@@ -137,6 +73,26 @@
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://microsoft.github.io/coyote/tutorials/actors/test-failover/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/non-determinism/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/concurrency-unit-testing/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/binary-rewriting/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/specifications/</loc>
+     <lastmod>2021-03-02</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://microsoft.github.io/coyote/concepts/liveness-checking/</loc>
      <lastmod>2021-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
