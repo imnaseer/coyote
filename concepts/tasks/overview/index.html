@@ -138,7 +138,7 @@ details of how <code>await</code> works are further explained in the C#
 <p>During testing, using <code>await</code> allows the Coyote runtime to automatically inject scheduling points
 and thoroughly explore asynchronous interleavings to find concurrency bugs.</p>
 <p>You can choose to use the <code>Microsoft.Coyote.Tasks.Task</code> directly in your programs or you can use
-the automatic <a href="rewriting.md">rewriting</a> feature which will rewrite your compiled binaries that use
+the automatic <a href="../../binary-rewriting/">rewriting</a> feature which will rewrite your compiled binaries that use
 <code>System.Threading.Tasks.Task</code> and inject the required Coyote controls so you can run <code>coyote test</code>
 on the rewritten binaries.</p>
 <h2 id="what-happens-under-the-covers">What happens under the covers</h2>
@@ -209,14 +209,14 @@ not systematically explore thread switching in the middle of these operations, t
 will not always find all data race conditions related to concurrent access on these collections.
 For example, two tasks calling <code>TryAdd</code> with the same key, one task will succeed the other will
 not, but Coyote will not systematically explore all possible orderings around this operation. You
-can help Coyote do better by using <a href="../interleavings">ExploreContextSwitch</a>.</p>
+can help Coyote do better by using <a href="../../../ref/Microsoft.Coyote.Tasks/Task/">ExploreContextSwitch</a>.</p>
 <h2 id="samples">Samples</h2>
 <p>To try out more samples that show how to use Coyote to systematically test task-based programs see
 the following:</p>
 <ul>
-<li><a href="../../../tutorials/account-manager">Account manager</a></li>
-<li><a href="../../../samples/tasks/bounded-buffer">Bounded buffer</a></li>
-<li><a href="../../../tutorials/test-failover">Coffee machine failover</a></li>
+<li><a href="../../../tutorials/test-concurrent-operations/">Account manager</a></li>
+<li><a href="../../../samples/tasks/bounded-buffer/">Bounded buffer</a></li>
+<li><a href="../../../tutorials/test-failover/">Coffee machine failover</a></li>
 </ul>
 
     <br>

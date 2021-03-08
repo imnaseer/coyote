@@ -114,11 +114,11 @@ where methods in multiple instances of the class can be called concurrently, eit
 process or across processes and machines. This latter condition means that using locks will not help
 you in writing correct concurrent code.</p>
 <h2 id="what-you-will-need">What you will need</h2>
-<p>To run the <code>AccountManager</code> example, you will need to:</p>
+<p>To run the code in this tutorial, you will need to:</p>
 <ul>
 <li>Install <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019</a>.</li>
 <li>Install the <a href="../../get-started/install/">.NET 5.0 version of the coyote tool</a>.</li>
-<li>Be familiar with the <code>coyote</code> tool. See <a href="../../get-started/using-coyote/">Testing</a>.</li>
+<li>Be familiar with the <code>coyote</code> tool. See <a href="../../get-started/using-coyote/">using Coyote</a>.</li>
 </ul>
 <h2 id="watch-this-tutorial">Watch this tutorial</h2>
 <p>Optionally, you can watch this tutorial on YouTube:</p>
@@ -132,7 +132,7 @@ you in writing correct concurrent code.</p>
   // Returns true if the account is created, else false.
   public async Task&lt;bool&gt; CreateAccount(string accountName, string accountPayload) { ... }
 
-  // Returns the accountPayload, else null.
+  // Returns the accountPayload if the account is found, else null.
   public async Task&lt;string&gt; GetAccount(string accountName) { ... }
 
   // Returns true if the account is deleted, else false.
@@ -142,13 +142,13 @@ you in writing correct concurrent code.</p>
 <p>Here are the methods available in the <code>IDbCollection</code> interface:</p>
 <pre><code class="language-csharp">public interface IDbCollection
 {
-  Task CreateRow(string key, string value);
+  Task&lt;bool&gt; CreateRow(string key, string value);
 
   Task&lt;bool&gt; DoesRowExist(string key);
 
   Task&lt;string&gt; GetRow(string key);
 
-  Task DeleteRow(string key);
+  Task&lt;bool&gt; DeleteRow(string key);
 }
 </code></pre>
 <p>The <code>CreateRow</code> method creates the row with the given key, unless it already exists in which case it
@@ -175,11 +175,10 @@ deletes the row if it exists and throws <code>RowNotFoundException</code> except
       return false;
     }
 
-    await this.AccountCollection.CreateRow(accountName, accountPayload);
-    return true;
+    return await this.AccountCollection.CreateRow(accountName, accountPayload);
   }
 
-  // Returns the accountPayload, else null.
+  // Returns the accountPayload if the account is found, else null.
   public async Task&lt;string&gt; GetAccount(string accountName)
   {
     if (!await this.AccountCollection.DoesRowExist(accountName))
@@ -198,8 +197,7 @@ deletes the row if it exists and throws <code>RowNotFoundException</code> except
       return false;
     }
 
-    await this.AccountCollection.DeleteRow(accountName);
-    return true;
+    return await this.AccountCollection.DeleteRow(accountName);
   }
 }
 </code></pre>
@@ -217,27 +215,17 @@ replace it with a mock. The following code shows such a mock implementation:</p>
     this.Collection = new ConcurrentDictionary&lt;string, string&gt;();
   }
 
-  public Task CreateRow(string key, string value)
+  public Task&lt;bool&gt; CreateRow(string key, string value)
   {
     return Task.Run(() =&gt;
     {
-      var result = this.Collection.TryAdd(key, value);
-      if (!result)
+      bool success = this.Collection.TryAdd(key, value);
+      if (!success)
       {
         throw new RowAlreadyExistsException();
       }
-    });
-  }
 
-  public Task DeleteRow(string key)
-  {
-    return Task.Run(() =&gt;
-    {
-      var removed = this.Collection.TryRemove(key, out string value);
-      if (!removed)
-      {
-        throw new RowNotFoundException();
-      }
+      return true;
     });
   }
 
@@ -253,12 +241,26 @@ replace it with a mock. The following code shows such a mock implementation:</p>
   {
     return Task.Run(() =&gt;
     {
-      var result = this.Collection.TryGetValue(key, out string value);
-      if (!result)
+      bool success = this.Collection.TryGetValue(key, out string value);
+      if (!success)
       {
         throw new RowNotFoundException();
       }
       return value;
+    });
+  }
+
+  public Task&lt;bool&gt; DeleteRow(string key)
+  {
+    return Task.Run(() =&gt;
+    {
+      bool success = this.Collection.TryRemove(key, out string _);
+      if (!success)
+      {
+        throw new RowNotFoundException();
+      }
+
+      return true;
     });
   }
 }
@@ -266,7 +268,8 @@ replace it with a mock. The following code shows such a mock implementation:</p>
 <p>The <code>InMemoryDbCollection</code> mock is very simple, it just maintains an in-memory
 <code>ConcurrentDictionary</code> to store the keys and values. Each method of the mock runs a new concurrent
 task (via <code>Task.Run</code>) to make the call execute asynchronously, modeling async I/O in a real database
-call.</p>
+call. You can read later this <a href="../mocks/mock-dependencies/">follow-up tutorial</a> to delve into mock design
+for concurrency unit testing.</p>
 <p>Now that you have written this mock, you can write a simple test:</p>
 <pre><code class="language-csharp">[Test]
 public static async Task TestAccountCreation()
@@ -371,10 +374,13 @@ single time.</p>
 ... Writing the modified 'AccountManager.dll' assembly to AccountManager.dll
 . Done rewriting in 0.6425808 sec
 </code></pre>
+<p><strong>Note</strong>: if your project contains multiple assemblies (which is usually the normal), then you need
+to rewrite all of them. This can be easily done by passing a JSON configuration file to <code>coyote
+rewrite</code> as discussed <a href="../../get-started/using-coyote/#configuration">here</a>.</p>
 <p>Awesome, now lets try use Coyote on the above concurrent test:</p>
 <pre><code class="language-plain">coyote test .\AccountManager.dll -m TestConcurrentAccountCreation -i 100
 </code></pre>
-<p>Note: for this to work the unit test method needs to use the
+<p><strong>Note</strong>: for this to work the unit test method needs to use the
 <code>[Microsoft.Coyote.SystematicTesting.Test]</code> custom attribute to declare the test method which 
 is what you will see if you have already downloaded the <a href="http://github.com/microsoft/coyote-samples">Coyote Samples git
 repo</a>.</p>
@@ -400,8 +406,8 @@ read more about other Coyote tool options <a href="../../get-started/using-coyot
 ..... Iteration #20
 ... Task 0 found a bug.
 ... Emitting task 0 traces:
-..... Writing AccountManagerTutorial.dll\CoyoteOutput\AccountManager_0_0.txt
-..... Writing AccountManagerTutorial.dll\CoyoteOutput\AccountManager_0_0.schedule
+..... Writing AccountManager.dll\CoyoteOutput\AccountManager_0_0.txt
+..... Writing AccountManager.dll\CoyoteOutput\AccountManager_0_0.schedule
 ... Elapsed 0.0743756 sec.
 ... Testing statistics:
 ..... Found 1 bug.
